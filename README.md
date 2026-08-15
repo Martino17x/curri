@@ -12,7 +12,7 @@ postulantes (ATS) pueden parsear sin problemas. Todo se guarda en tu navegador
 
 ![Editor con vista previa](docs/screenshots/editor.png)
 
-![CV comercial de ejemplo](docs/screenshots/cv-comercial.png)
+![CV de ejemplo](docs/screenshots/cv-martino.png)
 
 ## Características
 
