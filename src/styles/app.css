@@ -543,9 +543,53 @@ input[type='radio'] {
   width: 18px;
   height: 18px;
 }
+/* Sliders 100% custom: pista y thumb con la identidad de la app (sin skin nativo). */
 input[type='range'] {
-  accent-color: var(--ui-accent);
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 22px;
+  background: transparent;
   cursor: pointer;
+  margin: 2px 0;
+}
+input[type='range']::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: 999px;
+  background: var(--ui-border);
+}
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--ui-surface);
+  border: 2px solid var(--ui-accent);
+  margin-top: -6px; /* centra el thumb sobre el track de 6px */
+  box-shadow: 0 1px 4px rgba(15, 118, 110, 0.35);
+}
+input[type='range']:hover::-webkit-slider-thumb,
+input[type='range']:focus-visible::-webkit-slider-thumb {
+  background: var(--ui-accent-soft);
+}
+input[type='range']::-moz-range-track {
+  height: 6px;
+  border-radius: 999px;
+  background: var(--ui-border);
+}
+input[type='range']::-moz-range-progress {
+  height: 6px;
+  border-radius: 999px;
+  background: var(--ui-accent);
+}
+input[type='range']::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--ui-surface);
+  border: 2px solid var(--ui-accent);
+  box-shadow: 0 1px 4px rgba(15, 118, 110, 0.35);
 }
 .field textarea {
   resize: vertical;
