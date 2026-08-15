@@ -115,8 +115,6 @@ export function Builder({ resume }: { resume: Resume }) {
         onEffectiveZoomChange={setEffectiveZoom}
         onFitReady={setFitZoom}
       />
-      {showThemePanel && <ThemePanel resume={resume} />}
-      {showAtsPanel && <AtsPanel resume={resume} pageOverflow={pageOverflow} />}
     </section>
   );
 
@@ -145,6 +143,19 @@ export function Builder({ resume }: { resume: Resume }) {
       {!isCompact && previewColumn}
 
       {exportDialog === 'json' && <ExportJsonModal resume={resume} onClose={() => setExportDialog('none')} />}
+
+      {/* Paneles flotantes Tema / ATS: overlay fijo + backdrop, no dependen del layout */}
+      {(showThemePanel || showAtsPanel) && (
+        <div
+          className="drawer-backdrop"
+          onClick={() => {
+            useUiStore.setState({ showThemePanel: false, showAtsPanel: false });
+          }}
+          aria-hidden="true"
+        />
+      )}
+      {showThemePanel && <ThemePanel resume={resume} />}
+      {showAtsPanel && <AtsPanel resume={resume} pageOverflow={pageOverflow} />}
     </div>
   );
 }

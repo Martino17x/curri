@@ -22,6 +22,10 @@ export function ResumeList() {
     setView({ name: 'builder' });
   };
 
+  // El preset comercial se siembra solo (ensurePresets). Este botón es la vía de
+  // escape para volver a cargarlo si el usuario lo borró de la lista.
+  const hasCommercial = resumes.some((r) => r.documentName === 'CV Comercial de ejemplo');
+
   return (
     <main className="list-page">
       <div className="list-hero">
@@ -73,19 +77,21 @@ export function ResumeList() {
           <span>Nuevo CV</span>
         </button>
 
-        <button
-          type="button"
-          className="resume-card resume-card--new"
-          onClick={() => {
-            const id = addCommercialSampleResume();
-            open(id);
-          }}
-        >
-          <span className="resume-card-plus">
-            <SparklesIcon width={22} height={22} />
-          </span>
-          <span>Cargar CV comercial de ejemplo</span>
-        </button>
+        {!hasCommercial && (
+          <button
+            type="button"
+            className="resume-card resume-card--new"
+            onClick={() => {
+              const id = addCommercialSampleResume();
+              open(id);
+            }}
+          >
+            <span className="resume-card-plus">
+              <SparklesIcon width={22} height={22} />
+            </span>
+            <span>Cargar CV comercial de ejemplo</span>
+          </button>
+        )}
       </div>
     </main>
   );

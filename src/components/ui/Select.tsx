@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { usePopover } from '../../hooks/usePopover';
 import { CheckIcon, ChevronDownIcon } from './icons';
 
 export interface SelectOption<T extends string = string> {
@@ -31,6 +32,8 @@ export function Select<T extends string = string>({
   const [active, setActive] = useState(0);
   const rootRef = useRef<HTMLDivElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
+  const close = useCallback(() => setOpen(false), []);
+  const { triggerRef, menuStyle } = usePopover(open, close);
 
   const selected = options.find((o) => o.value === value);
 
@@ -93,6 +96,7 @@ export function Select<T extends string = string>({
         .join(' ')}
     >
       <button
+        ref={triggerRef}
         type="button"
         className="select-trigger"
         aria-haspopup="listbox"
@@ -104,10 +108,11 @@ export function Select<T extends string = string>({
         <span className="select-value">{selected?.label ?? placeholder ?? '—'}</span>
         <ChevronDownIcon width={14} height={14} />
       </button>
-      {open && (
+      {open && menuStyle && (
         <div
           ref={menuRef}
           className="select-menu"
+          style={menuStyle}
           role="listbox"
           aria-label={ariaLabel}
           tabIndex={-1}

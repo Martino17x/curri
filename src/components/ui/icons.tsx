@@ -56,6 +56,31 @@ export function GearIcon(props: IconProps) {
   );
 }
 
+export function PaletteIcon(props: IconProps) {
+  return (
+    <svg {...base} {...props}>
+      <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.93 0 1.65-.75 1.65-1.69 0-.44-.18-.83-.44-1.12-.29-.29-.44-.65-.44-1.12a1.65 1.65 0 0 1 1.67-1.67h1.99c3.05 0 5.56-2.5 5.56-5.55C21.97 6.01 17.46 2 12 2z" />
+      <circle cx="7.5" cy="11.5" r="0.5" fill="currentColor" stroke="none" />
+      <circle cx="9.5" cy="7.5" r="0.5" fill="currentColor" stroke="none" />
+      <circle cx="14.5" cy="7.5" r="0.5" fill="currentColor" stroke="none" />
+      <circle cx="16.5" cy="11.5" r="0.5" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
+export function ScanSearchIcon(props: IconProps) {
+  return (
+    <svg {...base} {...props}>
+      <path d="M3 7V5a2 2 0 0 1 2-2h2" />
+      <path d="M17 3h2a2 2 0 0 1 2 2v2" />
+      <path d="M21 17v2a2 2 0 0 1-2 2h-2" />
+      <path d="M7 21H5a2 2 0 0 1-2-2v-2" />
+      <circle cx="12" cy="12" r="3" />
+      <path d="m14.5 14.5 2.5 2.5" />
+    </svg>
+  );
+}
+
 export function ChevronLeftIcon(props: IconProps) {
   return (
     <svg {...base} {...props}>

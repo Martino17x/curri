@@ -25,7 +25,8 @@ export const useUiStore = create<UiState>((set) => ({
   showThemePanel: false,
   showAtsPanel: false,
   showPreviewMobile: false,
-  setView: (view) => set({ view }),
+  // Navegar cierra los paneles flotantes (Tema / ATS) para que no queden colgados.
+  setView: (view) => set({ view, showThemePanel: false, showAtsPanel: false }),
   setZoom: (zoom) => set({ zoom }),
   setActiveSectionId: (activeSectionId) => set({ activeSectionId }),
   setShowThemePanel: (showThemePanel) => set({ showThemePanel }),

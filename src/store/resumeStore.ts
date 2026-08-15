@@ -12,6 +12,8 @@ interface ResumeStore {
   activeResumeId: string | null;
   /** True cuando ya se sembró el CV de ejemplo en la primera visita. */
   seeded: boolean;
+  /** True una vez que el preset comercial (Candela) existe/ya se sembró. */
+  commercialSeeded: boolean;
   addResume: (name?: string) => string;
   addSampleResume: () => string;
   addCommercialSampleResume: () => string;
@@ -36,6 +38,7 @@ export const useResumeStore = create<ResumeStore>()(
       resumes: [],
       activeResumeId: null,
       seeded: false,
+      commercialSeeded: false,
 
       addResume: (name) => {
         const resume = createResume(name || 'CV nuevo');
@@ -195,6 +198,7 @@ export const useResumeStore = create<ResumeStore>()(
         resumes: state.resumes,
         activeResumeId: state.activeResumeId,
         seeded: state.seeded,
+        commercialSeeded: state.commercialSeeded,
       }),
     },
   ),
@@ -202,4 +206,67 @@ export const useResumeStore = create<ResumeStore>()(
 
 export function selectResume(resumes: Resume[], id: string | null): Resume | undefined {
   return resumes.find((r) => r.id === id);
+}
+
+/**
+ * Migración idempotente del estado local. Se llama en cada montaje; si no hay
+ * nada que cambiar, no toca el estado.
+ * 1) Deduplica "Mi CV de ejemplo" (el bug de StrictMode en dev sembraba 2 idénticos).
+ * 2) Usuario nuevo → siembra los dos presets (básico + comercial Candela).
+ * 3) Usuarios existentes → agrega el preset comercial UNA sola vez (flag
+ *    `commercialSeeded`). Si lo borran a propósito, no vuelve a aparecer.
+ */
+export function ensurePresets() {
+  const { resumes, activeResumeId, seeded, commercialSeeded } = useResumeStore.getState();
+  let next: Resume[] = resumes;
+  let changed = false;
+  let nextCommercialSeeded = commercialSeeded;
+
+  // 1) Dedupe: quita el "Mi CV de ejemplo" duplicado por el bug de StrictMode.
+  const seen = new Set<string>();
+  const deduped: Resume[] = [];
+  for (const r of resumes) {
+    if (r.documentName === 'Mi CV de ejemplo' && seen.has('Mi CV de ejemplo')) continue;
+    seen.add(r.documentName);
+    deduped.push(r);
+  }
+  if (deduped.length !== next.length) {
+    next = deduped;
+    changed = true;
+  }
+
+  // 2) Usuario nuevo: sembrar los dos presets.
+  if (next.length === 0 && !seeded) {
+    next = [createSampleResume(), createCommercialSampleResume()];
+    nextCommercialSeeded = true;
+    changed = true;
+  } else if (!seeded && next.length > 0) {
+    // 3a) Migración: cuenta con CVs guardados de antes de los presets.
+    if (!next.some((r) => r.documentName === 'Mi CV de ejemplo')) {
+      next = [...next, createSampleResume()];
+      changed = true;
+    }
+    if (!next.some((r) => r.documentName === 'CV Comercial de ejemplo')) {
+      next = [...next, createCommercialSampleResume()];
+      nextCommercialSeeded = true;
+      changed = true;
+    }
+  } else if (seeded && !commercialSeeded && !next.some((r) => r.documentName === 'CV Comercial de ejemplo')) {
+    // 3b) Migración puntual: el preset de Candela llega a cuentas existentes (una sola vez).
+    next = [...next, createCommercialSampleResume()];
+    nextCommercialSeeded = true;
+    changed = true;
+  }
+
+  // Si el comercial ya existe (lo crearon o lo cargaron), dejar de intentar sembrarlo.
+  if (next.some((r) => r.documentName === 'CV Comercial de ejemplo')) nextCommercialSeeded = true;
+
+  if (!changed && nextCommercialSeeded === commercialSeeded) return;
+  const activeOk = next.some((r) => r.id === activeResumeId);
+  useResumeStore.setState({
+    resumes: next,
+    activeResumeId: activeOk ? activeResumeId : next[0]?.id ?? null,
+    seeded: true,
+    commercialSeeded: nextCommercialSeeded,
+  });
 }

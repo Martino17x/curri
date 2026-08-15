@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import {
   DndContext,
   KeyboardSensor,
@@ -16,6 +16,7 @@ import {
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { SECTION_TYPE_LABELS, createSection } from '../../data/defaults';
+import { usePopover } from '../../hooks/usePopover';
 import { useResumeStore } from '../../store/resumeStore';
 import { useUiStore } from '../../store/uiStore';
 import type { Resume, Section } from '../../types/resume';
@@ -74,6 +75,11 @@ function SortableRow({
 
 export function SectionsPanel({ resume }: { resume: Resume }) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const closeMenu = useCallback(() => setMenuOpen(false), []);
+  const { triggerRef: addBtnRef, menuStyle } = usePopover(menuOpen, closeMenu, {
+    align: 'right',
+    minWidth: 230,
+  });
   const addSection = useResumeStore((s) => s.addSection);
   const removeSection = useResumeStore((s) => s.removeSection);
   const toggleSectionVisible = useResumeStore((s) => s.toggleSectionVisible);
@@ -129,12 +135,17 @@ export function SectionsPanel({ resume }: { resume: Resume }) {
       <div className="panel-head">
         <h2>Secciones</h2>
         <div className="add-section-wrap">
-          <button type="button" className="btn-primary btn-small" onClick={() => setMenuOpen((v) => !v)}>
+          <button
+            ref={addBtnRef}
+            type="button"
+            className="btn-primary btn-small"
+            onClick={() => setMenuOpen((v) => !v)}
+          >
             <PlusIcon width={14} height={14} />
             Agregar
           </button>
-          {menuOpen && (
-            <div className="menu">
+          {menuOpen && menuStyle && (
+            <div className="menu" style={menuStyle}>
               {(Object.keys(SECTION_TYPE_LABELS) as (keyof typeof SECTION_TYPE_LABELS)[])
                 .filter((t) => t !== 'basics')
                 .map((type) => {

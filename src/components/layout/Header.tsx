@@ -2,6 +2,7 @@ import { useResumeStore } from '../../store/resumeStore';
 import { useUiStore } from '../../store/uiStore';
 import type { TemplateId } from '../../types/resume';
 import { Select } from '../ui/Select';
+import { PaletteIcon, ScanSearchIcon } from '../ui/icons';
 
 const TEMPLATE_OPTIONS: { value: TemplateId; label: string }[] = [
   { value: 'modern', label: 'Moderna' },
@@ -10,6 +11,7 @@ const TEMPLATE_OPTIONS: { value: TemplateId; label: string }[] = [
 ];
 
 export function Header({ resume }: { resume?: { id: string; documentName: string; templateId: TemplateId } }) {
+  const view = useUiStore((s) => s.view);
   const resumes = useResumeStore((s) => s.resumes);
   const setActiveResume = useResumeStore((s) => s.setActiveResume);
   const renameResume = useResumeStore((s) => s.renameResume);
@@ -17,17 +19,22 @@ export function Header({ resume }: { resume?: { id: string; documentName: string
   const setView = useUiStore((s) => s.setView);
   const setShowThemePanel = useUiStore((s) => s.setShowThemePanel);
   const setShowAtsPanel = useUiStore((s) => s.setShowAtsPanel);
-  const setShowPreviewMobile = useUiStore((s) => s.setShowPreviewMobile);
+
+  // En la página principal el header es mínimo: solo identidad. Las herramientas
+  // de edición (selector de CV, nombre, plantilla, Tema/ATS) viven en el builder.
+  const isBuilder = view.name === 'builder' && !!resume;
 
   return (
-    <header className="app-header">
+    <header className={`app-header ${isBuilder ? 'app-header--builder' : 'app-header--list'}`}>
       <div className="header-brand">
         <button type="button" className="logo" onClick={() => setView({ name: 'list' })} title="Volver a tus CVs">
+          <span className="logo-mark" aria-hidden="true" />
           Curri
         </button>
+        {!isBuilder && <span className="header-tagline">Editor de CV compatibles con ATS · 100% local</span>}
       </div>
 
-      {resume && (
+      {isBuilder && (
         <>
           <span className="header-sep" aria-hidden="true" />
 
@@ -62,21 +69,19 @@ export function Header({ resume }: { resume?: { id: string; documentName: string
             <button
               type="button"
               className="btn-secondary"
-              onClick={() => {
-                setShowThemePanel(true);
-                setShowPreviewMobile(true);
-              }}
+              onClick={() => setShowThemePanel(true)}
+              aria-haspopup="dialog"
             >
+              <PaletteIcon width={15} height={15} />
               Tema
             </button>
             <button
               type="button"
               className="btn-secondary"
-              onClick={() => {
-                setShowAtsPanel(true);
-                setShowPreviewMobile(true);
-              }}
+              onClick={() => setShowAtsPanel(true)}
+              aria-haspopup="dialog"
             >
+              <ScanSearchIcon width={15} height={15} />
               ATS
             </button>
           </div>
