@@ -223,19 +223,38 @@ export function selectResume(resumes: Resume[], id: string | null): Resume | und
 export function ensurePresets() {
   // Bump cuando cambies createSampleResume()/createCommercialSampleResume():
   // los usuarios con el preset viejo guardado lo regeneran al recargar.
-  const PRESETS_VERSION = 3;
+  const PRESETS_VERSION = 4;
   const { resumes, activeResumeId, seeded, commercialSeeded, presetsVersion } = useResumeStore.getState();
   let next: Resume[] = resumes;
   let changed = false;
   let nextCommercialSeeded = commercialSeeded;
 
-  // 1) Regenerar el preset "Mi CV de ejemplo" si la versión guardada es vieja
-  //    (cubre: Sofía, Martino sin foto, DevOps/IA/JSCAMP viejos, etc.).
+  // 1) Regenerar los presets si la versión guardada es vieja.
   if (presetsVersion < PRESETS_VERSION) {
     const sampleIdx = next.findIndex((r) => r.documentName === 'Mi CV de ejemplo');
     if (sampleIdx >= 0) {
       next = [...next.slice(0, sampleIdx), createSampleResume(), ...next.slice(sampleIdx + 1)];
       changed = true;
+    }
+    const commercialIdx = next.findIndex((r) => r.documentName === 'CV Comercial de ejemplo');
+    if (commercialIdx >= 0) {
+      next = [...next.slice(0, commercialIdx), createCommercialSampleResume(), ...next.slice(commercialIdx + 1)];
+      changed = true;
+    }
+  }
+
+  // 1b) Safety net: si el comercial guarda datos personales reales (Candela),
+  //     se reemplaza por el de datos ficticios. Idempotente.
+  {
+    const commercialIdx = next.findIndex((r) => r.documentName === 'CV Comercial de ejemplo');
+    if (commercialIdx >= 0) {
+      const basics = next[commercialIdx].sections.find((s) => s.type === 'basics');
+      const email =
+        basics && 'fields' in basics ? ((basics.fields as { email?: string }).email ?? '') : '';
+      if (email === 'gcande720@gmail.com') {
+        next = [...next.slice(0, commercialIdx), createCommercialSampleResume(), ...next.slice(commercialIdx + 1)];
+        changed = true;
+      }
     }
   }
 

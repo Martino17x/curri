@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from 'react-router-dom';
+import { matchPath, useLocation, useNavigate } from 'react-router-dom';
 import { useResumeStore } from '../../store/resumeStore';
 import { useUiStore } from '../../store/uiStore';
 import type { TemplateId } from '../../types/resume';
@@ -13,7 +13,11 @@ const TEMPLATE_OPTIONS: { value: TemplateId; label: string }[] = [
 
 export function Header() {
   const navigate = useNavigate();
-  const { resumeId } = useParams();
+  const location = useLocation();
+  // Determinístico: matchea la URL contra el patrón del editor. useParams() fuera
+  // de una <Route> hija no garantiza ver el param en todas las versiones del router.
+  const match = matchPath('/cv/:resumeId', location.pathname);
+  const resumeId = match?.params.resumeId;
   const resumes = useResumeStore((s) => s.resumes);
   const renameResume = useResumeStore((s) => s.renameResume);
   const setTemplate = useResumeStore((s) => s.setTemplate);

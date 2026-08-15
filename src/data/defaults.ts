@@ -364,8 +364,12 @@ export function createSampleResume(): Resume {
   };
 }
 
-/** CV comercial de ejemplo, replicado del template de candela-app
- *  (cv-comercial-ventas-stock.html). Entra en UNA hoja A4 con tema compacto. */
+/**
+ * CV comercial de ejemplo, replicado del template de candela-app
+ * (cv-comercial-ventas-stock.html). Entra en UNA hoja A4 con tema compacto.
+ * Los DATOS PERSONALES son ficticios (por privacidad): el perfil y la
+ * experiencia son de ejemplo, pero nombre/email/tel/ubicación no son reales.
+ */
 export function createCommercialSampleResume(): Resume {
   const work: WorkItem[] = [
     {
@@ -508,11 +512,11 @@ export function createCommercialSampleResume(): Resume {
         title: 'Datos personales',
         visible: true,
         fields: {
-          name: 'Candela González',
+          name: 'Valentina Ríos',
           label: 'Vendedora · Asistente Comercial · Control de Stock',
-          email: 'gcande720@gmail.com',
-          phone: '(3549) 559939',
-          location: 'Córdoba Capital – Zona General Paz',
+          email: 'valentina.rios@email.com',
+          phone: '(351) 555-8765',
+          location: 'Córdoba Capital, Argentina',
           linkedin: '',
           website: '',
           photo: null,

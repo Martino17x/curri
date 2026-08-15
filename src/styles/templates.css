@@ -217,5 +217,11 @@
   .doc-page {
     margin: 0;
     box-shadow: none;
+    /* En pantalla la hoja se dibuja completa con min-height:297mm; al imprimir
+       la altura la define el CONTENIDO: 297mm exactos + redondeo de subpíxel
+       del navegador genera una 2.ª página vacía. */
+    min-height: 0;
+    height: auto;
+    overflow: visible;
   }
 }

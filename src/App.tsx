@@ -1,5 +1,13 @@
 import { useEffect } from 'react';
-import { BrowserRouter, Navigate, Route, Routes, useLocation, useParams } from 'react-router-dom';
+import {
+  BrowserRouter,
+  Navigate,
+  Outlet,
+  Route,
+  Routes,
+  useLocation,
+  useParams,
+} from 'react-router-dom';
 import { Builder } from './components/layout/Builder';
 import { Header } from './components/layout/Header';
 import { ResumeList } from './components/layout/ResumeList';
@@ -32,11 +40,7 @@ function Shell() {
   return (
     <div className="app">
       <Header />
-      <Routes>
-        <Route path="/" element={<ResumeList />} />
-        <Route path="/cv/:resumeId" element={<BuilderRoute />} />
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
+      <Outlet />
     </div>
   );
 }
@@ -49,7 +53,13 @@ export default function App() {
 
   return (
     <BrowserRouter>
-      <Shell />
+      <Routes>
+        <Route element={<Shell />}>
+          <Route path="/" element={<ResumeList />} />
+          <Route path="/cv/:resumeId" element={<BuilderRoute />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Route>
+      </Routes>
     </BrowserRouter>
   );
 }
