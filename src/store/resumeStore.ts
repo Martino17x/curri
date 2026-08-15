@@ -14,6 +14,8 @@ interface ResumeStore {
   seeded: boolean;
   /** True una vez que el preset comercial (Candela) existe/ya se sembró. */
   commercialSeeded: boolean;
+  /** Versión de los presets sembrados: si el sample guardado es viejo, se regenera. */
+  presetsVersion: number;
   addResume: (name?: string) => string;
   addSampleResume: () => string;
   addCommercialSampleResume: () => string;
@@ -39,6 +41,7 @@ export const useResumeStore = create<ResumeStore>()(
       activeResumeId: null,
       seeded: false,
       commercialSeeded: false,
+      presetsVersion: 0,
 
       addResume: (name) => {
         const resume = createResume(name || 'CV nuevo');
@@ -199,6 +202,7 @@ export const useResumeStore = create<ResumeStore>()(
         activeResumeId: state.activeResumeId,
         seeded: state.seeded,
         commercialSeeded: state.commercialSeeded,
+        presetsVersion: state.presetsVersion,
       }),
     },
   ),
@@ -217,21 +221,20 @@ export function selectResume(resumes: Resume[], id: string | null): Resume | und
  *    `commercialSeeded`). Si lo borran a propósito, no vuelve a aparecer.
  */
 export function ensurePresets() {
-  const { resumes, activeResumeId, seeded, commercialSeeded } = useResumeStore.getState();
+  // Bump cuando cambies createSampleResume()/createCommercialSampleResume():
+  // los usuarios con el preset viejo guardado lo regeneran al recargar.
+  const PRESETS_VERSION = 2;
+  const { resumes, activeResumeId, seeded, commercialSeeded, presetsVersion } = useResumeStore.getState();
   let next: Resume[] = resumes;
   let changed = false;
   let nextCommercialSeeded = commercialSeeded;
 
-  // 1) Migración del sample: el viejo CV de ejemplo (Sofía Herrera) se reemplaza
-  //    por el CV personal (Martino) en cuentas que ya lo tenían guardado.
-  const LEGACY_SAMPLE_EMAIL = 'sofia.herrera@email.com';
-  const legacyIdx = next.findIndex((r) => r.documentName === 'Mi CV de ejemplo');
-  if (legacyIdx >= 0) {
-    const basics = next[legacyIdx].sections.find((s) => s.type === 'basics');
-    const email =
-      basics && 'fields' in basics ? ((basics.fields as { email?: string }).email ?? '') : '';
-    if (email === LEGACY_SAMPLE_EMAIL) {
-      next = [...next.slice(0, legacyIdx), createSampleResume(), ...next.slice(legacyIdx + 1)];
+  // 1) Regenerar el preset "Mi CV de ejemplo" si la versión guardada es vieja
+  //    (cubre: Sofía, Martino sin foto, DevOps/IA/JSCAMP viejos, etc.).
+  if (presetsVersion < PRESETS_VERSION) {
+    const sampleIdx = next.findIndex((r) => r.documentName === 'Mi CV de ejemplo');
+    if (sampleIdx >= 0) {
+      next = [...next.slice(0, sampleIdx), createSampleResume(), ...next.slice(sampleIdx + 1)];
       changed = true;
     }
   }
@@ -282,5 +285,6 @@ export function ensurePresets() {
     activeResumeId: activeOk ? activeResumeId : next[0]?.id ?? null,
     seeded: true,
     commercialSeeded: nextCommercialSeeded,
+    presetsVersion: PRESETS_VERSION,
   });
 }
