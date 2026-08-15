@@ -34,6 +34,7 @@ export function usePopover(
     if (!open) return;
     const trigger = triggerRef.current;
     if (!trigger) return;
+    const initial = trigger.getBoundingClientRect();
 
     const update = () => {
       const r = trigger.getBoundingClientRect();
@@ -47,12 +48,25 @@ export function usePopover(
       );
     };
 
+    // En mobile, tocar una opción dispara micro-scrolls fantasma (scroll chaining /
+    // touch) que cerraban el menú antes del click. Solo cerramos si el trigger
+    // realmente se movió >10px (scroll real del documento o del contenedor).
+    const onScroll = () => {
+      const r = trigger.getBoundingClientRect();
+      const moved = Math.abs(r.top - initial.top) + Math.abs(r.left - initial.left);
+      if (moved > 10) {
+        onClose();
+      } else {
+        update(); // mantiene el menú pegado al trigger ante movimientos mínimos
+      }
+    };
+
     update();
     window.addEventListener('resize', update);
-    document.addEventListener('scroll', onClose, true);
+    document.addEventListener('scroll', onScroll, true);
     return () => {
       window.removeEventListener('resize', update);
-      document.removeEventListener('scroll', onClose, true);
+      document.removeEventListener('scroll', onScroll, true);
     };
   }, [open, onClose, align, minWidth]);
 

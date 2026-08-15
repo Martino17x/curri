@@ -156,7 +156,7 @@ export type Section =
   | InterestsSection
   | CustomSection;
 
-export type TemplateId = 'modern' | 'classic' | 'minimal';
+export type TemplateId = 'modern' | 'classic' | 'minimal' | 'executive' | 'creative';
 
 export interface Resume {
   id: string;

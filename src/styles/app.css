@@ -660,6 +660,31 @@ input[type='range']::-moz-range-thumb {
 }
 .month-year-inputs input {
   width: 96px;
+  min-width: 0;
+  border: 1px solid var(--ui-border);
+  background: var(--ui-surface);
+  border-radius: 8px;
+  padding: 0.45rem 0.7rem;
+  font-size: 0.85rem;
+  font-family: inherit;
+  color: var(--ui-text);
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+.month-year-inputs input::placeholder {
+  color: var(--ui-text-muted);
+}
+.month-year-inputs input:hover {
+  background: #f6f7f9;
+}
+.month-year-inputs input:focus {
+  outline: none;
+  border-color: var(--ui-accent);
+  box-shadow: 0 0 0 3px var(--ui-accent-soft);
+}
+.month-year-inputs input:disabled {
+  opacity: 0.55;
+  cursor: default;
+  background: transparent;
 }
 .date-range-fields {
   display: flex;

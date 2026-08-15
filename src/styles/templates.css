@@ -202,6 +202,61 @@
   margin-bottom: calc(var(--doc-spacing, 10pt) * 1.8);
 }
 
+/* ===== Plantilla Ejecutiva ===== */
+.tpl-executive .doc-header {
+  border-bottom: 0.4mm double var(--doc-accent, #1e3a5f);
+  padding-bottom: 2mm;
+  margin-bottom: var(--doc-spacing);
+}
+.tpl-executive .doc-name {
+  letter-spacing: 0.05em;
+}
+.tpl-executive .sec-title--bar::after {
+  display: none;
+}
+.tpl-executive .sec-title--bar::before {
+  content: '';
+  width: 1mm;
+  height: 1.1em;
+  border-radius: 1px;
+  background: var(--doc-accent, #1e3a5f);
+  flex-shrink: 0;
+  align-self: center;
+}
+.tpl-executive .sec-title--underline {
+  border-bottom-width: 0.4mm;
+  padding-bottom: 0.6mm;
+}
+
+/* ===== Plantilla Creativa ===== */
+.tpl-creative .doc-header {
+  background: var(--doc-accent, #1e3a5f);
+  color: #fff;
+  margin: calc(-1 * var(--doc-pad-y, 11mm)) calc(-1 * var(--doc-pad-x, 13mm))
+    var(--doc-spacing);
+  padding: var(--doc-pad-y, 11mm) var(--doc-pad-x, 13mm);
+  border-radius: 2px;
+}
+.tpl-creative .doc-name,
+.tpl-creative .doc-label,
+.tpl-creative .contact-line,
+.tpl-creative .date-range {
+  color: #fff;
+}
+.tpl-creative .doc-photo {
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+}
+.tpl-creative .sec-title--bar::after {
+  height: 0.8mm;
+}
+.tpl-creative .sec-title--underline {
+  border-bottom: 0.5mm solid var(--doc-accent, #1e3a5f);
+}
+.tpl-creative .sec-title--simple {
+  color: var(--doc-accent, #1e3a5f);
+  font-weight: 800;
+}
+
 /* Impresión: A4 con margen cero; el contenido fluye a más páginas si hace falta. */
 @media print {
   @page {
