@@ -1,0 +1,59 @@
+---
+const features = [
+  {
+    tag: 'ATS',
+    title: 'Pasa el filtro de las máquinas',
+    body: 'Texto 100 % seleccionable, sin tablas ni gráficos que rompan el parseo. Tu CV llega entero a la persona, no a una papelera virtual.',
+  },
+  {
+    tag: 'Privacidad',
+    title: 'Tus datos, solo tuyos',
+    body: 'Todo se guarda en tu navegador. Sin cuentas, sin servidores, sin nube. Cerrás la pestaña y no queda rastro en ningún lado.',
+  },
+  {
+    tag: 'PDF',
+    title: 'PDF perfecto, a una hoja',
+    body: 'Vista previa en vivo con detección de desbordes. Si el contenido supera la página, lo ves al instante y lo corregís antes de exportar.',
+  },
+  {
+    tag: 'Personalización',
+    title: 'Ajustalo hasta el detalle',
+    body: 'Cinco plantillas, tipografía, color de acento, espaciado y columnas de 1 o 2. Tu CV, con tu impronta, sin pelearte con el formato.',
+  },
+  {
+    tag: 'Orden',
+    title: 'Secciones a tu manera',
+    body: 'Reordená tus secciones con drag & drop directo en la vista previa. Contá tu historia en el orden que te conviene.',
+  },
+  {
+    tag: 'Export',
+    title: 'El formato que te piden',
+    body: 'PDF listo para mandar y JSON estándar (JSON Resume) para portales de empleo y sistemas ATS.',
+  },
+];
+---
+
+<section class="section section--soft">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow reveal">Por qué Currito</span>
+      <h2 class="reveal">Todo lo que necesitás para que tu CV destaque</h2>
+      <p class="reveal">
+        No es solo un editor de texto con plantillas. Es una herramienta pensada para que tu CV
+        sobreviva al filtro automático y le guste a la persona que lo lee.
+      </p>
+    </div>
+    <div class="features">
+      {
+        features.map((f) => (
+          <article class="feature reveal">
+            <p class="feature__tag">{f.tag}</p>
+            <h3>{f.title}</h3>
+            <p>{f.body}</p>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+

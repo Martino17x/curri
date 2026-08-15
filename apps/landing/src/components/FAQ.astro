@@ -1,0 +1,50 @@
+---
+const items = [
+  {
+    q: '¿Qué significa que un CV sea ATS-friendly?',
+    a: 'Los sistemas ATS parsean tu CV buscando texto. Si usás tablas, gráficos o imágenes, el texto se desordena o se pierde. Currito genera texto 100 % seleccionable y ordenado por secciones, así tu CV llega completo al reclutador.',
+  },
+  {
+    q: '¿Mis datos se guardan en algún servidor?',
+    a: 'No. Currito es 100 % client-side: todo se guarda en el localStorage de tu navegador. Podés usar la app sin conexión y tus datos nunca salen de tu máquina.',
+  },
+  {
+    q: '¿Cuánto cuesta Currito?',
+    a: 'Hay un plan Free sin límite de CVs. El plan Pro suma todas las plantillas y exports sin marca, y el plan Lifetime te da Pro para siempre con un solo pago. Sin pruebas que se renuevan solas ni cobros escondidos.',
+  },
+  {
+    q: '¿Qué formatos puedo exportar?',
+    a: 'PDF (con control de paginación y detección de desbordes) y JSON estándar (JSON Resume), ideal para portales de empleo y sistemas ATS.',
+  },
+  {
+    q: '¿Currito es open source?',
+    a: 'Sí. El proyecto es open source bajo licencia MIT, y el código está disponible en GitHub. Podés ver cómo funciona, contribuir o hacer un fork.',
+  },
+  {
+    q: '¿Puedo usar Currito desde el celular?',
+    a: 'Sí. La app está pensada primero para mobile: editás, mirás la vista previa con un toggle y exportás tu PDF sin complicarte.',
+  },
+];
+---
+
+<section class="section section--soft">
+  <div class="container">
+    <div class="section-head section-head--center">
+      <span class="eyebrow reveal">Preguntas frecuentes</span>
+      <h2 class="reveal">Resolvemos tus dudas</h2>
+    </div>
+    <div class="faq">
+      {
+        items.map((item) => (
+          <details class="reveal">
+            <summary>{item.q}</summary>
+            <div class="faq__body">
+              <p>{item.a}</p>
+            </div>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>
+

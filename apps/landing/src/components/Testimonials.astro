@@ -1,0 +1,54 @@
+---
+// PLACEHOLDER: estos testimonios son de EJEMPLO. Reemplazalos por testimonios reales
+// antes de publicar la landing (regla de honestidad: no fabricar pruebas sociales).
+const testimonials = [
+  {
+    quote:
+      'Armé mi CV en 20 minutos y quedó impecable. El detalle del desborde de página me salvó de mandar un PDF roto a una entrevista.',
+    name: 'Camila G.',
+    role: 'Estudiante de Ingeniería en Sistemas',
+    initials: 'CG',
+  },
+  {
+    quote:
+      'Me gustó que mis datos no suban a ningún servidor. Lo usé desde la compu de la facu sin registrarme y listo.',
+    name: 'Franco M.',
+    role: 'Técnico en Diseño UX',
+    initials: 'FM',
+  },
+  {
+    quote:
+      'El PDF pasó el parseo del portal de la empresa sin un solo error. Eso no me había pasado con otros editores.',
+    name: 'Lucía P.',
+    role: 'Analista de datos',
+    initials: 'LP',
+  },
+];
+---
+
+<section class="section">
+  <div class="container">
+    <div class="section-head section-head--center">
+      <span class="eyebrow reveal">Testimonios</span>
+      <h2 class="reveal">La gente que ya lo probó, lo cuenta</h2>
+      <p class="reveal">Historias de ejemplo: la sección está lista para testimonios reales.</p>
+    </div>
+    <div class="testimonials">
+      {
+        testimonials.map((t) => (
+          <figure class="testimonial reveal">
+            <blockquote class="testimonial__quote">“{t.quote}”</blockquote>
+            <figcaption class="testimonial__who">
+              <span class="testimonial__avatar">{t.initials}</span>
+              <span>
+                <span class="testimonial__name" style="display:block;">{t.name}</span>
+                <span class="testimonial__role">{t.role}</span>
+              </span>
+            </figcaption>
+          </figure>
+        ))
+      }
+    </div>
+  </div>
+</section>
+

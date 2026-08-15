@@ -1,0 +1,151 @@
+---
+import { PAYMENT_LINK } from '../config';
+
+const plans = [
+  {
+    name: 'Free',
+    price: '$0',
+    priceNote: 'para siempre',
+    desc: 'Todo lo básico para armar tu CV y mandarlo.',
+    badge: null,
+    features: [
+      { text: 'CVs ilimitados', included: true },
+      { text: 'Plantillas Moderna, Clásica y Mínima', included: true },
+      { text: 'Export PDF con marca Currito', included: true },
+      { text: 'Check ATS básico', included: true },
+      { text: '100 % client-side', included: true },
+      { text: 'Export sin marca', included: false },
+      { text: 'JSON Resume', included: false },
+    ],
+    cta: 'Empezar gratis',
+    ctaHref: '/',
+    featured: false,
+  },
+  {
+    name: 'Pro',
+    price: '$9',
+    priceNote: '/mes · o $59/año',
+    desc: 'Para quien busca laburo en serio y quiere sacarle todo el jugo.',
+    badge: 'Más popular',
+    badgeType: 'popular',
+    features: [
+      { text: 'Todo lo de Free', included: true },
+      { text: 'Todas las plantillas (incl. Ejecutiva y Creativa)', included: true },
+      { text: 'Export PDF sin marca', included: true },
+      { text: 'Export JSON Resume', included: true },
+      { text: 'Columnas de 1 o 2', included: true },
+      { text: 'Preview interactivo con drag & drop', included: true },
+      { text: 'Nuevas plantillas y funciones', included: true },
+    ],
+    cta: 'Probar Pro',
+    ctaHref: PAYMENT_LINK,
+    featured: true,
+  },
+  {
+    name: 'Lifetime',
+    price: '$49',
+    priceNote: 'pago único',
+    desc: 'Pagás una vez y tenés Pro para siempre. Ideal si solo cambiás de laburo cada tanto.',
+    badge: 'Mejor valor',
+    badgeType: 'value',
+    features: [
+      { text: 'Todo lo de Pro, para siempre', included: true },
+      { text: 'Sin suscripción ni renovaciones', included: true },
+      { text: 'Actualizaciones incluidas', included: true },
+      { text: 'Apoyás un proyecto open source', included: true },
+    ],
+    cta: 'Comprar Lifetime',
+    ctaHref: PAYMENT_LINK,
+    featured: false,
+  },
+];
+
+const compare = [
+  { feature: 'CVs ilimitados', free: true, pro: true, lifetime: true },
+  { feature: 'Plantillas Moderna / Clásica / Mínima', free: true, pro: true, lifetime: true },
+  { feature: 'Todas las plantillas (Ejecutiva, Creativa)', free: false, pro: true, lifetime: true },
+  { feature: 'Export PDF sin marca', free: false, pro: true, lifetime: true },
+  { feature: 'Export JSON Resume', free: false, pro: true, lifetime: true },
+  { feature: 'Columnas de 1 o 2', free: false, pro: true, lifetime: true },
+  { feature: 'Preview interactivo (click + drag & drop)', free: false, pro: true, lifetime: true },
+  { feature: 'Check ATS', free: true, pro: true, lifetime: true },
+  { feature: '100 % client-side (tus datos, solo tuyos)', free: true, pro: true, lifetime: true },
+  { feature: 'Actualizaciones de por vida', free: false, pro: false, lifetime: true },
+];
+---
+
+<div class="pricing-grid">
+  {
+    plans.map((plan) => (
+      <div class:list={['plan', { 'plan--featured': plan.featured }]}>
+        {plan.badge && (
+          <span class:list={['plan__badge', { 'plan__badge--popular': plan.badgeType === 'popular' }, { 'plan__badge--value': plan.badgeType === 'value' }]}>
+            {plan.badge}
+          </span>
+        )}
+        <p class="plan__name">{plan.name}</p>
+        <p class="plan__price">
+          {plan.price}
+          <small> {plan.priceNote}</small>
+        </p>
+        <p class="plan__desc">{plan.desc}</p>
+        <ul class="plan__features">
+          {
+            plan.features.map((f) => (
+              <li>
+                <span class={f.included ? 'check' : 'minus'} aria-hidden="true">
+                  {f.included ? (
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M20 6 9 17l-5-5" />
+                    </svg>
+                  ) : (
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                      <path d="M6 12h12" />
+                    </svg>
+                  )}
+                </span>
+                {f.text}
+              </li>
+            ))
+          }
+        </ul>
+        <a class:list={['btn', plan.featured ? 'btn--primary' : 'btn--ghost']} href={plan.ctaHref}>
+          {plan.cta}
+        </a>
+      </div>
+    ))
+  }
+</div>
+
+<p class="pricing-note">
+  Precios en USD · Sin pruebas que se renuevan solas · Garantía de 14 días en Pro y Lifetime.
+</p>
+
+<div class="reveal">
+  <h2 style="text-align:center; font-size: clamp(24px, 3vw, 32px); margin: 72px 0 8px;">Comparativa de planes</h2>
+  <p style="text-align:center; color: var(--ink-500);">Todo lo que suma cada plan, de un vistazo.</p>
+  <div style="overflow-x:auto;">
+    <table class="compare">
+      <thead>
+        <tr>
+          <th>Característica</th>
+          <th>Free</th>
+          <th>Pro</th>
+          <th>Lifetime</th>
+        </tr>
+      </thead>
+      <tbody>
+        {
+          compare.map((row) => (
+            <tr>
+              <td>{row.feature}</td>
+              <td class={row.free ? 'yes' : 'no'}>{row.free ? '✓' : '—'}</td>
+              <td class={row.pro ? 'yes' : 'no'}>{row.pro ? '✓' : '—'}</td>
+              <td class={row.lifetime ? 'yes' : 'no'}>{row.lifetime ? '✓' : '—'}</td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

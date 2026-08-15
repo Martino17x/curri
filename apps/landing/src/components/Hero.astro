@@ -1,0 +1,113 @@
+---
+import { APP_URL } from '../config';
+---
+
+<section class="hero">
+  <div class="container hero__inner">
+    <div class="reveal">
+      <span class="eyebrow">Editor de CV · 100 % client-side</span>
+      <h1 class="hero__title">
+        Tu CV, listo para <em>pasar cualquier filtro.</em>
+      </h1>
+      <p class="hero__sub">
+        Currito crea currículums compatibles con ATS, con vista previa en vivo y export a
+        PDF en una hoja. Todo en tu navegador: sin cuentas, sin servidores, sin subir tus datos a ningún lado.
+      </p>
+      <div class="hero__actions">
+        <a class="btn btn--light" href={APP_URL} target="_blank" rel="noopener">
+          Crear mi CV gratis
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M5 12h14M13 6l6 6-6 6" />
+          </svg>
+        </a>
+        <a class="btn btn--outline-light" href="/plantillas">Ver plantillas</a>
+      </div>
+      <div class="hero__trust">
+        <span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20 6 9 17l-5-5" />
+          </svg>
+          Open source · MIT
+        </span>
+        <span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20 6 9 17l-5-5" />
+          </svg>
+          Sin registro
+        </span>
+        <span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20 6 9 17l-5-5" />
+          </svg>
+          Gratis para siempre
+        </span>
+      </div>
+    </div>
+
+    <div class="mock reveal">
+      <div class="mock__window">
+        <div class="mock__bar">
+          <span class="mock__dot"></span>
+          <span class="mock__dot"></span>
+          <span class="mock__dot"></span>
+          <span class="mock__url">currito · tu CV</span>
+        </div>
+        <div class="mock__body">
+          <div class="mock__sidebar">
+            <div class="mock__avatar">SH</div>
+            <div>
+              <p class="mock__side-label">Contacto</p>
+              <div class="mock__side-line"></div>
+              <div class="mock__side-line mock__side-line--accent"></div>
+              <div class="mock__side-line"></div>
+            </div>
+            <div>
+              <p class="mock__side-label">Skills</p>
+              <div class="mock__side-line"></div>
+              <div class="mock__side-line mock__side-line--accent"></div>
+            </div>
+          </div>
+          <div class="mock__main">
+            <div>
+              <p class="mock__name">Sofía Herrera</p>
+              <p class="mock__role">Desarrolladora Frontend</p>
+            </div>
+            <div>
+              <p class="mock__sec-label">Experiencia</p>
+              <div class="mock__line mock__line--w85"></div>
+              <div class="mock__line mock__line--w70"></div>
+              <div class="mock__line mock__line--w55"></div>
+              <div class="mock__line mock__line--w70 mock__line--accent"></div>
+            </div>
+            <div>
+              <p class="mock__sec-label">Educación</p>
+              <div class="mock__line mock__line--w70"></div>
+              <div class="mock__line mock__line--w55"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mock__chip mock__chip--ats">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M20 6 9 17l-5-5" />
+        </svg>
+        ATS 96/100
+      </div>
+      <div class="mock__chip mock__chip--pdf">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+          <path d="M14 2v6h6M9 15h6M9 11h2" />
+        </svg>
+        PDF · 1 hoja
+      </div>
+      <div class="mock__chip mock__chip--json">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5c0 1.1.9 2 2 2h1M16 21h1a2 2 0 0 0 2-2v-5c0-1.1.9-2 2-2a2 2 0 0 1-2-2V5a2 2 0 0 0-2-2h-1" />
+        </svg>
+        JSON Resume
+      </div>
+    </div>
+  </div>
+</section>
+

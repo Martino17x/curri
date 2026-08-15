@@ -1,0 +1,136 @@
+---
+import Layout from '../layouts/Layout.astro';
+import CTA from '../components/CTA.astro';
+
+const templates = [
+  {
+    name: 'Moderna',
+    desc: 'La más equilibrada: sidebar con contacto y skills, contenido a la derecha. Ideal para la mayoría de los perfiles.',
+    shot: '/screenshots/cv-martino.png',
+    kind: 'image',
+  },
+  {
+    name: 'Clásica',
+    desc: 'Estructura tradicional y sobria, con encabezado centrado. Perfecta para rubros conservadores.',
+    kind: 'classic',
+  },
+  {
+    name: 'Mínima',
+    desc: 'Lo esencial, sin distracciones. Tipografía grande y mucho aire: destaca el contenido.',
+    kind: 'minimal',
+  },
+  {
+    name: 'Ejecutiva',
+    desc: 'Banda oscura de encabezado y dos columnas internas. Transmite jerarquía y seniority.',
+    kind: 'executive',
+  },
+  {
+    name: 'Creativa',
+    desc: 'Bloque de acento a color y grilla dinámica. Para perfiles de diseño y marketing.',
+    kind: 'creative',
+  },
+];
+---
+
+<Layout
+  title="Plantillas"
+  description="Cinco plantillas profesionales de currículum, con columnas de 1 o 2 y personalización total de tema. Todas diseñadas para entrar en una hoja A4."
+>
+  <section class="page-hero container">
+    <span class="eyebrow reveal">Plantillas</span>
+    <h1 class="reveal">Plantillas que pasan el filtro humano y el de las máquinas</h1>
+    <p class="reveal">
+      Cinco estilos distintos, todos compatibles con ATS y pensados para entrar en una sola hoja.
+      Cambiás de plantilla cuando quieras, sin perder tu contenido.
+    </p>
+  </section>
+
+  <section class="section" style="padding-top: 48px;">
+    <div class="container">
+      <div class="gallery">
+        {
+          templates.map((t) => (
+            <article class="tpl-card reveal">
+              <div class="tpl-card__shot">
+                {t.kind === 'image' ? (
+                  <img src={t.shot} alt={`Plantilla ${t.name} de Currito`} loading="lazy" />
+                ) : (
+                  <div class:list={['mini', `mini--${t.kind}`]}>
+                    {t.kind === 'classic' && (
+                      <>
+                        <p class="mini__name">Sofía Herrera</p>
+                        <p class="mini__role">Desarrolladora Frontend</p>
+                        <span class="mini__rule"></span>
+                        <div class="mini__lines">
+                          <span></span>
+                          <span></span>
+                          <span></span>
+                        </div>
+                      </>
+                    )}
+                    {t.kind === 'minimal' && (
+                      <>
+                        <p class="mini__name">Sofía Herrera</p>
+                        <p class="mini__role">Desarrolladora Frontend</p>
+                        <div class="ml ml--a"></div>
+                        <div class="ml"></div>
+                        <div class="ml"></div>
+                      </>
+                    )}
+                    {t.kind === 'executive' && (
+                      <>
+                        <div class="mini__band">
+                          <p class="mini__name">Sofía Herrera</p>
+                          <p class="mini__role">Desarrolladora Frontend</p>
+                        </div>
+                        <div class="mini__body">
+                          <div class="mini__col"><span></span><span></span><span></span></div>
+                          <div class="mini__col"><span></span><span></span><span></span></div>
+                        </div>
+                      </>
+                    )}
+                    {t.kind === 'creative' && (
+                      <>
+                        <div class="mini__top">
+                          <div>
+                            <p class="mini__name">Sofía Herrera</p>
+                            <p class="mini__role">Desarrolladora Frontend</p>
+                          </div>
+                        </div>
+                        <div class="mini__body">
+                          <span class="acc"></span>
+                          <span></span>
+                          <span></span>
+                          <span class="acc"></span>
+                        </div>
+                      </>
+                    )}
+                  </div>
+                )}
+              </div>
+              <div class="tpl-card__body">
+                <h3>{t.name}</h3>
+                <p>{t.desc}</p>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+
+      <div class="reveal" style="margin-top: 56px; text-align:center;">
+        <h2 style="font-size: clamp(24px, 3.4vw, 34px); margin-bottom: 12px;">Columnas de 1 o 2, a tu gusto</h2>
+        <p style="color: var(--ink-500); max-width: 560px; margin: 0 auto 26px;">
+          El mercado pide una columna y la preferís, pero a veces dos columnas aprovechan mejor el
+          espacio. En Currito elegís la cantidad de columnas desde el panel de tema, en cualquier plantilla.
+        </p>
+        <div class="tpl-badges" style="justify-content:center;">
+          <span class="tpl-badge">1 columna · estándar ATS</span>
+          <span class="tpl-badge">2 columnas · más densidad</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CTA />
+</Layout>
+

@@ -1,0 +1,30 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Pricing from '../components/Pricing.astro';
+import FAQ from '../components/FAQ.astro';
+import CTA from '../components/CTA.astro';
+---
+
+<Layout
+  title="Precios"
+  description="Currito es gratis para siempre. Pro y Lifetime suman todas las plantillas, PDF sin marca y más. Sin pruebas que se renuevan solas."
+>
+  <section class="page-hero container">
+    <span class="eyebrow reveal">Precios</span>
+    <h1 class="reveal">Precios simples. Sin sorpresas.</h1>
+    <p class="reveal">
+      Sin pruebas que se renuevan solas y sin cobros escondidos. Empezá gratis y subí de plan
+      solo si lo necesitás.
+    </p>
+  </section>
+
+  <section class="section" style="padding-top: 44px;">
+    <div class="container">
+      <Pricing />
+    </div>
+  </section>
+
+  <FAQ />
+  <CTA />
+</Layout>
+

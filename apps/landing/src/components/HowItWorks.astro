@@ -1,0 +1,34 @@
+---
+import { APP_URL } from '../config';
+
+const steps = [
+  { title: 'Elegí una plantilla', body: 'Empezá desde una de las cinco plantillas o desde cero. El cambio se ve al instante.' },
+  { title: 'Completá tus datos', body: 'Secciones guiadas: experiencia, educación, skills, idiomas y más. Sin vueltas.' },
+  { title: 'Ajustá tema y columnas', body: 'Tipografía, color, espaciado y columnas de 1 o 2 con vista previa en vivo.' },
+  { title: 'Exportá tu PDF', body: 'Descargá un PDF que entra en una hoja y un JSON estándar para portales ATS.' },
+];
+---
+
+<section class="section">
+  <div class="container">
+    <div class="section-head section-head--center">
+      <span class="eyebrow reveal">Cómo funciona</span>
+      <h2 class="reveal">De cero a CV listo en 4 pasos</h2>
+      <p class="reveal">Sin curvas de aprendizaje. Si sabés escribir, sabés usar Currito.</p>
+    </div>
+    <div class="steps">
+      {
+        steps.map((step, i) => (
+          <div class="step reveal">
+            <span class="step__num">0{i + 1}</span>
+            <h3>{step.title}</h3>
+            <p>{step.body}</p>
+          </div>
+        ))
+      }
+    </div>
+    <div style="text-align:center; margin-top: 44px;" class="reveal">
+      <a class="btn btn--primary" href={APP_URL} target="_blank" rel="noopener">Probar Currito gratis</a>
+    </div>
+  </div>
+</section>

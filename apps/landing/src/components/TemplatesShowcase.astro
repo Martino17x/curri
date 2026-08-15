@@ -1,0 +1,30 @@
+---
+const badges = ['Moderna', 'Clásica', 'Mínima', 'Ejecutiva', 'Creativa', '1 o 2 columnas'];
+---
+
+<section class="section section--soft">
+  <div class="container">
+    <div class="showcase">
+      <div class="showcase__frame reveal">
+        <img src="/screenshots/cv-martino.png" alt="Vista previa de un CV creado con Currito (plantilla Moderna)" loading="lazy" />
+      </div>
+      <div class="reveal">
+        <span class="eyebrow">Plantillas</span>
+        <h2 style="font-size: clamp(28px, 4vw, 40px); margin: 16px 0 14px;">
+          Profesionales, limpias y que entran en una hoja
+        </h2>
+        <p style="color: var(--ink-500); font-size: 17px; margin-bottom: 22px;">
+          Cada plantilla se diseñó con un solo objetivo: que el contenido quepa bien y se lea rápido.
+          Probá la que va con tu perfil y cambiá la que quieras cuando quieras.
+        </p>
+        <div class="tpl-badges">
+          {badges.map((b) => <span class="tpl-badge">{b}</span>)}
+        </div>
+        <div style="margin-top: 30px;">
+          <a class="btn btn--primary" href="/plantillas">Ver todas las plantillas</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
