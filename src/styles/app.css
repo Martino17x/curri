@@ -1191,18 +1191,20 @@ input[type='range'] {
   display: none;
 }
 @media print {
-  body * {
-    visibility: hidden;
+  html,
+  body {
+    height: auto !important;
+    overflow: visible;
   }
-  #print-root,
-  #print-root * {
-    visibility: visible;
+  /* La app desaparece del layout (display:none, sin espacio residual).
+     visibility:hidden NO alcanza: el layout del builder seguía aportando altura
+     y generaba una 2.ª página vacía. Ahora la altura del documento la define
+     SOLO el CV en #print-root. */
+  body > *:not(#print-root) {
+    display: none !important;
   }
   #print-root {
     display: block;
-    position: absolute;
-    left: 0;
-    top: 0;
     width: 210mm;
   }
 }
