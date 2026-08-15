@@ -46,26 +46,20 @@ export function ResumePreview({
     return () => ro.disconnect();
   }, [onFitReady]);
 
-  // Overflow REAL: el último bloque de contenido supera la altura de una hoja A4.
-  // Se mide el borde inferior del último hijo con contenido (ignora padding/margen
-  // final = espacio en blanco) para no paginar ni marcar de más.
+  // Overflow REAL: el contenido del documento supera la altura de una hoja A4.
+  // Se mide con scrollHeight (altura de layout del .doc-page, sin el transform
+  // del zoom). El min-height:297mm absorbe el espacio en blanco final: el valor
+  // solo crece cuando el contenido + padding supera la hoja.
+  // Tolerancia = padding inferior del documento (~34px) + aire por diferencias
+  // de render entre navegadores (el in-app browser mide las fuentes más altas y
+  // generaba falsos positivos con la medición vieja basada en offsetTop).
   useEffect(() => {
     const el = docRef.current;
     if (!el) return;
     const pageH = PAGE_H * MM_TO_PX;
+    const TOLERANCE = 56;
     const check = () => {
-      // Solo cuentan bloques con contenido REAL (texto o media): un div vacío o el
-      // margen/padding final es espacio en blanco y no debe marcar ni paginar de más.
-      let realBottom = 0;
-      for (const child of Array.from(el.children)) {
-        const h = (child as HTMLElement).offsetHeight;
-        const top = (child as HTMLElement).offsetTop;
-        if (h <= 0) continue;
-        const hasText = ((child as HTMLElement).innerText ?? '').trim().length > 0;
-        const hasMedia = (child as HTMLElement).querySelector('img, svg, table') !== null;
-        if ((hasText || hasMedia) && top + h > realBottom) realBottom = top + h;
-      }
-      const o = realBottom > pageH + 2;
+      const o = el.scrollHeight > pageH + TOLERANCE;
       setOverflow(o);
       onOverflowChange?.(o);
     };
