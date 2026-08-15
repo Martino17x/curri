@@ -223,7 +223,7 @@ export function selectResume(resumes: Resume[], id: string | null): Resume | und
 export function ensurePresets() {
   // Bump cuando cambies createSampleResume()/createCommercialSampleResume():
   // los usuarios con el preset viejo guardado lo regeneran al recargar.
-  const PRESETS_VERSION = 4;
+  const PRESETS_VERSION = 5;
   const { resumes, activeResumeId, seeded, commercialSeeded, presetsVersion } = useResumeStore.getState();
   let next: Resume[] = resumes;
   let changed = false;

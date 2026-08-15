@@ -12,6 +12,10 @@
   line-height: var(--doc-line-height, 1.45);
   padding: var(--doc-pad-y, 11mm) var(--doc-pad-x, 13mm);
   box-sizing: border-box;
+  /* Fuerza a imprimir los backgrounds (barras, subrayados, bloque de color del
+     header). Sin esto, los navegadores omiten los fondos al imprimir/exportar. */
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
 }
 
 /* Header del documento */

@@ -28,9 +28,10 @@ function drawResized(file: File): Promise<string> {
           reject(new Error('Canvas no soportado'));
           return;
         }
-        ctx.fillStyle = '#ffffff';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        const ratio = Math.min(MAX_DIM.width / img.width, MAX_DIM.height / img.height);
+        // Recorte "cover": la imagen LLENA el canvas (se recorta el exceso).
+        // Antes se rellenaba con blanco el área sobrante → la foto quedaba dentro
+        // de una "card blanca" en el CV. Ahora no queda área vacía.
+        const ratio = Math.max(MAX_DIM.width / img.width, MAX_DIM.height / img.height);
         const w = img.width * ratio;
         const h = img.height * ratio;
         const x = (MAX_DIM.width - w) / 2;
