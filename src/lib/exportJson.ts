@@ -28,7 +28,7 @@ export interface JsonExportOptions {
   includeTheme: boolean;
 }
 
-/** Convierte un CV de Curri al estándar JSON Resume (sin foto ni tema). */
+  /** Convierte un CV de Currito al estándar JSON Resume (sin foto ni tema). */
 export function resumeToJsonResume(resume: Resume): Record<string, unknown> {
   const basics = resume.sections.find((s): s is Extract<Section, { type: 'basics' }> => s.type === 'basics');
   const summary = resume.sections.find((s): s is Extract<Section, { type: 'summary' }> => s.type === 'summary');
@@ -239,5 +239,5 @@ export async function importResumeFile(file: File): Promise<Resume> {
   }
   if (Array.isArray(json?.sections)) return normalizeNative(json);
   if (json?.basics || json?.work || json?.education || json?.skills) return fromJsonResume(json);
-  throw new Error('El archivo no parece un CV válido (formato Curri o JSON Resume).');
+  throw new Error('El archivo no parece un CV válido (formato Currito o JSON Resume).');
 }

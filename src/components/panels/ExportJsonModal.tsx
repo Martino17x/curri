@@ -39,7 +39,7 @@ export function ExportJsonModal({ resume, onClose }: { resume: Resume; onClose: 
                 checked={format === 'curri'}
                 onChange={() => setFormat('curri')}
               />
-              <span>Curri (nativo — conserva secciones, tema y orden)</span>
+                  <span>Currito (nativo — conserva secciones, tema y orden)</span>
             </label>
             <label className="field field--toggle">
               <input
