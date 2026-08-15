@@ -1,3 +1,4 @@
+import { createRoot, type Root } from 'react-dom/client';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { TemplateRenderer } from '../components/preview/TemplateRenderer';
 import type { Resume } from '../types/resume';
@@ -27,8 +28,8 @@ function escapeHtml(value: string): string {
 }
 
 /**
- * Documento HTML standalone con el CV renderizado. El texto es seleccionable,
- * por lo que el PDF generado se parsea bien en los ATS.
+ * Documento HTML standalone con el CV renderizado (lo usa el smoke test SSR).
+ * El PDF de la app se genera con exportPdf() desde el documento principal.
  */
 export function buildStandaloneHtml(resume: Resume): string {
   const body = renderToStaticMarkup(<TemplateRenderer resume={resume} />);
@@ -44,41 +45,62 @@ export function buildStandaloneHtml(resume: Resume): string {
   ].join('');
 }
 
-export function exportPdf(resume: Resume) {
-  const html = buildStandaloneHtml(resume);
-  const iframe = document.createElement('iframe');
-  iframe.setAttribute('aria-hidden', 'true');
-  iframe.style.position = 'fixed';
-  iframe.style.right = '0';
-  iframe.style.bottom = '0';
-  iframe.style.width = '0';
-  iframe.style.height = '0';
-  iframe.style.border = '0';
-  document.body.appendChild(iframe);
+interface PdfCallbacks {
+  onDone?: () => void;
+  onError?: (err: unknown) => void;
+}
 
-  const cleanup = () => {
-    if (iframe.parentNode) iframe.parentNode.removeChild(iframe);
-  };
+let printRootEl: HTMLDivElement | null = null;
+let printReactRoot: Root | null = null;
 
-  iframe.onload = () => {
+function ensurePrintRoot(): Root {
+  if (!printRootEl || !document.body.contains(printRootEl)) {
+    printRootEl = document.createElement('div');
+    printRootEl.id = 'print-root';
+    document.body.appendChild(printRootEl);
+    printReactRoot = createRoot(printRootEl);
+  }
+  return printReactRoot as Root;
+}
+
+function teardownPrintRoot() {
+  try {
+    printReactRoot?.unmount();
+  } catch {
+    /* noop */
+  }
+  printReactRoot = null;
+  printRootEl?.remove();
+  printRootEl = null;
+}
+
+/**
+ * Exporta el PDF imprimiendo el documento principal: renderiza el CV en
+ * #print-root (visible solo en @media print) y llama window.print().
+ * Más confiable que el iframe oculto en browsers embebidos.
+ */
+export function exportPdf(resume: Resume, callbacks?: PdfCallbacks) {
+  try {
+    const root = ensurePrintRoot();
+    root.render(
+      <div className="doc-page">
+        <TemplateRenderer resume={resume} />
+      </div>,
+    );
     setTimeout(() => {
       try {
-        iframe.contentWindow?.focus();
-        iframe.contentWindow?.print();
+        window.focus();
+        window.print();
       } catch (err) {
-        console.error('No se pudo abrir el diálogo de impresión', err);
-        cleanup();
+        callbacks?.onError?.(err);
+      } finally {
+        teardownPrintRoot();
+        callbacks?.onDone?.();
       }
-      setTimeout(cleanup, 1000);
-    }, 250);
-  };
-
-  const doc = iframe.contentDocument ?? iframe.contentWindow?.document;
-  if (doc) {
-    doc.open();
-    doc.write(html);
-    doc.close();
-  } else {
-    cleanup();
+    }, 60);
+  } catch (err) {
+    teardownPrintRoot();
+    callbacks?.onError?.(err);
+    callbacks?.onDone?.();
   }
 }

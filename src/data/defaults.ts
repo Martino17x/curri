@@ -172,12 +172,10 @@ export function createSampleResume(): Resume {
       start: d(2024, 3),
       end: null,
       current: true,
-      summary:
-        'Mantenimiento y desarrollo de una plataforma web de facturación usada por 2.000+ pymes.',
+      summary: 'Mantenimiento y desarrollo de una plataforma web de facturación para +2.000 pymes.',
       highlights: [
         'Migré el dashboard principal de JavaScript a React + TypeScript, reduciendo errores en runtime un 40%.',
         'Implementé diseño responsive y accesibilidad (WCAG AA) en módulos de alta demanda.',
-        'Coordiné el trabajo con diseño y QA en sprints semanales.',
       ],
     },
     {
@@ -191,7 +189,6 @@ export function createSampleResume(): Resume {
       summary: 'Desarrollo de landing pages y tiendas en línea para clientes locales.',
       highlights: [
         'Maqueté 15+ sitios con HTML, CSS y JavaScript vanilla, optimizados para SEO.',
-        'Automaticé reportes de tráfico con scripts en Node.js.',
       ],
     },
   ];
@@ -205,7 +202,7 @@ export function createSampleResume(): Resume {
       start: d(2022, 3),
       end: d(2025, 12),
       current: false,
-      description: 'Orientación en desarrollo web. Promedio 8.5.',
+      description: 'Orientación en desarrollo web.',
     },
     {
       id: uid(),
@@ -214,7 +211,7 @@ export function createSampleResume(): Resume {
       start: d(2024, 1),
       end: d(2024, 6),
       current: false,
-      description: '60 horas. Hooks, contexto, testing con Vitest.',
+      description: '60 horas: React, hooks y TypeScript.',
     },
   ];
 
@@ -222,17 +219,17 @@ export function createSampleResume(): Resume {
     {
       id: uid(),
       name: 'Frontend',
-      keywords: ['React', 'TypeScript', 'HTML', 'CSS', 'Vite', 'Redux'],
+      keywords: ['React', 'TypeScript', 'HTML', 'CSS'],
     },
     {
       id: uid(),
       name: 'Backend y datos',
-      keywords: ['Node.js', 'Express', 'PostgreSQL', 'REST APIs'],
+      keywords: ['Node.js', 'PostgreSQL', 'REST'],
     },
     {
       id: uid(),
       name: 'Herramientas',
-      keywords: ['Git', 'GitHub', 'Figma', 'Jest'],
+      keywords: ['Git', 'Figma', 'Jest'],
     },
   ];
 
@@ -251,7 +248,6 @@ export function createSampleResume(): Resume {
       current: true,
       summary: 'Editor de currículums 100% client-side con plantillas ATS-safe.',
       highlights: [
-        'Persistencia en localStorage con Zustand.',
         'Exportación de PDF con texto seleccionable (ATS friendly).',
       ],
     },
@@ -271,7 +267,8 @@ export function createSampleResume(): Resume {
     documentName: 'Mi CV de ejemplo',
     updatedAt: now(),
     templateId: 'modern',
-    theme: { ...DEFAULT_THEME },
+    // Tema compacto a propósito: el ejemplo debe entrar en UNA hoja A4.
+    theme: { ...DEFAULT_THEME, baseFontSize: 10, spacing: 'compact' },
     sections: [
       {
         id: uid(),
@@ -295,7 +292,7 @@ export function createSampleResume(): Resume {
         title: 'Resumen profesional',
         visible: true,
         text:
-          'Desarrolladora frontend con 2 años de experiencia construyendo aplicaciones web con React y TypeScript. Me especializo en interfaces accesibles, código limpio y trabajo en equipo ágil. Busco aportar a productos con impacto real.',
+          'Desarrolladora frontend con 2 años de experiencia en aplicaciones web con React y TypeScript. Me especializo en interfaces accesibles y código limpio.',
       },
       { id: uid(), type: 'experience', title: 'Experiencia laboral', visible: true, items: work },
       { id: uid(), type: 'education', title: 'Educación', visible: true, items: education },

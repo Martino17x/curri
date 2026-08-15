@@ -1,4 +1,5 @@
 import { DEFAULT_THEME, createResume } from '../data/defaults';
+import { formatDateRefToJson } from './dates';
 import { uid } from './id';
 import { slugify } from './exportPdf';
 import type { DateRef, Resume, Section } from '../types/resume';
@@ -17,6 +18,98 @@ function downloadJson(filename: string, data: unknown) {
 
 export function exportJsonResume(resume: Resume) {
   downloadJson(`curri-${slugify(resume.documentName)}.json`, resume);
+}
+
+export type JsonExportFormat = 'curri' | 'jsonresume';
+
+export interface JsonExportOptions {
+  format: JsonExportFormat;
+  includePhoto: boolean;
+  includeTheme: boolean;
+}
+
+/** Convierte un CV de Curri al estándar JSON Resume (sin foto ni tema). */
+export function resumeToJsonResume(resume: Resume): Record<string, unknown> {
+  const basics = resume.sections.find((s): s is Extract<Section, { type: 'basics' }> => s.type === 'basics');
+  const summary = resume.sections.find((s): s is Extract<Section, { type: 'summary' }> => s.type === 'summary');
+  const exp = resume.sections.find((s): s is Extract<Section, { type: 'experience' }> => s.type === 'experience');
+  const edu = resume.sections.find((s): s is Extract<Section, { type: 'education' }> => s.type === 'education');
+  const skills = resume.sections.find((s): s is Extract<Section, { type: 'skills' }> => s.type === 'skills');
+  const langs = resume.sections.find((s): s is Extract<Section, { type: 'languages' }> => s.type === 'languages');
+  const projs = resume.sections.find((s): s is Extract<Section, { type: 'projects' }> => s.type === 'projects');
+  const certs = resume.sections.find((s): s is Extract<Section, { type: 'certificates' }> => s.type === 'certificates');
+
+  return {
+    basics: {
+      name: basics?.fields.name ?? '',
+      label: basics?.fields.label ?? '',
+      email: basics?.fields.email ?? '',
+      phone: basics?.fields.phone ?? '',
+      url: basics?.fields.website ?? '',
+      summary: summary?.text ?? '',
+      location: { city: basics?.fields.location ?? '' },
+      profiles: basics?.fields.linkedin
+        ? [{ network: 'LinkedIn', url: basics.fields.linkedin }]
+        : [],
+    },
+    work:
+      exp?.items.map((w) => ({
+        name: w.company,
+        position: w.position,
+        startDate: formatDateRefToJson(w.start),
+        endDate: w.current ? undefined : formatDateRefToJson(w.end),
+        summary: w.summary,
+        highlights: w.highlights,
+      })) ?? [],
+    education:
+      edu?.items.map((e) => ({
+        institution: e.institution,
+        area: e.degree,
+        startDate: formatDateRefToJson(e.start),
+        endDate: e.current ? undefined : formatDateRefToJson(e.end),
+        description: e.description,
+      })) ?? [],
+    skills:
+      skills?.groups.map((g) => ({
+        name: g.name,
+        keywords: g.keywords,
+      })) ?? [],
+    languages:
+      langs?.items.map((l) => ({
+        language: l.language,
+        fluency: l.level,
+      })) ?? [],
+    projects:
+      projs?.items.map((p) => ({
+        name: p.name,
+        url: p.url,
+        startDate: formatDateRefToJson(p.start),
+        endDate: p.current ? undefined : formatDateRefToJson(p.end),
+        description: p.summary,
+        highlights: p.highlights,
+      })) ?? [],
+    certificates:
+      certs?.items.map((c) => ({
+        name: c.name,
+        issuer: c.issuer,
+        date: c.date,
+      })) ?? [],
+  };
+}
+
+export function exportJsonResumeWithOptions(resume: Resume, options: JsonExportOptions) {
+  const filename = `curri-${slugify(resume.documentName)}.json`;
+  if (options.format === 'jsonresume') {
+    downloadJson(filename, resumeToJsonResume(resume));
+    return;
+  }
+  const copy = structuredClone(resume);
+  if (!options.includePhoto) {
+    const basics = copy.sections.find((s): s is Extract<Section, { type: 'basics' }> => s.type === 'basics');
+    if (basics) basics.fields.photo = null;
+  }
+  const data: unknown = options.includeTheme ? copy : { ...copy, theme: undefined };
+  downloadJson(filename, data);
 }
 
 function dateRef(value: unknown): DateRef | null {

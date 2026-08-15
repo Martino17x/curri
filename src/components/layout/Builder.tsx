@@ -1,33 +1,31 @@
 import { useEffect, useRef, useState } from 'react';
+import { useDeviceTier } from '../../hooks/useDeviceTier';
 import { exportPdf } from '../../lib/exportPdf';
 import { exportJsonResume, importResumeFile } from '../../lib/exportJson';
 import { useResumeStore } from '../../store/resumeStore';
 import { useUiStore } from '../../store/uiStore';
 import type { Resume } from '../../types/resume';
 import { AtsPanel } from '../panels/AtsPanel';
+import { ExportJsonModal } from '../panels/ExportJsonModal';
 import { SectionsPanel } from '../panels/SectionsPanel';
 import { ThemePanel } from '../panels/ThemePanel';
 import { ResumePreview } from '../preview/ResumePreview';
 import { ZoomControls } from '../preview/ZoomControls';
 
 export function Builder({ resume }: { resume: Resume }) {
+  const { presetZoom, isCompact } = useDeviceTier();
   const zoom = useUiStore((s) => s.zoom);
   const showThemePanel = useUiStore((s) => s.showThemePanel);
   const showAtsPanel = useUiStore((s) => s.showAtsPanel);
-  const showPreviewMobile = useUiStore((s) => s.showPreviewMobile);
-  const setShowPreviewMobile = useUiStore((s) => s.setShowPreviewMobile);
+  const showPreview = useUiStore((s) => s.showPreviewMobile);
+  const setShowPreview = useUiStore((s) => s.setShowPreviewMobile);
   const importResume = useResumeStore((s) => s.importResume);
   const [pageOverflow, setPageOverflow] = useState(false);
-  const [effectiveZoom, setEffectiveZoom] = useState(1);
-  const [isMobile, setIsMobile] = useState(() => window.matchMedia('(max-width: 1020px)').matches);
+  const [effectiveZoom, setEffectiveZoom] = useState(presetZoom);
+  const [fitZoom, setFitZoom] = useState(presetZoom);
+  const [exportingPdf, setExportingPdf] = useState(false);
+  const [exportDialog, setExportDialog] = useState<'none' | 'json'>('none');
   const fileRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    const mq = window.matchMedia('(max-width: 1020px)');
-    const onChange = (e: MediaQueryListEvent) => setIsMobile(e.matches);
-    mq.addEventListener('change', onChange);
-    return () => mq.removeEventListener('change', onChange);
-  }, []);
 
   const handleImport = async (file: File) => {
     try {
@@ -38,12 +36,24 @@ export function Builder({ resume }: { resume: Resume }) {
     }
   };
 
+  const handleExportPdf = () => {
+    if (exportingPdf) return;
+    setExportingPdf(true);
+    exportPdf(resume, {
+      onDone: () => setExportingPdf(false),
+      onError: () => {
+        setExportingPdf(false);
+        alert('No se pudo abrir el diálogo de impresión.');
+      },
+    });
+  };
+
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (!(e.ctrlKey || e.metaKey)) return;
       if (e.key.toLowerCase() === 'p') {
         e.preventDefault();
-        exportPdf(resume);
+        handleExportPdf();
       }
       if (e.key.toLowerCase() === 's') {
         e.preventDefault();
@@ -52,17 +62,22 @@ export function Builder({ resume }: { resume: Resume }) {
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [resume]);
+  }, [resume, exportingPdf]);
 
   const previewColumn = (
     <section className="builder-right">
       <div className="preview-toolbar">
-        <ZoomControls effectiveZoom={effectiveZoom} />
+        <ZoomControls effectiveZoom={effectiveZoom} fitZoom={fitZoom} />
         <div className="preview-toolbar-actions">
-          <button type="button" className="btn-primary btn-small" onClick={() => exportPdf(resume)}>
-            Exportar PDF
+          <button
+            type="button"
+            className="btn-primary btn-small"
+            onClick={handleExportPdf}
+            disabled={exportingPdf}
+          >
+            {exportingPdf ? 'Preparando…' : 'Exportar PDF'}
           </button>
-          <button type="button" className="btn-secondary btn-small" onClick={() => exportJsonResume(resume)}>
+          <button type="button" className="btn-secondary btn-small" onClick={() => setExportDialog('json')}>
             JSON
           </button>
           <button type="button" className="btn-secondary btn-small" onClick={() => fileRef.current?.click()}>
@@ -84,8 +99,10 @@ export function Builder({ resume }: { resume: Resume }) {
       <ResumePreview
         resume={resume}
         zoom={zoom}
+        presetZoom={presetZoom}
         onOverflowChange={setPageOverflow}
         onEffectiveZoomChange={setEffectiveZoom}
+        onFitReady={setFitZoom}
       />
       {showThemePanel && <ThemePanel resume={resume} />}
       {showAtsPanel && <AtsPanel resume={resume} pageOverflow={pageOverflow} />}
@@ -94,25 +111,27 @@ export function Builder({ resume }: { resume: Resume }) {
 
   return (
     <div className="builder">
-      {isMobile && (
+      {isCompact && (
         <div className="builder-mobile-bar">
           <button
             type="button"
-            className={showPreviewMobile ? 'btn-secondary' : 'btn-primary'}
-            onClick={() => setShowPreviewMobile(!showPreviewMobile)}
+            className={showPreview ? 'btn-secondary' : 'btn-primary'}
+            onClick={() => setShowPreview(!showPreview)}
           >
-            {showPreviewMobile ? '✕ Ocultar vista previa' : '👁 Ver vista previa'}
+            {showPreview ? '✕ Ocultar vista previa' : '👁 Ver vista previa'}
           </button>
         </div>
       )}
 
-      {isMobile && showPreviewMobile && previewColumn}
+      {isCompact && showPreview && previewColumn}
 
       <aside className="builder-left">
         <SectionsPanel resume={resume} />
       </aside>
 
-      {!isMobile && previewColumn}
+      {!isCompact && previewColumn}
+
+      {exportDialog === 'json' && <ExportJsonModal resume={resume} onClose={() => setExportDialog('none')} />}
     </div>
   );
 }

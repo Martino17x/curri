@@ -4,7 +4,7 @@ export type View = { name: 'list' } | { name: 'builder' };
 
 interface UiState {
   view: View;
-  /** Zoom del preview. `null` = auto (ajustar el documento completo al área visible). */
+  /** Zoom del preview. `null` = usar el preset por dispositivo (35/60/80%). */
   zoom: number | null;
   activeSectionId: string | null;
   showThemePanel: boolean;
@@ -12,7 +12,6 @@ interface UiState {
   showPreviewMobile: boolean;
   setView: (view: View) => void;
   setZoom: (zoom: number) => void;
-  setZoomFit: () => void;
   setActiveSectionId: (id: string | null) => void;
   setShowThemePanel: (show: boolean) => void;
   setShowAtsPanel: (show: boolean) => void;
@@ -28,7 +27,6 @@ export const useUiStore = create<UiState>((set) => ({
   showPreviewMobile: false,
   setView: (view) => set({ view }),
   setZoom: (zoom) => set({ zoom }),
-  setZoomFit: () => set({ zoom: null }),
   setActiveSectionId: (activeSectionId) => set({ activeSectionId }),
   setShowThemePanel: (showThemePanel) => set({ showThemePanel }),
   setShowAtsPanel: (showAtsPanel) => set({ showAtsPanel }),
