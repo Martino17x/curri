@@ -1,6 +1,8 @@
 node_modules
+.turbo
 dist
 dist-ssr*
+.astro
 .DS_Store
 Thumbs.db
 *.local
@@ -10,5 +12,5 @@ Thumbs.db
 !.env.example
 coverage
 *.tgz
-scripts/.smoke
-scripts/.vision
+**/scripts/.smoke
+**/scripts/.vision

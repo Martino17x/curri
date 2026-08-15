@@ -5,6 +5,16 @@ Todas las novedades notables de Currito se documentan en este archivo.
 El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y el
 proyecto usa [Versionado Semántico](https://semver.org/lang/es/).
 
+## [Unreleased]
+
+### Añadido
+
+- Monorepo **pnpm + Turborepo**: la app se mueve a `apps/currito` y se agrega `apps/landing`.
+- **Landing page en Astro** con View Transitions: `/` (inicio), `/precios` y `/plantillas`.
+- Secciones de la landing: Hero, características, cómo funciona, plantillas, testimonios, FAQ y CTA.
+- Análisis de mercado y estrategia de precios en `docs/market-analysis.md` (Free / Pro / Lifetime).
+- CI actualizado para compilar y testear ambas apps desde la raíz (Turborepo).
+
 ## [0.1.0] - 2026-08-15
 
 ### Añadido
