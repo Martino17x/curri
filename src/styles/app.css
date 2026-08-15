@@ -16,6 +16,9 @@
   top: 0;
   z-index: 20;
 }
+.builder-mobile-bar {
+  display: none;
+}
 .logo {
   font-weight: 800;
   font-size: 1.3rem;
@@ -102,6 +105,39 @@
 .panel-head h2 {
   margin: 0;
   font-size: 1rem;
+}
+.panel-head--detail {
+  margin-bottom: 0.75rem;
+}
+.btn-back {
+  border: none;
+  background: none;
+  color: var(--ui-accent);
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  padding: 0.3rem 0.5rem;
+  margin-left: -0.5rem;
+  border-radius: 6px;
+}
+.btn-back:hover {
+  background: var(--ui-accent-soft);
+}
+.section-title-input {
+  font-size: 1.05rem;
+  font-weight: 700;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: 0.4rem 0.5rem;
+  background: transparent;
+  color: var(--ui-text);
+  width: 100%;
+}
+.section-title-input:hover,
+.section-title-input:focus {
+  border-color: var(--ui-border);
+  background: var(--ui-surface);
+  outline: none;
 }
 .panel-hint {
   color: var(--ui-text-muted);
@@ -650,6 +686,17 @@
   .builder-left {
     position: static;
     max-height: none;
+  }
+  .builder-mobile-bar {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 0.5rem;
+  }
+  .builder-right .preview-scroll {
+    max-height: calc(100vh - 200px);
+  }
+  .preview-toolbar {
+    flex-wrap: wrap;
   }
   .app-header {
     flex-wrap: wrap;

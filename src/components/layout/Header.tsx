@@ -10,6 +10,7 @@ export function Header({ resume }: { resume?: { id: string; documentName: string
   const setView = useUiStore((s) => s.setView);
   const setShowThemePanel = useUiStore((s) => s.setShowThemePanel);
   const setShowAtsPanel = useUiStore((s) => s.setShowAtsPanel);
+  const setShowPreviewMobile = useUiStore((s) => s.setShowPreviewMobile);
 
   return (
     <header className="app-header">
@@ -49,10 +50,24 @@ export function Header({ resume }: { resume?: { id: string; documentName: string
               <option value="classic">Plantilla: Clásica</option>
               <option value="minimal">Plantilla: Mínima</option>
             </select>
-            <button type="button" className="btn-secondary" onClick={() => setShowThemePanel(true)}>
+            <button
+              type="button"
+              className="btn-secondary"
+              onClick={() => {
+                setShowThemePanel(true);
+                setShowPreviewMobile(true);
+              }}
+            >
               Tema
             </button>
-            <button type="button" className="btn-secondary" onClick={() => setShowAtsPanel(true)}>
+            <button
+              type="button"
+              className="btn-secondary"
+              onClick={() => {
+                setShowAtsPanel(true);
+                setShowPreviewMobile(true);
+              }}
+            >
               ATS
             </button>
           </div>

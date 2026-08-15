@@ -8,61 +8,62 @@ import {
   useSensors,
   type DragEndEvent,
 } from '@dnd-kit/core';
-import { SortableContext, sortableKeyboardCoordinates, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable';
+import {
+  SortableContext,
+  sortableKeyboardCoordinates,
+  useSortable,
+  verticalListSortingStrategy,
+} from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { SECTION_TYPE_LABELS, createSection } from '../../data/defaults';
 import { useResumeStore } from '../../store/resumeStore';
 import { useUiStore } from '../../store/uiStore';
 import type { Resume, Section } from '../../types/resume';
+import { SectionForms } from '../editor/SectionForms';
 
 function SortableRow({
   section,
-  active,
   onActivate,
+  onToggle,
+  onRemove,
 }: {
   section: Section;
-  active: boolean;
   onActivate: () => void;
+  onToggle: () => void;
+  onRemove: () => void;
 }) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: section.id });
-  const resumeStore = useResumeStore();
-  const resume = resumeStore.resumes.find((r) => r.id === resumeStore.activeResumeId);
-  if (!resume) return null;
-
   const style = { transform: CSS.Transform.toString(transform), transition };
+  const isBasics = section.type === 'basics';
   return (
-    <div
-      ref={setNodeRef}
-      style={style}
-      className={`section-row ${active ? 'section-row--active' : ''} ${isDragging ? 'section-row--dragging' : ''}`}
-    >
-      <button
-        type="button"
-        className="drag-handle"
-        aria-label="Arrastrar para reordenar"
-        {...attributes}
-        {...listeners}
-      >
-        ⠿
-      </button>
-      <button type="button" className="section-row-title" onClick={onActivate}>
+    <div ref={setNodeRef} style={style} className={`section-row ${isDragging ? 'section-row--dragging' : ''}`}>
+      {!isBasics && (
+        <button
+          type="button"
+          className="drag-handle"
+          aria-label="Arrastrar para reordenar"
+          {...attributes}
+          {...listeners}
+        >
+          ⠿
+        </button>
+      )}
+      <button type="button" className="section-row-title" onClick={onActivate} title="Configurar sección">
         {section.title}
+      </button>
+      <button type="button" className="btn-icon" title="Configurar sección" onClick={onActivate}>
+        ⚙
       </button>
       <button
         type="button"
         className={`btn-icon ${section.visible ? '' : 'btn-icon--off'}`}
         title={section.visible ? 'Ocultar sección' : 'Mostrar sección'}
-        onClick={() => resumeStore.toggleSectionVisible(resume.id, section.id)}
+        onClick={onToggle}
       >
         {section.visible ? '👁' : '—'}
       </button>
-      {section.type !== 'basics' && (
-        <button
-          type="button"
-          className="btn-icon"
-          title="Eliminar sección"
-          onClick={() => resumeStore.removeSection(resume.id, section.id)}
-        >
+      {!isBasics && (
+        <button type="button" className="btn-icon" title="Eliminar sección" onClick={onRemove}>
           ✕
         </button>
       )}
@@ -73,6 +74,9 @@ function SortableRow({
 export function SectionsPanel({ resume }: { resume: Resume }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const addSection = useResumeStore((s) => s.addSection);
+  const removeSection = useResumeStore((s) => s.removeSection);
+  const toggleSectionVisible = useResumeStore((s) => s.toggleSectionVisible);
+  const renameSection = useResumeStore((s) => s.renameSection);
   const activeSectionId = useUiStore((s) => s.activeSectionId);
   const setActiveSectionId = useUiStore((s) => s.setActiveSectionId);
 
@@ -90,6 +94,31 @@ export function SectionsPanel({ resume }: { resume: Resume }) {
     useResumeStore.getState().reorderSections(resume.id, from, to);
   };
 
+  const activeSection = resume.sections.find((s) => s.id === activeSectionId);
+
+  // Vista detalle: config de la sección dentro del MISMO panel, con botón "volver".
+  if (activeSection) {
+    return (
+      <div className="panel panel-form">
+        <div className="panel-head panel-head--detail">
+          <button type="button" className="btn-back" onClick={() => setActiveSectionId(null)}>
+            ← Volver
+          </button>
+        </div>
+        <label className="field">
+          <span className="field-label">Título de la sección</span>
+          <input
+            className="section-title-input"
+            value={activeSection.title}
+            onChange={(e) => renameSection(resume.id, activeSection.id, e.target.value)}
+          />
+        </label>
+        <SectionForms key={activeSection.id} resume={resume} section={activeSection} />
+      </div>
+    );
+  }
+
+  // Vista lista: secciones reordenables.
   const existing = new Set(resume.sections.map((s) => s.type));
   const sortable = resume.sections.filter((s) => s.type !== 'basics');
 
@@ -114,7 +143,9 @@ export function SectionsPanel({ resume }: { resume: Resume }) {
                       className="menu-item"
                       disabled={disabled}
                       onClick={() => {
-                        addSection(resume.id, createSection(type));
+                        const section = createSection(type);
+                        addSection(resume.id, section);
+                        setActiveSectionId(section.id);
                         setMenuOpen(false);
                       }}
                     >
@@ -127,15 +158,16 @@ export function SectionsPanel({ resume }: { resume: Resume }) {
           )}
         </div>
       </div>
-      <p className="panel-hint">Arrastrá para ordenar. Hacé clic para editar.</p>
+      <p className="panel-hint">Tocá una sección (o el ⚙) para configurarla. Arrastrá ⠿ para ordenar.</p>
       <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={onDragEnd}>
         <SortableContext items={sortable.map((s) => s.id)} strategy={verticalListSortingStrategy}>
           {resume.sections.map((s) => (
             <SortableRow
               key={s.id}
               section={s}
-              active={activeSectionId === s.id}
               onActivate={() => setActiveSectionId(s.id)}
+              onToggle={() => toggleSectionVisible(resume.id, s.id)}
+              onRemove={() => removeSection(resume.id, s.id)}
             />
           ))}
         </SortableContext>

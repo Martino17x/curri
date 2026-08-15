@@ -10,7 +10,12 @@ Todo se guarda en el navegador (localStorage): no hay servidor ni cuentas.
   (incluye secciones personalizadas).
 - **3 plantillas** (todas single-column, ATS-safe): Moderna, Clásica y Mínima.
 - **Tema en vivo**: color de acento, tipografía (ATS-safe), tamaño, espaciado y estilo de títulos.
-- **Preview A4 en tiempo real** con zoom, y **detector de desborde** de página.
+- **Preview A4 en tiempo real** con zoom, **auto-ajuste** al área visible por defecto
+  (el documento completo siempre se ve entero) y **detector de desborde** de página.
+- **Responsive + toggle de preview** en mobile: la vista previa se muestra/oculta con un
+  botón en vez de obligar a scrollear hasta el final.
+- **Navegación interna de secciones**: tocar una sección (o el ⚙) abre su configuración
+  en el mismo panel, con botón "Volver".
 - **ATS Checker**: valida en vivo formato de fechas, headers estándar, contacto, fuentes y más.
 - **Export PDF** (texto seleccionable, A4) y **Export/Import JSON**
   (también importa el estándar [JSON Resume](https://jsonresume.org/schema/)).
