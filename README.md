@@ -1,85 +1,91 @@
-# Curri — Editor de CV compatible con ATS
+# Curri
 
-Editor de currículums 100% client-side hecho con **React + TypeScript + Vite**.
-Todo se guarda en el navegador (localStorage): no hay servidor ni cuentas.
+Editor de currículums vitae compatibles con **ATS**, 100% client-side.
 
-## ✨ Features
+Curri te permite crear, editar y exportar CVs que los sistemas de seguimiento de
+postulantes (ATS) pueden parsear sin problemas. Todo se guarda en tu navegador
+(localStorage): sin cuentas, sin servidores, sin subir tus datos a ningún lado.
 
-- **Multi-CV**: creá, duplicá y borrá varios documentos.
-- **Secciones dinámicas**: agregá, eliminá, ocultá, renombrá y **reordená con drag & drop**
-  (incluye secciones personalizadas).
-- **3 plantillas** (todas single-column, ATS-safe): Moderna, Clásica y Mínima.
-- **Tema en vivo**: color de acento, tipografía (ATS-safe), tamaño, espaciado y estilo de títulos.
-- **Preview A4 en tiempo real** con zoom, **auto-ajuste** al área visible por defecto
-  (el documento completo siempre se ve entero) y **detector de desborde** de página.
-- **Responsive + toggle de preview** en mobile: la vista previa se muestra/oculta con un
-  botón en vez de obligar a scrollear hasta el final.
-- **Navegación interna de secciones**: tocar una sección (o el ⚙) abre su configuración
-  en el mismo panel, con botón "Volver".
-- **ATS Checker**: valida en vivo formato de fechas, headers estándar, contacto, fuentes y más.
-- **Export PDF** (texto seleccionable, A4) y **Export/Import JSON**
-  (también importa el estándar [JSON Resume](https://jsonresume.org/schema/)).
-- **Foto de perfil** opcional, procesada en el navegador (canvas → JPEG).
-- Atajos: `Ctrl+P` exporta PDF, `Ctrl+S` exporta JSON.
+## Capturas
 
-## 🧰 Stack
+![Lista de CVs](docs/screenshots/lista.png)
 
-| Herramienta | Uso |
-|---|---|
-| Vite 8 | Bundler y dev server |
-| React 19 + TypeScript (strict) | UI y tipos |
-| Zustand (persist) | Estado global + autosave en localStorage |
-| @dnd-kit | Reordenamiento de secciones |
-| react-dom/server | Generación del HTML para el PDF |
+![Editor con vista previa](docs/screenshots/editor.png)
 
-Solo **6 dependencias**. Cero servidor, cero cuenta, 100% privado.
+![CV comercial de ejemplo](docs/screenshots/cv-comercial.png)
 
-## 🚀 Arrancar
+## Características
+
+- **ATS-friendly**: texto seleccionable, sin tablas ni gráficos, keywords por sección.
+- **3 plantillas**: Moderna, Clásica y Mínima, todas con estilos de títulos configurables.
+- **Tema completo**: color de acento, tipografía, tamaño de base, escala de títulos, espaciado.
+- **Vista previa en vivo** con zoom por dispositivo (35% móvil / 60% tablet / 80% desktop) y ajuste automático.
+- **Foto de perfil** con arrastrar y soltar (se optimiza y se guarda en el navegador).
+- **Secciones reordenables** con drag & drop (dnd-kit) y formularios de configuración por sección.
+- **Panel ATS checker**: detecta problemas que afectan el parseo del CV.
+- **Exportar PDF** (imprime en A4 real, una sola hoja si el contenido entra) y **Exportar/Importar JSON**.
+- **100% local**: tus datos nunca salen de tu navegador.
+- **Rutas reales** (`/` y `/cv/:id`) con deep-linking, listo para deploy SPA.
+
+## Stack
+
+- [React](https://react.dev) + [TypeScript](https://www.typescriptlang.org)
+- [Vite](https://vitejs.dev)
+- [Zustand](https://zustand.docs.pmnd.rs) (estado + persistencia en localStorage)
+- [React Router](https://reactrouter.com)
+- [dnd-kit](https://dndkit.com) (drag & drop)
+
+## Cómo correrlo
+
+Requisitos: [Node.js](https://nodejs.org) 18+ y [pnpm](https://pnpm.io).
 
 ```bash
 pnpm install
-pnpm dev        # dev server en http://localhost:5173
-pnpm typecheck  # tsc --noEmit
-pnpm build      # build de producción en dist/
+pnpm dev        # servidor de desarrollo (http://localhost:5173)
 ```
 
-## 🧱 Arquitectura
+Build de producción:
+
+```bash
+pnpm build      # typecheck + build a dist/
+pnpm preview    # servir el build localmente
+```
+
+Chequeos:
+
+```bash
+pnpm typecheck                            # tsc --noEmit
+pnpm exec vite build --ssr scripts/smoke.ts --outDir dist-ssr && node dist-ssr/smoke.js
+```
+
+## Estructura
 
 ```
 src/
-  types/        # Modelo de datos (Resume, Section, ThemeConfig)
-  data/         # Defaults, fábricas de secciones, CV de ejemplo
-  store/        # Zustand: resumeStore (persist) + uiStore
-  lib/          # dates, fonts, ATS checker, export PDF/JSON
   components/
-    templates/  # Plantillas (Modern/Classic/Minimal) + SectionView
-    preview/    # Preview A4 con zoom y detección de overflow
-    editor/     # Formularios por tipo de sección + fields + foto
-    panels/     # Secciones (dnd), Tema, ATS Checker
-    layout/     # Header, lista de CVs, Builder
-  styles/       # tokens (CSS vars), UI, plantillas
+    editor/       # formularios de cada sección, photo uploader
+    layout/       # header, lista de CVs, builder
+    panels/       # tema, ATS checker, export JSON
+    preview/      # vista previa + controles de zoom
+    templates/    # plantillas (modern, classic, minimal)
+    ui/           # primitivas: Select custom, iconos SVG
+  data/           # presets de ejemplo + tema por defecto
+  hooks/          # useDeviceTier, usePopover
+  lib/            # ats, dates, exportPdf, exportJson, fonts
+  store/          # zustand: resumeStore (persistido), uiStore
+  styles/         # tokens, app UI, template CSS
+  types/          # tipos del dominio (Resume, Theme)
 ```
 
-**La idea central:** un CV es un **array ordenado de secciones autocontenidas**.
-El orden del array = el orden del CV. Cada sección sabe renderizarse sola
-(`SectionView`) y las plantillas solo controlan la "carcasa" (header, títulos, tipografía).
-El tema se aplica con **CSS variables** derivadas de `ThemeConfig`, así cambiar
-el tema es cambiar datos, no CSS hardcodeado.
+## Deploy en Vercel
 
-## 🤖 Reglas ATS aplicadas (research 2026)
+El proyecto incluye `vercel.json` con el framework Vite y las **rewrites de SPA**
+(`/(.*) → /index.html`) para que las rutas `/cv/:id` funcionen al recargar o abrir
+directo, sin el clásico 404 de Vite en Vercel.
 
-- **Una columna**: la más segura para el parseo (benchmark: 100/100 vs 85 en dos columnas).
-- **Fechas estructuradas** `MM/YYYY` + "Presente": nunca "2022-2023" ni "Verano 2023".
-- **Headers estándar**: el ATS mapea la sección por su título; por eso el checker avisa si renombrás.
-- **Sin iconos ni barras de progreso**: el checker promueve etiquetas de texto.
-- **Fuentes del sistema**: el selector solo permite fuentes ATS-safe.
-- **Contacto en el cuerpo de la página 1** (nunca en header/footer de página).
-- **PDF con texto seleccionable**: se genera vía impresión del documento HTML, sin imágenes.
+Importá el repo en [vercel.com](https://vercel.com): Vercel detecta Vite solo,
+usa `pnpm build` y el output `dist/`.
 
-## 📌 Próximos pasos (fuera del alcance v1)
+## Licencia
 
-- Paginación multi-página con continuidad de secciones.
-- Rich text (Tiptap) para descripciones.
-- Export a JSON Resume (no solo import).
-- Carta de presentación como tipo de documento.
-- Modo oscuro para la UI del editor.
+[MIT](LICENSE) © 2026 Martino Costigliolo
