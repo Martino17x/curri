@@ -27,6 +27,7 @@ console.log(`HTML generado: ${html.length} caracteres`);
 console.log(`Contiene doctype: ${html.startsWith('<!DOCTYPE html>')}`);
 console.log(`Contiene estilos inline: ${html.includes('<style>')}`);
 console.log(`Contiene doc-page: ${html.includes('class="doc-page"')}`);
+console.log(`Contiene foto embebida: ${html.includes('data:image/jpeg')}`);
 
 if (missing.length) {
   console.error('FALTAN:', missing.map(([label]) => label).join(', '));

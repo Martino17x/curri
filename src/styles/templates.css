@@ -18,13 +18,21 @@
 .doc-header {
   margin-bottom: var(--doc-spacing);
 }
+.doc-header-grid {
+  display: flex;
+  align-items: center;
+  gap: 4mm;
+}
 .doc-photo {
   width: 22mm;
-  height: 27mm;
+  height: 28mm;
   object-fit: cover;
   border-radius: 3mm;
-  margin-bottom: 3mm;
-  display: block;
+  flex-shrink: 0;
+}
+.doc-header-main {
+  flex: 1;
+  min-width: 0;
 }
 .doc-name {
   margin: 0 0 1mm;
@@ -156,6 +164,9 @@
 /* Variantes de plantilla */
 .tpl-classic .doc-header {
   text-align: center;
+}
+.tpl-classic .doc-header-grid {
+  justify-content: center;
 }
 .tpl-classic .contact-line {
   margin-top: 1mm;

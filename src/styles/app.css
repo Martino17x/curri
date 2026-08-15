@@ -632,6 +632,11 @@ input[type='range'] {
   border: 1px dashed var(--ui-border);
   border-radius: 8px;
   background: #fafbfc;
+  transition: border-color 150ms ease, background-color 150ms ease;
+}
+.photo-uploader--dragging {
+  border-color: var(--ui-accent);
+  background: var(--ui-accent-soft);
 }
 .photo-uploader-row {
   display: flex;

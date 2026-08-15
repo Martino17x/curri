@@ -1,4 +1,5 @@
 import { uid } from '../lib/id';
+import { SAMPLE_PHOTO_DATA_URL } from './samplePhoto';
 import type {
   DateRef,
   EducationItem,
@@ -231,15 +232,6 @@ export function createSampleResume(): Resume {
     },
     {
       id: uid(),
-      degree: 'JSCAMP – React, Testing, IA, SQL, DevOps y Docker',
-      institution: 'InfoJobs',
-      start: d(2025, 10),
-      end: d(2026, 2),
-      current: false,
-      description: 'Especialización práctica en desarrollo frontend y backend.',
-    },
-    {
-      id: uid(),
       degree: 'HTML y CSS – validación universitaria',
       institution: 'Instituto Instrumenta | UTN',
       start: d(2022, 6),
@@ -262,7 +254,7 @@ export function createSampleResume(): Resume {
     {
       id: uid(),
       name: 'Tecnologías',
-      keywords: ['React', 'TypeScript', 'Node.js', 'SQL', 'Testing', 'Docker', 'DevOps', 'IA'],
+      keywords: ['React', 'TypeScript', 'Node.js', 'SQL', 'Testing', 'Docker'],
     },
     {
       id: uid(),
@@ -353,7 +345,7 @@ export function createSampleResume(): Resume {
           location: 'Cruz del Eje, Córdoba, Argentina',
           linkedin: '',
           website: '',
-          photo: null,
+          photo: SAMPLE_PHOTO_DATA_URL,
         },
       },
       {

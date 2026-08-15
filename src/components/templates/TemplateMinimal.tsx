@@ -1,5 +1,5 @@
 import type { Resume, Section } from '../../types/resume';
-import { ContactLine } from './shared';
+import { DocHeader } from './shared';
 import { SectionView } from './SectionView';
 
 export function TemplateMinimal({ resume }: { resume: Resume }) {
@@ -11,11 +11,7 @@ export function TemplateMinimal({ resume }: { resume: Resume }) {
   return (
     <div className="tpl tpl-minimal">
       <header className="doc-header">
-        <h1 className={`doc-name ${theme.nameUppercase ? 'doc-name--upper' : ''}`}>
-          {basics?.fields.name}
-        </h1>
-        {basics?.fields.label && <div className="doc-label">{basics.fields.label}</div>}
-        <ContactLine basics={basics} theme={theme} />
+        <DocHeader basics={basics} theme={theme} />
       </header>
       {rest.map((s) => (
         <SectionView key={s.id} section={s} headerStyle={theme.headerStyle} />

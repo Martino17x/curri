@@ -47,32 +47,47 @@ function drawResized(file: File): Promise<string> {
 export function PhotoUploader({ value, onChange }: { value: string | null; onChange: (v: string | null) => void }) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [error, setError] = useState<string | null>(null);
+  const [dragging, setDragging] = useState(false);
 
-  const handleFile = async (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+  const processFile = async (file: File) => {
     setError(null);
+    if (!file) return;
     if (!file.type.startsWith('image/')) {
       setError('El archivo no es una imagen.');
-      e.target.value = '';
       return;
     }
     if (file.size > MAX_INPUT_BYTES) {
       setError('La imagen es muy grande (máx 5 MB).');
-      e.target.value = '';
       return;
     }
     try {
       onChange(await drawResized(file));
     } catch (err) {
       setError(err instanceof Error ? err.message : 'No se pudo procesar la imagen.');
-    } finally {
-      e.target.value = '';
     }
   };
 
+  const handleFile = async (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    e.target.value = '';
+    if (file) await processFile(file);
+  };
+
   return (
-    <div className="photo-uploader">
+    <div
+      className={`photo-uploader ${dragging ? 'photo-uploader--dragging' : ''}`}
+      onDragOver={(e) => {
+        e.preventDefault();
+        setDragging(true);
+      }}
+      onDragLeave={() => setDragging(false)}
+      onDrop={(e) => {
+        e.preventDefault();
+        setDragging(false);
+        const file = e.dataTransfer.files?.[0];
+        if (file) void processFile(file);
+      }}
+    >
       <div className="photo-uploader-row">
         <label className="btn-secondary">
           {value ? 'Cambiar foto' : 'Subir foto'}
@@ -94,6 +109,11 @@ export function PhotoUploader({ value, onChange }: { value: string | null; onCha
           </>
         )}
       </div>
+      {!value && (
+        <p className="field-help">
+          También podés arrastrar y soltar una imagen acá (se recorta y optimiza sola).
+        </p>
+      )}
       {value && (
         <p className="field-help">
           ~{Math.round(approxBytesFromDataUrl(value) / 1024)} KB · La foto se guarda solo en este navegador.

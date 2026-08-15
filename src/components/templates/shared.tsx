@@ -89,3 +89,20 @@ export function ContactLine({ basics, theme }: { basics?: BasicsSection; theme: 
   if (!parts.length) return null;
   return <p className="contact-line">{parts.join(' · ')}</p>;
 }
+
+/**
+ * Cabecera del documento: foto a la izquierda y datos (nombre, título, contacto)
+ * a la derecha en la MISMA fila. Sin foto, solo el bloque de texto.
+ */
+export function DocHeader({ basics, theme }: { basics?: BasicsSection; theme: ThemeConfig }) {
+  return (
+    <div className="doc-header-grid">
+      {basics?.fields.photo && <img className="doc-photo" src={basics.fields.photo} alt="" />}
+      <div className="doc-header-main">
+        <h1 className={`doc-name ${theme.nameUppercase ? 'doc-name--upper' : ''}`}>{basics?.fields.name}</h1>
+        {basics?.fields.label && <div className="doc-label">{basics.fields.label}</div>}
+        <ContactLine basics={basics} theme={theme} />
+      </div>
+    </div>
+  );
+}
