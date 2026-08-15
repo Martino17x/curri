@@ -1,6 +1,7 @@
 import type { Section } from '../../types/resume';
 import type { HeaderStyle } from '../../types/theme';
 import { formatDateRef } from '../../lib/dates';
+import { isSectionEmpty } from '../../data/defaults';
 import { Bullets, DateRange, InlineList, SectionTitle, TextValue } from './shared';
 
 function certDate(value: string): string {
@@ -12,7 +13,25 @@ function certDate(value: string): string {
   return `${names[m] ?? month} ${year}`;
 }
 
-export function SectionView({ section, headerStyle }: { section: Section; headerStyle: HeaderStyle }) {
+export function SectionView({
+  section,
+  headerStyle,
+  forceRender,
+}: {
+  section: Section;
+  headerStyle: HeaderStyle;
+  /** Muestra la sección aunque esté vacía (solo modo edición del preview). */
+  forceRender?: boolean;
+}) {
+  if (forceRender && isSectionEmpty(section)) {
+    return (
+      <section className="sec sec--empty">
+        <SectionTitle style={headerStyle}>{section.title}</SectionTitle>
+        <div className="sec-empty-hint">Sección vacía — agregá contenido</div>
+      </section>
+    );
+  }
+
   switch (section.type) {
     case 'basics':
       return null;

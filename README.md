@@ -1,14 +1,14 @@
-# Curri
+# Currito
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![CI](https://github.com/Martino17x/curri/actions/workflows/ci.yml/badge.svg)](https://github.com/Martino17x/curri/actions/workflows/ci.yml)
+[![CI](https://github.com/Martino17x/currito/actions/workflows/ci.yml/badge.svg)](https://github.com/Martino17x/currito/actions/workflows/ci.yml)
 [![React](https://img.shields.io/badge/React-19-61DAFB.svg)](https://react.dev)
 [![Vite](https://img.shields.io/badge/Vite-8-646CFF.svg)](https://vitejs.dev)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6.svg)](https://www.typescriptlang.org)
 
 Editor de currículums vitae compatibles con **ATS**, 100% client-side.
 
-Curri te permite crear, editar y exportar CVs que los sistemas de seguimiento de
+Currito te permite crear, editar y exportar CVs que los sistemas de seguimiento de
 postulantes (ATS) pueden parsear sin problemas. Todo se guarda en tu navegador
 (localStorage): sin cuentas, sin servidores, sin subir tus datos a ningún lado.
 

@@ -96,6 +96,19 @@ export function ThemePanel({ resume }: { resume: Resume }) {
           />
         </label>
 
+        <label className="field">
+          <span className="field-label">Columnas</span>
+          <Select
+            options={[
+              { value: '1', label: '1 columna' },
+              { value: '2', label: '2 columnas' },
+            ]}
+            value={String(t.columns)}
+            onChange={(v) => set({ columns: v === '2' ? 2 : 1 })}
+            ariaLabel="Columnas"
+          />
+        </label>
+
         <ToggleField
           label="Nombre en mayúsculas"
           checked={t.nameUppercase}

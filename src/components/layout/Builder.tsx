@@ -11,7 +11,7 @@ import { SectionsPanel } from '../panels/SectionsPanel';
 import { ThemePanel } from '../panels/ThemePanel';
 import { ResumePreview } from '../preview/ResumePreview';
 import { ZoomControls } from '../preview/ZoomControls';
-import { EyeIcon, EyeOffIcon, PrinterIcon } from '../ui/icons';
+import { EyeIcon, EyeOffIcon, PencilIcon, PrinterIcon } from '../ui/icons';
 
 export function Builder({ resume }: { resume: Resume }) {
   const { presetZoom, isCompact } = useDeviceTier();
@@ -20,7 +20,12 @@ export function Builder({ resume }: { resume: Resume }) {
   const showAtsPanel = useUiStore((s) => s.showAtsPanel);
   const showPreview = useUiStore((s) => s.showPreviewMobile);
   const setShowPreview = useUiStore((s) => s.setShowPreviewMobile);
+  const previewEditMode = useUiStore((s) => s.previewEditMode);
+  const setPreviewEditMode = useUiStore((s) => s.setPreviewEditMode);
+  const setActiveSectionId = useUiStore((s) => s.setActiveSectionId);
   const importResume = useResumeStore((s) => s.importResume);
+  const leftRef = useRef<HTMLElement>(null);
+  const [flashSections, setFlashSections] = useState(false);
   const [pageOverflow, setPageOverflow] = useState(false);
   const [effectiveZoom, setEffectiveZoom] = useState(presetZoom);
   const [fitZoom, setFitZoom] = useState(presetZoom);
@@ -49,6 +54,22 @@ export function Builder({ resume }: { resume: Resume }) {
     });
   };
 
+  const handleEditSection = (sectionId: string) => {
+    setActiveSectionId(sectionId);
+    if (isCompact) setShowPreview(false); // en mobile: mostrar el panel de edición
+  };
+
+  const handleEmptyAction = () => {
+    if (isCompact) {
+      setShowPreview(false);
+      return;
+    }
+    // Desktop: resaltar el panel de secciones y hacer scroll hasta él.
+    setFlashSections(true);
+    leftRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    window.setTimeout(() => setFlashSections(false), 1600);
+  };
+
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (!(e.ctrlKey || e.metaKey)) return;
@@ -70,6 +91,16 @@ export function Builder({ resume }: { resume: Resume }) {
       <div className="preview-toolbar">
         <ZoomControls effectiveZoom={effectiveZoom} fitZoom={fitZoom} />
         <div className="preview-toolbar-actions">
+          <button
+            type="button"
+            className={`btn-secondary btn-small ${previewEditMode ? 'btn-secondary--active' : ''}`}
+            onClick={() => setPreviewEditMode(!previewEditMode)}
+            aria-pressed={previewEditMode}
+            title="Click en una sección para editarla, arrastrá para reordenar"
+          >
+            <PencilIcon width={13} height={13} />
+            {previewEditMode ? 'Listo' : 'Editar secciones'}
+          </button>
           <button
             type="button"
             className="btn-primary btn-small"
@@ -114,6 +145,9 @@ export function Builder({ resume }: { resume: Resume }) {
         onOverflowChange={setPageOverflow}
         onEffectiveZoomChange={setEffectiveZoom}
         onFitReady={setFitZoom}
+        editMode={previewEditMode}
+        onEditSection={handleEditSection}
+        onEmptyAction={handleEmptyAction}
       />
     </section>
   );
@@ -136,7 +170,10 @@ export function Builder({ resume }: { resume: Resume }) {
 
       {isCompact && showPreview && previewColumn}
 
-      <aside className="builder-left">
+      <aside
+        ref={leftRef}
+        className={`builder-left ${flashSections ? 'builder-left--flash' : ''}`}
+      >
         <SectionsPanel resume={resume} />
       </aside>
 

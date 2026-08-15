@@ -17,7 +17,7 @@ function downloadJson(filename: string, data: unknown) {
 }
 
 export function exportJsonResume(resume: Resume) {
-  downloadJson(`curri-${slugify(resume.documentName)}.json`, resume);
+  downloadJson(`currito-${slugify(resume.documentName)}.json`, resume);
 }
 
 export type JsonExportFormat = 'curri' | 'jsonresume';
@@ -98,7 +98,7 @@ export function resumeToJsonResume(resume: Resume): Record<string, unknown> {
 }
 
 export function exportJsonResumeWithOptions(resume: Resume, options: JsonExportOptions) {
-  const filename = `curri-${slugify(resume.documentName)}.json`;
+  const filename = `currito-${slugify(resume.documentName)}.json`;
   if (options.format === 'jsonresume') {
     downloadJson(filename, resumeToJsonResume(resume));
     return;

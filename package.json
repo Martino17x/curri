@@ -1,17 +1,17 @@
 {
-  "name": "curri",
+  "name": "currito",
   "version": "0.1.0",
-  "description": "Editor de currículums compatibles con ATS, 100% client-side (React + Vite + TypeScript).",
+  "description": "Currito — editor de currículums compatibles con ATS, 100% client-side (React + Vite + TypeScript).",
   "license": "MIT",
   "author": "Martino Costigliolo",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Martino17x/curri.git"
+    "url": "https://github.com/Martino17x/currito.git"
   },
   "bugs": {
-    "url": "https://github.com/Martino17x/curri/issues"
+    "url": "https://github.com/Martino17x/currito/issues"
   },
-  "homepage": "https://github.com/Martino17x/curri#readme",
+  "homepage": "https://github.com/Martino17x/currito#readme",
   "keywords": [
     "cv",
     "resume",

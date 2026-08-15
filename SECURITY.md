@@ -4,7 +4,7 @@
 
 Si encontrás una vulnerabilidad de seguridad en Curri, **no la publiques en un
 issue público**. Reportala de forma privada usando el flujo de
-[GitHub Security Advisories](https://github.com/Martino17x/curri/security/advisories/new)
+[GitHub Security Advisories](https://github.com/Martino17x/currito/security/advisories/new)
 o escribiendo directamente al mantenedor.
 
 Al reportar incluí:

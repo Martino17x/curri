@@ -13,9 +13,11 @@ export function TemplateMinimal({ resume }: { resume: Resume }) {
       <header className="doc-header">
         <DocHeader basics={basics} theme={theme} />
       </header>
-      {rest.map((s) => (
-        <SectionView key={s.id} section={s} headerStyle={theme.headerStyle} />
-      ))}
+      <div className="tpl-body" data-cols={theme.columns}>
+        {rest.map((s) => (
+          <SectionView key={s.id} section={s} headerStyle={theme.headerStyle} />
+        ))}
+      </div>
     </div>
   );
 }

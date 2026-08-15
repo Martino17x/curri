@@ -20,6 +20,7 @@ export const DEFAULT_THEME: ThemeConfig = {
   headingScale: 1.25,
   spacing: 'comfortable',
   headerStyle: 'accent-bar',
+  columns: 1,
   nameUppercase: true,
   contactLabels: false,
 };
@@ -131,6 +132,37 @@ export function createResume(documentName: string): Resume {
       interestsSection(),
     ],
   };
+}
+
+/** True si una sección no tiene contenido real (salvo datos personales). */
+export function isSectionEmpty(section: Section): boolean {
+  switch (section.type) {
+    case 'summary':
+      return !section.text.trim();
+    case 'experience':
+      return section.items.every((i) => !i.position && !i.company && !i.summary && !i.highlights.length);
+    case 'education':
+      return section.items.every((i) => !i.degree && !i.institution && !i.description);
+    case 'skills':
+      return section.groups.every((g) => !g.name.trim() && !g.keywords.length);
+    case 'languages':
+      return section.items.every((i) => !i.language.trim() && !i.level.trim());
+    case 'projects':
+      return section.items.every((i) => !i.name && !i.summary && !i.highlights.length);
+    case 'certificates':
+      return section.items.every((i) => !i.name.trim() && !i.issuer.trim());
+    case 'interests':
+      return section.items.length === 0;
+    case 'custom':
+      return section.items.every((i) => !i.heading.trim() && !i.value.trim());
+    default:
+      return true;
+  }
+}
+
+/** True si ninguna sección (salvo datos personales) tiene contenido real. */
+export function isResumeEmpty(resume: Resume): boolean {
+  return resume.sections.filter((s) => s.type !== 'basics').every(isSectionEmpty);
 }
 
 export const SECTION_TYPE_LABELS: Record<SectionType, string> = {

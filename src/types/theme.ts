@@ -10,6 +10,7 @@ export type FontId =
 
 export type SpacingPreset = 'compact' | 'comfortable' | 'relaxed';
 export type HeaderStyle = 'accent-bar' | 'underline' | 'simple';
+export type ColumnsPreset = 1 | 2;
 
 export interface ThemeConfig {
   accentColor: string;
@@ -20,6 +21,8 @@ export interface ThemeConfig {
   headingScale: number;
   spacing: SpacingPreset;
   headerStyle: HeaderStyle;
+  /** Cantidad de columnas para las secciones del cuerpo (el header va a lo ancho). */
+  columns: ColumnsPreset;
   nameUppercase: boolean;
   /** Muestra etiquetas de texto (Email:, Tel:) en el contacto. Texto plano = ATS-safe. */
   contactLabels: boolean;

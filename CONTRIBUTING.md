@@ -1,12 +1,12 @@
-# Contribuyendo a Curri
+# Contribuyendo a Currito
 
-¡Gracias por querer mejorar Curri! 🙌 Cualquier aporte suma: reportar un bug,
+¡Gracias por querer mejorar Currito! 🙌 Cualquier aporte suma: reportar un bug,
 proponer una feature, mejorar la documentación o mandar un PR.
 
 ## Reportar un problema
 
 Antes de abrir un issue, buscá si ya existe uno similar en
-[issues](https://github.com/Martino17x/curri/issues). Si no existe, abrí uno nuevo
+[issues](https://github.com/Martino17x/currito/issues). Si no existe, abrí uno nuevo
 con:
 
 - **Bug**: qué esperabas, qué pasó, pasos para reproducirlo, navegador/versión y

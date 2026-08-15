@@ -62,7 +62,7 @@ export function Header() {
       <div className="header-brand">
         <button type="button" className="logo" onClick={() => navigate('/')} title="Volver a tus CVs">
           <span className="logo-mark" aria-hidden="true" />
-          Curri
+          Currito
         </button>
         {!isBuilder && <span className="header-tagline">Editor de CV compatibles con ATS · 100% local</span>}
       </div>

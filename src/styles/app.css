@@ -452,6 +452,11 @@ button svg {
 .btn-secondary:hover {
   background: #f6f7f9;
 }
+.btn-secondary--active {
+  border-color: var(--ui-accent);
+  color: var(--ui-accent);
+  background: var(--ui-accent-soft);
+}
 .btn-danger {
   background: #fef2f2;
   color: var(--ui-danger);
@@ -895,6 +900,51 @@ input[type='range']::-moz-range-thumb {
 .preview-toolbar-actions {
   display: flex;
   gap: 0.4rem;
+}
+.preview-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  height: 100%;
+  min-height: 55vh;
+  text-align: center;
+  padding: 2rem;
+}
+.preview-empty-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  background: var(--ui-accent-soft);
+  color: var(--ui-accent);
+  margin-bottom: 0.5rem;
+}
+.preview-empty-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin: 0;
+}
+.preview-empty-sub {
+  font-size: 0.9rem;
+  color: var(--ui-text-muted);
+  margin: 0 0 0.75rem;
+}
+.builder-left--flash {
+  animation: flash-panel 1.6s ease;
+}
+@keyframes flash-panel {
+  0%,
+  100% {
+    box-shadow: none;
+  }
+  25% {
+    box-shadow: 0 0 0 3px var(--ui-accent-soft), 0 0 0 6px rgba(15, 118, 110, 0.25);
+    border-radius: var(--ui-radius);
+  }
 }
 .preview-scroll {
   overflow: auto;

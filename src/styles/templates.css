@@ -261,6 +261,61 @@
   font-weight: 800;
 }
 
+/* ===== Cuerpo del documento y columnas ===== */
+.tpl-body {
+  min-width: 0;
+}
+.tpl-body[data-cols='2'] {
+  columns: 2;
+  column-gap: 6mm;
+}
+.tpl-body[data-cols='2'] .sec {
+  break-inside: avoid;
+}
+
+/* Preview interactivo: wrapper sortable + botón "Editar" */
+.editable-sec {
+  position: relative;
+}
+.editable-sec--dragging {
+  opacity: 0.55;
+}
+.editable-sec--selected .sec {
+  outline: 1.5px dashed var(--doc-accent, #0f766e);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+.sec {
+  position: relative;
+}
+.sec-empty-hint {
+  color: var(--doc-muted, #5b6270);
+  font-size: calc(var(--doc-base-pt, 10.5pt) * 0.9);
+  font-style: italic;
+  opacity: 0.8;
+}
+.sec-edit-btn {
+  position: absolute;
+  top: -13px;
+  right: 0;
+  z-index: 6;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--doc-accent, #0f766e);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 3px 9px;
+  font-size: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(15, 118, 110, 0.35);
+}
+.sec-edit-btn:hover {
+  filter: brightness(0.92);
+}
+
 /* Impresión: A4 con margen cero; el contenido fluye a más páginas si hace falta. */
 @media print {
   @page {

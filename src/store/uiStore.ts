@@ -7,11 +7,14 @@ interface UiState {
   showThemePanel: boolean;
   showAtsPanel: boolean;
   showPreviewMobile: boolean;
+  /** Modo edición del preview: click para editar secciones + drag & drop. */
+  previewEditMode: boolean;
   setZoom: (zoom: number) => void;
   setActiveSectionId: (id: string | null) => void;
   setShowThemePanel: (show: boolean) => void;
   setShowAtsPanel: (show: boolean) => void;
   setShowPreviewMobile: (show: boolean) => void;
+  setPreviewEditMode: (show: boolean) => void;
 }
 
 export const useUiStore = create<UiState>((set) => ({
@@ -20,9 +23,11 @@ export const useUiStore = create<UiState>((set) => ({
   showThemePanel: false,
   showAtsPanel: false,
   showPreviewMobile: false,
+  previewEditMode: false,
   setZoom: (zoom) => set({ zoom }),
   setActiveSectionId: (activeSectionId) => set({ activeSectionId }),
   setShowThemePanel: (showThemePanel) => set({ showThemePanel }),
   setShowAtsPanel: (showAtsPanel) => set({ showAtsPanel }),
   setShowPreviewMobile: (showPreviewMobile) => set({ showPreviewMobile }),
+  setPreviewEditMode: (previewEditMode) => set({ previewEditMode }),
 }));
