@@ -37,50 +37,174 @@ button svg {
 .app-header {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  padding: 0.75rem 1.25rem;
+  gap: 0.5rem;
+  min-height: 56px;
+  padding: 0 1.25rem;
   background: var(--ui-surface);
   border-bottom: 1px solid var(--ui-border);
   position: sticky;
   top: 0;
-  z-index: 20;
+  z-index: 30;
+}
+.header-brand {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+.header-sep {
+  width: 1px;
+  height: 24px;
+  background: var(--ui-border);
+  flex-shrink: 0;
+  margin: 0 0.4rem;
+}
+.doc-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
 }
 .builder-mobile-bar {
   display: none;
 }
 .logo {
   font-weight: 800;
-  font-size: 1.3rem;
+  font-size: 1.15rem;
   color: var(--ui-accent);
   background: none;
   border: none;
   cursor: pointer;
-  padding: 0;
+  padding: 0.4rem 0;
   letter-spacing: -0.02em;
 }
-.doc-select {
-  max-width: 180px;
-  font-size: 0.85rem;
-}
 .doc-name-input {
-  flex: 0 1 260px;
-  font-size: 0.9rem;
+  flex: 0 1 240px;
+  min-width: 0;
+  font-size: 0.95rem;
   font-weight: 600;
-}
-.doc-name-input,
-.doc-select,
-.header-actions select {
-  border: 1px solid var(--ui-border);
-  border-radius: 8px;
-  padding: 0.45rem 0.6rem;
-  background: var(--ui-surface);
   color: var(--ui-text);
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: 0.4rem 0.6rem;
+  background: transparent;
+}
+.doc-name-input:hover {
+  border-color: var(--ui-border);
+  background: var(--ui-surface);
+}
+.doc-name-input:focus {
+  border-color: var(--ui-accent);
+  background: var(--ui-surface);
+  outline: none;
 }
 .header-actions {
   margin-left: auto;
   display: flex;
   align-items: center;
   gap: 0.5rem;
+}
+
+/* ===== Select custom (sin <select> nativo) ===== */
+.select {
+  position: relative;
+  display: inline-flex;
+  max-width: 100%;
+}
+.select-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--ui-border);
+  background: var(--ui-surface);
+  border-radius: 8px;
+  padding: 0.45rem 0.7rem;
+  font-size: 0.85rem;
+  font-family: inherit;
+  font-weight: 500;
+  cursor: pointer;
+  color: var(--ui-text);
+  max-width: 100%;
+}
+.select-trigger:hover {
+  background: #f6f7f9;
+}
+.select--open .select-trigger {
+  border-color: var(--ui-accent);
+  box-shadow: 0 0 0 3px var(--ui-accent-soft);
+}
+.select-value {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.select-menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  background: var(--ui-surface);
+  border: 1px solid var(--ui-border);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.14);
+  z-index: 80;
+  min-width: 100%;
+  max-width: min(320px, 90vw);
+  padding: 4px;
+  max-height: 260px;
+  overflow: auto;
+}
+.select-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  text-align: left;
+  border: none;
+  background: none;
+  padding: 8px 10px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-family: inherit;
+  cursor: pointer;
+  color: var(--ui-text);
+}
+.select-option span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.select-option:hover,
+.select-option--active {
+  background: var(--ui-accent-soft);
+}
+.select-option--selected {
+  font-weight: 600;
+  color: var(--ui-accent);
+}
+.select--disabled .select-trigger {
+  opacity: 0.55;
+  cursor: default;
+}
+.select--sm .select-trigger {
+  padding: 0.32rem 0.6rem;
+  font-size: 0.8rem;
+}
+/* Ancho completo dentro de campos de formulario */
+.field .select,
+.month-year .select {
+  width: 100%;
+}
+.field .select .select-trigger,
+.month-year .select .select-trigger {
+  width: 100%;
+  justify-content: space-between;
+}
+.month-year-inputs .select {
+  flex: 1;
+}
+.select--month .select-menu {
+  min-width: 0;
+  width: 100%;
 }
 
 /* ===== Builder ===== */
@@ -646,6 +770,7 @@ button svg {
   max-height: calc(100vh - 140px);
 }
 .preview-stage {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -659,31 +784,49 @@ button svg {
 }
 .page-break-marker {
   position: absolute;
-  top: 297mm;
   left: 0;
   right: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
   pointer-events: none;
+  transform: translateY(-50%);
+  z-index: 5;
 }
 .page-break-line {
   display: block;
   width: 100%;
-  border-top: 2px dashed #f59e0b;
+  border-top: 2px solid #f59e0b;
+  box-shadow: 0 1px 3px rgba(146, 64, 14, 0.35);
 }
 .page-break-label {
+  position: relative;
+  top: -8px;
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  background: #fffbeb;
-  border: 1px solid #fde68a;
+  gap: 8px;
+  background: #fffdf5;
+  border: 1.5px solid #f59e0b;
   color: #92400e;
-  font-size: 10px;
-  padding: 3px 8px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.2;
+  padding: 6px 14px;
   border-radius: 999px;
-  white-space: nowrap;
+  box-shadow: 0 3px 12px rgba(146, 64, 14, 0.3);
+}
+.page-break-label-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+.page-break-label-text strong {
+  font-size: 12px;
+}
+.page-break-label-text small {
+  font-size: 10.5px;
+  font-weight: 500;
+  opacity: 0.85;
 }
 
 /* ===== Lista de CVs ===== */

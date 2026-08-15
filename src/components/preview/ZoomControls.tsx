@@ -30,14 +30,6 @@ export function ZoomControls({ effectiveZoom, fitZoom }: { effectiveZoom: number
       >
         Ajustar
       </button>
-      <button
-        type="button"
-        className="btn-secondary btn-small zoom-action"
-        onClick={() => setZoom(1)}
-        title="Tamaño real (100%)"
-      >
-        100%
-      </button>
     </div>
   );
 }

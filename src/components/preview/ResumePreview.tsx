@@ -45,12 +45,26 @@ export function ResumePreview({
     return () => ro.disconnect();
   }, [onFitReady]);
 
-  // Overflow: el contenido del documento supera la altura de una hoja A4.
+  // Overflow REAL: el último bloque de contenido supera la altura de una hoja A4.
+  // Se mide el borde inferior del último hijo con contenido (ignora padding/margen
+  // final = espacio en blanco) para no paginar ni marcar de más.
   useEffect(() => {
     const el = docRef.current;
     if (!el) return;
+    const pageH = PAGE_H * MM_TO_PX;
     const check = () => {
-      const o = el.scrollHeight > PAGE_H * MM_TO_PX + 1;
+      // Solo cuentan bloques con contenido REAL (texto o media): un div vacío o el
+      // margen/padding final es espacio en blanco y no debe marcar ni paginar de más.
+      let realBottom = 0;
+      for (const child of Array.from(el.children)) {
+        const h = (child as HTMLElement).offsetHeight;
+        const top = (child as HTMLElement).offsetTop;
+        if (h <= 0) continue;
+        const hasText = ((child as HTMLElement).innerText ?? '').trim().length > 0;
+        const hasMedia = (child as HTMLElement).querySelector('img, svg, table') !== null;
+        if ((hasText || hasMedia) && top + h > realBottom) realBottom = top + h;
+      }
+      const o = realBottom > pageH + 2;
       setOverflow(o);
       onOverflowChange?.(o);
     };
@@ -81,16 +95,20 @@ export function ResumePreview({
           <div className="doc-page" ref={docRef}>
             <TemplateRenderer resume={resume} />
           </div>
-          {overflow && (
-            <div className="page-break-marker" role="status">
-              <span className="page-break-line" />
-              <span className="page-break-label">
-                <AlertIcon width={12} height={12} />
-                Fin de la página 1 — el contenido continúa (se paginará a una 2.ª hoja)
-              </span>
-            </div>
-          )}
         </div>
+        {/* Marcador FUERA del frame escalado: queda legible a cualquier zoom. */}
+        {overflow && (
+          <div className="page-break-marker" style={{ top: `${PAGE_H * effective}mm` }} role="status">
+            <span className="page-break-line" />
+            <span className="page-break-label">
+              <AlertIcon width={18} height={18} />
+              <span className="page-break-label-text">
+                <strong>Fin de la página 1</strong>
+                <small>El contenido continúa en una 2.ª hoja</small>
+              </span>
+            </span>
+          </div>
+        )}
       </div>
     </div>
   );

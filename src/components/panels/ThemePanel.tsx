@@ -2,8 +2,8 @@ import { FONTS, FONT_IDS } from '../../lib/fonts';
 import { useResumeStore } from '../../store/resumeStore';
 import { useUiStore } from '../../store/uiStore';
 import type { Resume } from '../../types/resume';
-import type { FontId, HeaderStyle, SpacingPreset } from '../../types/theme';
 import { ToggleField } from '../editor/fields';
+import { Select } from '../ui/Select';
 import { XIcon } from '../ui/icons';
 
 export function ThemePanel({ resume }: { resume: Resume }) {
@@ -36,13 +36,12 @@ export function ThemePanel({ resume }: { resume: Resume }) {
 
         <label className="field">
           <span className="field-label">Tipografía (ATS-safe)</span>
-          <select value={t.fontFamily} onChange={(e) => set({ fontFamily: e.target.value as FontId })}>
-            {FONT_IDS.map((id) => (
-              <option key={id} value={id}>
-                {FONTS[id].label}
-              </option>
-            ))}
-          </select>
+          <Select
+            options={FONT_IDS.map((id) => ({ value: id, label: FONTS[id].label }))}
+            value={t.fontFamily}
+            onChange={(fontFamily) => set({ fontFamily })}
+            ariaLabel="Tipografía"
+          />
         </label>
 
         <label className="field">
@@ -71,20 +70,30 @@ export function ThemePanel({ resume }: { resume: Resume }) {
 
         <label className="field">
           <span className="field-label">Espaciado</span>
-          <select value={t.spacing} onChange={(e) => set({ spacing: e.target.value as SpacingPreset })}>
-            <option value="compact">Compacto</option>
-            <option value="comfortable">Cómodo</option>
-            <option value="relaxed">Espaciado</option>
-          </select>
+          <Select
+            options={[
+              { value: 'compact', label: 'Compacto' },
+              { value: 'comfortable', label: 'Cómodo' },
+              { value: 'relaxed', label: 'Espaciado' },
+            ]}
+            value={t.spacing}
+            onChange={(spacing) => set({ spacing })}
+            ariaLabel="Espaciado"
+          />
         </label>
 
         <label className="field">
           <span className="field-label">Estilo de títulos</span>
-          <select value={t.headerStyle} onChange={(e) => set({ headerStyle: e.target.value as HeaderStyle })}>
-            <option value="accent-bar">Barra de acento</option>
-            <option value="underline">Subrayado</option>
-            <option value="simple">Simple</option>
-          </select>
+          <Select
+            options={[
+              { value: 'accent-bar', label: 'Barra de acento' },
+              { value: 'underline', label: 'Subrayado' },
+              { value: 'simple', label: 'Simple' },
+            ]}
+            value={t.headerStyle}
+            onChange={(headerStyle) => set({ headerStyle })}
+            ariaLabel="Estilo de títulos"
+          />
         </label>
 
         <ToggleField

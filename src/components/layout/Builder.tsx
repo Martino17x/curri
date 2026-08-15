@@ -11,7 +11,7 @@ import { SectionsPanel } from '../panels/SectionsPanel';
 import { ThemePanel } from '../panels/ThemePanel';
 import { ResumePreview } from '../preview/ResumePreview';
 import { ZoomControls } from '../preview/ZoomControls';
-import { EyeIcon, EyeOffIcon } from '../ui/icons';
+import { EyeIcon, EyeOffIcon, PrinterIcon } from '../ui/icons';
 
 export function Builder({ resume }: { resume: Resume }) {
   const { presetZoom, isCompact } = useDeviceTier();
@@ -73,6 +73,16 @@ export function Builder({ resume }: { resume: Resume }) {
           <button
             type="button"
             className="btn-primary btn-small"
+            onClick={handleExportPdf}
+            disabled={exportingPdf}
+            title="Imprimir el CV (abre el diálogo de impresión)"
+          >
+            <PrinterIcon width={14} height={14} />
+            Imprimir
+          </button>
+          <button
+            type="button"
+            className="btn-secondary btn-small"
             onClick={handleExportPdf}
             disabled={exportingPdf}
           >

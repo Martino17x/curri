@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import { MESES_CORTO } from '../../lib/dates';
 import type { DateRef } from '../../types/resume';
+import { Select } from '../ui/Select';
 
 export function TextField({
   label,
@@ -84,21 +85,20 @@ export function MonthYearPicker({
     <div className="month-year">
       <span className="field-label">{label}</span>
       <div className="month-year-inputs">
-        <select
-          value={value?.month ?? ''}
+        <Select
+          className="select--month"
+          options={[
+            { value: '', label: 'Mes' },
+            ...MESES_CORTO.slice(1).map((m, i) => ({ value: String(i + 1), label: m })),
+          ]}
+          value={value?.month ? String(value.month) : ''}
           disabled={disabled}
-          onChange={(e) => {
-            const month = e.target.value ? Number(e.target.value) : undefined;
+          onChange={(v) => {
+            const month = v ? Number(v) : undefined;
             onChange(value ? { ...value, month } : { year: new Date().getFullYear(), month });
           }}
-        >
-          <option value="">Mes</option>
-          {MESES_CORTO.slice(1).map((m, i) => (
-            <option key={i + 1} value={i + 1}>
-              {m}
-            </option>
-          ))}
-        </select>
+          ariaLabel="Mes"
+        />
         <input
           type="number"
           min={1950}

@@ -1,6 +1,13 @@
 import { useResumeStore } from '../../store/resumeStore';
 import { useUiStore } from '../../store/uiStore';
 import type { TemplateId } from '../../types/resume';
+import { Select } from '../ui/Select';
+
+const TEMPLATE_OPTIONS: { value: TemplateId; label: string }[] = [
+  { value: 'modern', label: 'Moderna' },
+  { value: 'classic', label: 'Clásica' },
+  { value: 'minimal', label: 'Mínima' },
+];
 
 export function Header({ resume }: { resume?: { id: string; documentName: string; templateId: TemplateId } }) {
   const resumes = useResumeStore((s) => s.resumes);
@@ -14,42 +21,44 @@ export function Header({ resume }: { resume?: { id: string; documentName: string
 
   return (
     <header className="app-header">
-      <button type="button" className="logo" onClick={() => setView({ name: 'list' })}>
-        Curri
-      </button>
+      <div className="header-brand">
+        <button type="button" className="logo" onClick={() => setView({ name: 'list' })} title="Volver a tus CVs">
+          Curri
+        </button>
+      </div>
 
       {resume && (
         <>
-          <select
-            className="doc-select"
-            value={resume.id}
-            onChange={(e) => setActiveResume(e.target.value)}
-            title="Elegí otro CV"
-          >
-            {resumes.map((r) => (
-              <option key={r.id} value={r.id}>
-                {r.documentName}
-              </option>
-            ))}
-          </select>
+          <span className="header-sep" aria-hidden="true" />
 
-          <input
-            className="doc-name-input"
-            value={resume.documentName}
-            onChange={(e) => renameResume(resume.id, e.target.value)}
-            aria-label="Nombre del documento"
-          />
+          <div className="doc-controls">
+            <Select
+              className="select--sm"
+              options={resumes.map((r) => ({ value: r.id, label: r.documentName || 'Sin nombre' }))}
+              value={resume.id}
+              onChange={setActiveResume}
+              ariaLabel="Elegí otro CV"
+            />
+            <input
+              className="doc-name-input"
+              value={resume.documentName}
+              onChange={(e) => renameResume(resume.id, e.target.value)}
+              aria-label="Nombre del documento"
+              placeholder="Nombre del CV"
+            />
+          </div>
+
+          <span className="header-sep" aria-hidden="true" />
 
           <div className="header-actions">
-            <select
+            <Select
+              className="select--sm select--template"
+              options={TEMPLATE_OPTIONS}
               value={resume.templateId}
-              onChange={(e) => setTemplate(resume.id, e.target.value as TemplateId)}
-              title="Plantilla"
-            >
-              <option value="modern">Plantilla: Moderna</option>
-              <option value="classic">Plantilla: Clásica</option>
-              <option value="minimal">Plantilla: Mínima</option>
-            </select>
+              onChange={(v) => setTemplate(resume.id, v as TemplateId)}
+              ariaLabel="Plantilla"
+              placeholder="Plantilla"
+            />
             <button
               type="button"
               className="btn-secondary"
