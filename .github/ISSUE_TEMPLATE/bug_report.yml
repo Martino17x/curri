@@ -1,0 +1,37 @@
+name: Reporte de bug
+description: Algo no funciona como debería
+title: "bug: "
+labels: ["bug"]
+body:
+  - type: textarea
+    id: descripcion
+    attributes:
+      label: Descripción
+      description: Qué esperabas que pase y qué pasó en realidad.
+    validations:
+      required: true
+  - type: textarea
+    id: pasos
+    attributes:
+      label: Pasos para reproducir
+      placeholder: |
+        1. Ir a ...
+        2. Hacer clic en ...
+        3. Ver el error
+  - type: dropdown
+    id: navegador
+    attributes:
+      label: Navegador
+      options:
+        - Chrome
+        - Edge
+        - Firefox
+        - Safari
+        - Otro
+    validations:
+      required: true
+  - type: textarea
+    id: contexto
+    attributes:
+      label: Contexto adicional
+      description: Capturas de pantalla, consola, etc.

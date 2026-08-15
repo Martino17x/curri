@@ -2,7 +2,13 @@ node_modules
 dist
 dist-ssr*
 .DS_Store
+Thumbs.db
 *.local
 *.log
+.env
+.env.*
+!.env.example
+coverage
+*.tgz
 scripts/.smoke
 scripts/.vision

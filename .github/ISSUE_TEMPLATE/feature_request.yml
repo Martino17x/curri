@@ -1,0 +1,23 @@
+name: Solicitud de feature
+description: Proponé una mejora o funcionalidad nueva
+title: "feat: "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problema
+    attributes:
+      label: ¿Qué problema resuelve?
+      description: Describí el caso de uso y por qué lo necesitás.
+    validations:
+      required: true
+  - type: textarea
+    id: propuesta
+    attributes:
+      label: Propuesta
+      description: Cómo imaginás la solución (puede ser aproximado).
+  - type: checkboxes
+    id: contribucion
+    attributes:
+      label: ¿Te gustaría implementarla?
+      options:
+        - label: Sí, puedo mandar un PR
