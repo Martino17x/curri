@@ -531,6 +531,22 @@ button svg {
   color: var(--ui-text);
   width: 100%;
 }
+/* Controles con la identidad de la app, no el skin nativo del sistema. */
+input[type='checkbox'],
+input[type='radio'] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--ui-accent);
+  cursor: pointer;
+}
+.field--toggle input[type='checkbox'] {
+  width: 18px;
+  height: 18px;
+}
+input[type='range'] {
+  accent-color: var(--ui-accent);
+  cursor: pointer;
+}
 .field textarea {
   resize: vertical;
 }

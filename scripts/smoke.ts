@@ -4,18 +4,21 @@ import { buildStandaloneHtml } from '../src/lib/exportPdf';
 const html = buildStandaloneHtml(createSampleResume());
 
 const checks: Array<[string, string]> = [
-  ['nombre', 'Sofía Herrera'],
-  ['título', 'Desarrolladora Frontend'],
-  ['email', 'sofia.herrera@email.com'],
+  ['nombre', 'Martino Costigliolo'],
+  ['título', 'Desarrollador de Software'],
+  ['email', 'martinoldcostigliolo@gmail.com'],
   ['header experiencia', 'Experiencia laboral'],
-  ['empresa', 'Nubel S.A.'],
-  ['fecha rango', 'Mar 2024 – Presente'],
-  ['header habilidades', 'Habilidades'],
+  ['empresa', 'Cuenca Hogar'],
+  ['fecha rango', 'Feb 2025 – Nov 2025'],
+  ['header formación', 'Formación'],
+  ['técnico', 'Técnico Superior en Desarrollo de Software'],
+  ['header competencias', 'Competencias'],
   ['skill React', 'React'],
-  ['header idiomas', 'Idiomas'],
-  ['proyecto', 'Curri — editor de CV'],
-  ['certificación', 'Fundamentos de AWS Cloud'],
-  ['intereses', 'Ajedrez'],
+  ['skill gestión', 'Gestión de proyectos'],
+  ['header proyectos', 'Proyectos'],
+  ['proyecto 1', 'Equarys'],
+  ['url proyecto', 'equarys.com'],
+  ['proyecto 2', 'Sentinel Tracker'],
 ];
 
 const missing = checks.filter(([, needle]) => !html.includes(needle));

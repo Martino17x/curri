@@ -222,10 +222,24 @@ export function ensurePresets() {
   let changed = false;
   let nextCommercialSeeded = commercialSeeded;
 
-  // 1) Dedupe: quita el "Mi CV de ejemplo" duplicado por el bug de StrictMode.
+  // 1) Migración del sample: el viejo CV de ejemplo (Sofía Herrera) se reemplaza
+  //    por el CV personal (Martino) en cuentas que ya lo tenían guardado.
+  const LEGACY_SAMPLE_EMAIL = 'sofia.herrera@email.com';
+  const legacyIdx = next.findIndex((r) => r.documentName === 'Mi CV de ejemplo');
+  if (legacyIdx >= 0) {
+    const basics = next[legacyIdx].sections.find((s) => s.type === 'basics');
+    const email =
+      basics && 'fields' in basics ? ((basics.fields as { email?: string }).email ?? '') : '';
+    if (email === LEGACY_SAMPLE_EMAIL) {
+      next = [...next.slice(0, legacyIdx), createSampleResume(), ...next.slice(legacyIdx + 1)];
+      changed = true;
+    }
+  }
+
+  // 2) Dedupe: quita el "Mi CV de ejemplo" duplicado por el bug de StrictMode.
   const seen = new Set<string>();
   const deduped: Resume[] = [];
-  for (const r of resumes) {
+  for (const r of next) {
     if (r.documentName === 'Mi CV de ejemplo' && seen.has('Mi CV de ejemplo')) continue;
     seen.add(r.documentName);
     deduped.push(r);
@@ -235,7 +249,7 @@ export function ensurePresets() {
     changed = true;
   }
 
-  // 2) Usuario nuevo: sembrar los dos presets.
+  // 3) Usuario nuevo: sembrar los dos presets.
   if (next.length === 0 && !seeded) {
     next = [createSampleResume(), createCommercialSampleResume()];
     nextCommercialSeeded = true;

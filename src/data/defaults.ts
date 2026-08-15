@@ -1,6 +1,5 @@
 import { uid } from '../lib/id';
 import type {
-  CertificateItem,
   DateRef,
   EducationItem,
   LanguageItem,
@@ -161,34 +160,60 @@ export const SECTION_TYPE_ORDER: SectionType[] = [
 
 const d = (year: number, month?: number): DateRef => ({ year, month });
 
-/** CV de ejemplo que demuestra todos los tipos de sección. */
+/**
+ * CV personal de ejemplo (Martino Costigliolo), replicado desde
+ * martino-curriculum.notion.site. Es el CV que ve quien abre la app.
+ * Selección pensada para entrar en UNA hoja A4 con tema compacto:
+ * - 3 empleos (se descarta Daniel Sport, el más viejo y menos relevante).
+ * - Formación completa (4 ítems) con detalles cortos.
+ * - Habilidades agrupadas: tecnologías + gestión + comercial/análisis.
+ * - 4 proyectos con resumen de una línea (se omite el detalle largo).
+ * - Sin idiomas (no declarados en la fuente) ni intereses (no declarados).
+ */
 export function createSampleResume(): Resume {
   const work: WorkItem[] = [
     {
       id: uid(),
-      position: 'Desarrolladora Frontend',
-      company: 'Nubel S.A.',
+      position: 'Encargado de Postventa',
+      company: 'Cuenca Hogar – Tienda de Electrodomésticos',
       location: 'Córdoba, Argentina',
-      start: d(2024, 3),
-      end: null,
-      current: true,
-      summary: 'Mantenimiento y desarrollo de una plataforma web de facturación para +2.000 pymes.',
+      start: d(2025, 2),
+      end: d(2025, 11),
+      current: false,
+      summary: '',
       highlights: [
-        'Migré el dashboard principal de JavaScript a React + TypeScript, reduciendo errores en runtime un 40%.',
-        'Implementé diseño responsive y accesibilidad (WCAG AA) en módulos de alta demanda.',
+        'Optimicé los procesos de respuesta y creé estrategias de comunicación que aumentaron la eficiencia del sector.',
+        'Realicé evaluaciones de riesgo, gestión de cambio y de presupuesto; preparé informes de estado, recomendación y mercado desde cero.',
+        'Incorporé metodologías y prácticas de gestión de proyectos en la operación diaria.',
       ],
     },
     {
       id: uid(),
-      position: 'Desarrolladora Web Trainee',
-      company: 'Estudio Digital Pixel',
+      position: 'Promotor de ventas',
+      company: 'Bancor – Banco de la Provincia de Córdoba',
       location: 'Córdoba, Argentina',
-      start: d(2023, 2),
-      end: d(2024, 2),
+      start: d(2022, 5),
+      end: d(2022, 12),
       current: false,
-      summary: 'Desarrollo de landing pages y tiendas en línea para clientes locales.',
+      summary: '',
       highlights: [
-        'Maqueté 15+ sitios con HTML, CSS y JavaScript vanilla, optimizados para SEO.',
+        'Realicé demostraciones prácticas del producto (Posnet) destacando sus ventajas frente a la competencia.',
+        'Mantuve seguimiento postventa y soporte en la implementación para garantizar la satisfacción del cliente.',
+        'Me formé en comunicación, manejo de objeciones, persuasión y cierre de negociación.',
+      ],
+    },
+    {
+      id: uid(),
+      position: 'Vendedor y diseño gráfico',
+      company: 'Angelicos – Regalería y sublimación',
+      location: '',
+      start: d(2022),
+      end: d(2023),
+      current: false,
+      summary: '',
+      highlights: [
+        'Apliqué conocimientos de diseño gráfico (Corel Draw) para crear diseños únicos en productos.',
+        'Monitoreé ventas diarias, manejé caja y aporté en reuniones de equipo y sesiones creativas.',
       ],
     },
   ];
@@ -196,69 +221,114 @@ export function createSampleResume(): Resume {
   const education: EducationItem[] = [
     {
       id: uid(),
-      degree: 'Técnico Universitario en Programación',
-      institution: 'Universidad Tecnológica Nacional',
+      degree: 'Técnico Superior en Desarrollo de Software',
+      institution: 'Universidad Provincial de Córdoba',
       location: 'Córdoba, Argentina',
-      start: d(2022, 3),
-      end: d(2025, 12),
-      current: false,
-      description: 'Orientación en desarrollo web.',
+      start: d(2024),
+      end: null,
+      current: true,
+      description: 'Desarrollo de aplicaciones web y gestión de proyectos de software.',
     },
     {
       id: uid(),
-      degree: 'Curso de React y TypeScript',
-      institution: 'Plataforma online',
-      start: d(2024, 1),
-      end: d(2024, 6),
+      degree: 'JSCAMP – React, Testing, IA, SQL, DevOps y Docker',
+      institution: 'InfoJobs',
+      start: d(2025, 10),
+      end: d(2026, 2),
       current: false,
-      description: '60 horas: React, hooks y TypeScript.',
+      description: 'Especialización práctica en desarrollo frontend y backend.',
+    },
+    {
+      id: uid(),
+      degree: 'HTML y CSS – validación universitaria',
+      institution: 'Instituto Instrumenta | UTN',
+      start: d(2022, 6),
+      end: d(2023, 1),
+      current: false,
+      description: '',
+    },
+    {
+      id: uid(),
+      degree: 'Certificación en Diseño Gráfico',
+      institution: 'Instituto Santo Domingo',
+      start: d(2019, 6),
+      end: d(2019, 12),
+      current: false,
+      description: 'Vectorización con Corel Draw.',
     },
   ];
 
   const skills: SkillGroup[] = [
     {
       id: uid(),
-      name: 'Frontend',
-      keywords: ['React', 'TypeScript', 'HTML', 'CSS'],
+      name: 'Tecnologías',
+      keywords: ['React', 'TypeScript', 'Node.js', 'SQL', 'Testing', 'Docker', 'DevOps', 'IA'],
     },
     {
       id: uid(),
-      name: 'Backend y datos',
-      keywords: ['Node.js', 'PostgreSQL', 'REST'],
+      name: 'Gestión',
+      keywords: [
+        'Gestión de proyectos',
+        'Gestión del cambio',
+        'Gestión de la calidad',
+        'Gestión de presupuesto',
+        'Mejora de procesos',
+      ],
     },
     {
       id: uid(),
-      name: 'Herramientas',
-      keywords: ['Git', 'Figma', 'Jest'],
+      name: 'Comercial y análisis',
+      keywords: [
+        'Negociación',
+        'Comunicación asertiva',
+        'Resolución de negociaciones',
+        'Evaluación de riesgos',
+        'Pensamiento creativo',
+        'Gestión del tiempo',
+      ],
     },
-  ];
-
-  const languages: LanguageItem[] = [
-    { id: uid(), language: 'Español', level: 'Nativo' },
-    { id: uid(), language: 'Inglés', level: 'Intermedio (B1)' },
   ];
 
   const projects: ProjectItem[] = [
     {
       id: uid(),
-      name: 'Curri — editor de CV',
-      url: 'https://github.com/martino/curri',
-      start: d(2026, 8),
+      name: 'Equarys – ERP y Shopping virtual',
+      url: 'https://www.equarys.com/',
+      start: d(2025),
       end: null,
-      current: true,
-      summary: 'Editor de currículums 100% client-side con plantillas ATS-safe.',
-      highlights: [
-        'Exportación de PDF con texto seleccionable (ATS friendly).',
-      ],
+      current: false,
+      summary: 'SaaS multi-tenant de gestión operativa, comercial y financiera con facturación electrónica y portal de compras.',
+      highlights: [],
     },
-  ];
-
-  const certificates: CertificateItem[] = [
     {
       id: uid(),
-      name: 'Fundamentos de AWS Cloud',
-      issuer: 'AWS Academy',
-      date: '2025-05',
+      name: 'Sentinel Tracker – Control de Gastos',
+      url: 'https://sentinel-tracker.vercel.app/',
+      start: d(2025),
+      end: null,
+      current: false,
+      summary: 'App de control de gastos con recurrencias, reportes y metas de ahorro.',
+      highlights: [],
+    },
+    {
+      id: uid(),
+      name: 'Circulapp – Marketplace de Economía Circular',
+      url: 'https://circulapp.vercel.app/',
+      start: d(2025),
+      end: null,
+      current: false,
+      summary: 'Marketplace de reutilización de recursos para la comuna de Charbonier, Córdoba.',
+      highlights: [],
+    },
+    {
+      id: uid(),
+      name: 'Atenea – Task Manager',
+      url: 'https://atenea-task.vercel.app/login',
+      start: d(2025),
+      end: null,
+      current: false,
+      summary: 'Organización de tareas con múltiples entornos de trabajo por cliente.',
+      highlights: [],
     },
   ];
 
@@ -268,7 +338,7 @@ export function createSampleResume(): Resume {
     updatedAt: now(),
     templateId: 'modern',
     // Tema compacto a propósito: el ejemplo debe entrar en UNA hoja A4.
-    theme: { ...DEFAULT_THEME, baseFontSize: 10, spacing: 'compact' },
+    theme: { ...DEFAULT_THEME, baseFontSize: 10, headingScale: 1.12, spacing: 'compact', headerStyle: 'accent-bar' },
     sections: [
       {
         id: uid(),
@@ -276,13 +346,13 @@ export function createSampleResume(): Resume {
         title: 'Datos personales',
         visible: true,
         fields: {
-          name: 'Sofía Herrera',
-          label: 'Desarrolladora Frontend',
-          email: 'sofia.herrera@email.com',
-          phone: '(351) 555-1234',
-          location: 'Córdoba, Argentina',
-          linkedin: 'linkedin.com/in/sofiaherrera',
-          website: 'sofiaherrera.dev',
+          name: 'Martino Costigliolo',
+          label: 'Desarrollador de Software · Gestión Comercial',
+          email: 'martinoldcostigliolo@gmail.com',
+          phone: '(+54) 3549-436561',
+          location: 'Cruz del Eje, Córdoba, Argentina',
+          linkedin: '',
+          website: '',
           photo: null,
         },
       },
@@ -292,15 +362,12 @@ export function createSampleResume(): Resume {
         title: 'Resumen profesional',
         visible: true,
         text:
-          'Desarrolladora frontend con 2 años de experiencia en aplicaciones web con React y TypeScript. Me especializo en interfaces accesibles y código limpio.',
+          'Apasionado por las ventas y el desarrollo de software, con trayectoria constante en la entrega de metas a tiempo y dentro de las especificaciones, superando expectativas. Estudiante avanzado de Desarrollo de Software con experiencia en atención al cliente, postventa y gestión comercial.',
       },
       { id: uid(), type: 'experience', title: 'Experiencia laboral', visible: true, items: work },
-      { id: uid(), type: 'education', title: 'Educación', visible: true, items: education },
-      { id: uid(), type: 'skills', title: 'Habilidades', visible: true, groups: skills },
-      { id: uid(), type: 'languages', title: 'Idiomas', visible: true, items: languages },
+      { id: uid(), type: 'education', title: 'Formación', visible: true, items: education },
+      { id: uid(), type: 'skills', title: 'Competencias', visible: true, groups: skills },
       { id: uid(), type: 'projects', title: 'Proyectos', visible: true, items: projects },
-      { id: uid(), type: 'certificates', title: 'Certificaciones', visible: true, items: certificates },
-      { id: uid(), type: 'interests', title: 'Intereses', visible: true, items: ['Ajedrez', 'Open Source', 'Música'] },
     ],
   };
 }

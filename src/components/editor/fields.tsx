@@ -99,17 +99,23 @@ export function MonthYearPicker({
           }}
           ariaLabel="Mes"
         />
+        {/* Año: input de texto + teclado numérico (sin spinners nativos de number) */}
         <input
-          type="number"
-          min={1950}
-          max={2100}
+          type="text"
+          inputMode="numeric"
+          autoComplete="off"
+          maxLength={4}
           placeholder="Año"
-          value={value?.year ?? ''}
+          value={value?.year?.toString() ?? ''}
           disabled={disabled}
           onChange={(e) => {
-            const year = Number(e.target.value);
-            if (Number.isNaN(year)) return;
-            onChange(value ? { ...value, year } : { year });
+            const digits = e.target.value.replace(/\D/g, '').slice(0, 4);
+            if (!digits) {
+              // El año es obligatorio: si se vacía, se restaura el valor previo.
+              e.target.value = value?.year?.toString() ?? '';
+              return;
+            }
+            onChange(value ? { ...value, year: Number(digits) } : { year: Number(digits) });
           }}
         />
       </div>
