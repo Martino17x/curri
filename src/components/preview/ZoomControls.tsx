@@ -1,4 +1,5 @@
 import { useUiStore } from '../../store/uiStore';
+import { MinusIcon, PlusIcon } from '../ui/icons';
 
 export function ZoomControls({ effectiveZoom, fitZoom }: { effectiveZoom: number; fitZoom: number }) {
   const setZoom = useUiStore((s) => s.setZoom);
@@ -10,7 +11,7 @@ export function ZoomControls({ effectiveZoom, fitZoom }: { effectiveZoom: number
         onClick={() => setZoom(Math.max(0.3, +(effectiveZoom - 0.1).toFixed(2)))}
         aria-label="Alejar"
       >
-        −
+        <MinusIcon />
       </button>
       <span className="zoom-value">{Math.round(effectiveZoom * 100)}%</span>
       <button
@@ -19,7 +20,7 @@ export function ZoomControls({ effectiveZoom, fitZoom }: { effectiveZoom: number
         onClick={() => setZoom(Math.min(2, +(effectiveZoom + 0.1).toFixed(2)))}
         aria-label="Acercar"
       >
-        +
+        <PlusIcon />
       </button>
       <button
         type="button"

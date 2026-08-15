@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import type { Resume } from '../../types/resume';
 import { TemplateRenderer } from './TemplateRenderer';
+import { AlertIcon } from '../ui/icons';
 
 const PAGE_W = 210; // mm
 const PAGE_H = 297; // mm
@@ -84,7 +85,8 @@ export function ResumePreview({
             <div className="page-break-marker" role="status">
               <span className="page-break-line" />
               <span className="page-break-label">
-                ⚠ Fin de la página 1 — el contenido continúa (se paginará a una 2.ª hoja)
+                <AlertIcon width={12} height={12} />
+                Fin de la página 1 — el contenido continúa (se paginará a una 2.ª hoja)
               </span>
             </div>
           )}

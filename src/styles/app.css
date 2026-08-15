@@ -4,6 +4,35 @@
   flex-direction: column;
 }
 
+/* ===== Accesibilidad: foco visible + movimiento suave ===== */
+:focus-visible {
+  outline: 2px solid var(--ui-accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+button,
+input,
+select,
+textarea {
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease,
+    color 150ms ease,
+    box-shadow 150ms ease;
+}
+button svg {
+  flex-shrink: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
 /* ===== Header ===== */
 .app-header {
   display: flex;
@@ -110,6 +139,9 @@
   margin-bottom: 0.75rem;
 }
 .btn-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
   border: none;
   background: none;
   color: var(--ui-accent);
@@ -164,12 +196,14 @@
   opacity: 0.5;
 }
 .drag-handle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   cursor: grab;
   border: none;
   background: none;
-  font-size: 1rem;
   color: var(--ui-text-muted);
-  padding: 0 0.2rem;
+  padding: 0.25rem;
   touch-action: none;
 }
 .section-row-title {
@@ -221,6 +255,10 @@
 
 /* ===== Botones ===== */
 .btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
   background: var(--ui-accent);
   color: #fff;
   border: none;
@@ -231,9 +269,13 @@
   font-size: 0.85rem;
 }
 .btn-primary:hover {
-  filter: brightness(1.08);
+  background: var(--ui-accent-strong);
 }
 .btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
   background: var(--ui-surface);
   color: var(--ui-text);
   border: 1px solid var(--ui-border);
@@ -261,12 +303,14 @@
   font-size: 0.78rem;
 }
 .btn-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   border: none;
   background: none;
   cursor: pointer;
   color: var(--ui-text-muted);
-  font-size: 0.9rem;
-  padding: 0.2rem 0.35rem;
+  padding: 0.35rem;
   border-radius: 6px;
   line-height: 1;
 }
@@ -437,6 +481,17 @@
   z-index: 30;
   padding: 1rem;
   overflow: auto;
+  animation: drawer-in 220ms ease;
+}
+@keyframes drawer-in {
+  from {
+    transform: translateX(24px);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
 }
 .drawer-head {
   display: flex;
@@ -530,6 +585,9 @@
   margin-top: 1px;
 }
 .ats-ok {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
   color: var(--ui-success);
   font-weight: 600;
   font-size: 0.9rem;
@@ -616,6 +674,9 @@
   border-top: 2px dashed #f59e0b;
 }
 .page-break-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
   background: #fffbeb;
   border: 1px solid #fde68a;
   color: #92400e;
@@ -697,8 +758,8 @@
   color: var(--ui-accent);
 }
 .resume-card-plus {
-  font-size: 1.5rem;
-  line-height: 1;
+  display: inline-flex;
+  color: var(--ui-accent);
 }
 
 /* ===== Responsive ===== */
@@ -730,6 +791,29 @@
     margin-left: 0;
     flex-wrap: wrap;
   }
+  /* Touch targets de 44px en pantallas táctiles */
+  .btn-icon,
+  .drag-handle {
+    min-width: 44px;
+    min-height: 44px;
+  }
+  .btn-small {
+    min-height: 40px;
+  }
+  .builder-mobile-bar .btn {
+    min-height: 44px;
+    padding: 0.5rem 1rem;
+  }
+  .zoom-controls .zoom-step {
+    width: 40px;
+    height: 40px;
+  }
+  .zoom-controls .zoom-action {
+    min-height: 40px;
+  }
+  .section-row {
+    padding: 0.4rem 0.4rem;
+  }
 }
 
 /* ===== Modal ===== */
@@ -742,6 +826,7 @@
   justify-content: center;
   z-index: 100;
   padding: 1rem;
+  animation: overlay-in 180ms ease;
 }
 .modal {
   background: var(--ui-surface);
@@ -750,6 +835,25 @@
   width: 100%;
   max-width: 440px;
   padding: 1.25rem;
+  animation: modal-in 200ms ease;
+}
+@keyframes overlay-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes modal-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 .modal-head {
   display: flex;

@@ -1,5 +1,6 @@
 import { useResumeStore } from '../../store/resumeStore';
 import { useUiStore } from '../../store/uiStore';
+import { PlusIcon, SparklesIcon } from '../ui/icons';
 
 function formatUpdated(iso: string): string {
   if (!iso) return '';
@@ -66,7 +67,9 @@ export function ResumeList() {
             open(id);
           }}
         >
-          <span className="resume-card-plus">+</span>
+          <span className="resume-card-plus">
+            <PlusIcon width={22} height={22} />
+          </span>
           <span>Nuevo CV</span>
         </button>
 
@@ -78,7 +81,9 @@ export function ResumeList() {
             open(id);
           }}
         >
-          <span className="resume-card-plus">✦</span>
+          <span className="resume-card-plus">
+            <SparklesIcon width={22} height={22} />
+          </span>
           <span>Cargar CV de ejemplo</span>
         </button>
       </div>

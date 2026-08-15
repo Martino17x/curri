@@ -16,8 +16,8 @@ import type { SpacingPreset, ThemeConfig } from '../types/theme';
 export const DEFAULT_THEME: ThemeConfig = {
   accentColor: '#1e3a5f',
   fontFamily: 'helvetica',
-  baseFontSize: 10.5,
-  headingScale: 1.35,
+  baseFontSize: 10,
+  headingScale: 1.25,
   spacing: 'comfortable',
   headerStyle: 'accent-bar',
   nameUppercase: true,
@@ -25,9 +25,9 @@ export const DEFAULT_THEME: ThemeConfig = {
 };
 
 export const SPACING_PX: Record<SpacingPreset, number> = {
-  compact: 6,
-  comfortable: 10,
-  relaxed: 15,
+  compact: 5,
+  comfortable: 8,
+  relaxed: 12,
 };
 
 const now = () => new Date().toISOString();

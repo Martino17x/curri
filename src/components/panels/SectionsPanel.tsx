@@ -20,6 +20,7 @@ import { useResumeStore } from '../../store/resumeStore';
 import { useUiStore } from '../../store/uiStore';
 import type { Resume, Section } from '../../types/resume';
 import { SectionForms } from '../editor/SectionForms';
+import { ChevronLeftIcon, EyeIcon, EyeOffIcon, GearIcon, GripIcon, PlusIcon, XIcon } from '../ui/icons';
 
 function SortableRow({
   section,
@@ -45,14 +46,14 @@ function SortableRow({
           {...attributes}
           {...listeners}
         >
-          ⠿
+          <GripIcon width={18} height={18} />
         </button>
       )}
       <button type="button" className="section-row-title" onClick={onActivate} title="Configurar sección">
         {section.title}
       </button>
       <button type="button" className="btn-icon" title="Configurar sección" onClick={onActivate}>
-        ⚙
+        <GearIcon />
       </button>
       <button
         type="button"
@@ -60,11 +61,11 @@ function SortableRow({
         title={section.visible ? 'Ocultar sección' : 'Mostrar sección'}
         onClick={onToggle}
       >
-        {section.visible ? '👁' : '—'}
+        {section.visible ? <EyeIcon /> : <EyeOffIcon />}
       </button>
       {!isBasics && (
         <button type="button" className="btn-icon" title="Eliminar sección" onClick={onRemove}>
-          ✕
+          <XIcon />
         </button>
       )}
     </div>
@@ -102,7 +103,8 @@ export function SectionsPanel({ resume }: { resume: Resume }) {
       <div className="panel panel-form">
         <div className="panel-head panel-head--detail">
           <button type="button" className="btn-back" onClick={() => setActiveSectionId(null)}>
-            ← Volver
+            <ChevronLeftIcon width={16} height={16} />
+            Volver
           </button>
         </div>
         <label className="field">
@@ -128,7 +130,8 @@ export function SectionsPanel({ resume }: { resume: Resume }) {
         <h2>Secciones</h2>
         <div className="add-section-wrap">
           <button type="button" className="btn-primary btn-small" onClick={() => setMenuOpen((v) => !v)}>
-            + Agregar
+            <PlusIcon width={14} height={14} />
+            Agregar
           </button>
           {menuOpen && (
             <div className="menu">
@@ -158,7 +161,7 @@ export function SectionsPanel({ resume }: { resume: Resume }) {
           )}
         </div>
       </div>
-      <p className="panel-hint">Tocá una sección (o el ⚙) para configurarla. Arrastrá ⠿ para ordenar.</p>
+      <p className="panel-hint">Tocá una sección para configurarla. Arrastrá el agarre para reordenar.</p>
       <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={onDragEnd}>
         <SortableContext items={sortable.map((s) => s.id)} strategy={verticalListSortingStrategy}>
           {resume.sections.map((s) => (

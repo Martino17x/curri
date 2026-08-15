@@ -7,6 +7,9 @@ import type { HeaderStyle, ThemeConfig } from '../../types/theme';
 
 /** Variables CSS del documento, derivadas del tema. Cambiar el tema = cambiar estos datos. */
 export function docVars(theme: ThemeConfig): CSSProperties {
+  const lineHeight = theme.spacing === 'compact' ? 1.3 : theme.spacing === 'comfortable' ? 1.38 : 1.5;
+  const padY = theme.spacing === 'compact' ? '9mm' : theme.spacing === 'comfortable' ? '11mm' : '14mm';
+  const padX = theme.spacing === 'compact' ? '11mm' : theme.spacing === 'comfortable' ? '13mm' : '16mm';
   return {
     '--doc-font': FONTS[theme.fontFamily].css,
     '--doc-accent': theme.accentColor,
@@ -14,9 +17,11 @@ export function docVars(theme: ThemeConfig): CSSProperties {
     '--doc-muted': '#5b6270',
     '--doc-base-pt': `${theme.baseFontSize}pt`,
     '--doc-heading-pt': `${theme.baseFontSize * theme.headingScale}pt`,
-    '--doc-name-pt': `${theme.baseFontSize * theme.headingScale * 1.25}pt`,
-    '--doc-line-height': '1.45',
+    '--doc-name-pt': `${theme.baseFontSize * theme.headingScale * 1.35}pt`,
+    '--doc-line-height': String(lineHeight),
     '--doc-spacing': `${SPACING_PX[theme.spacing]}pt`,
+    '--doc-pad-y': padY,
+    '--doc-pad-x': padX,
   } as CSSProperties;
 }
 

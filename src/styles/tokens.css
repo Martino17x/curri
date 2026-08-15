@@ -5,13 +5,14 @@
   --ui-border: #e2e4e8;
   --ui-text: #1f2430;
   --ui-text-muted: #6b7280;
-  --ui-accent: #4f46e5;
-  --ui-accent-soft: #eef2ff;
+  --ui-accent: #0f766e;
+  --ui-accent-soft: #e6f4f1;
+  --ui-accent-strong: #0b5f58;
   --ui-danger: #dc2626;
   --ui-warning: #d97706;
   --ui-success: #16a34a;
-  --ui-radius: 10px;
-  --ui-shadow: 0 1px 3px rgba(16, 24, 40, 0.08);
+  --ui-radius: 8px;
+  --ui-shadow: 0 1px 2px rgba(16, 24, 40, 0.06), 0 1px 3px rgba(16, 24, 40, 0.04);
   --ui-font: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 
   /* Resume document tokens (set per-document by ThemeProvider) */

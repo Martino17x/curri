@@ -4,6 +4,7 @@ import { useUiStore } from '../../store/uiStore';
 import type { Resume } from '../../types/resume';
 import type { FontId, HeaderStyle, SpacingPreset } from '../../types/theme';
 import { ToggleField } from '../editor/fields';
+import { XIcon } from '../ui/icons';
 
 export function ThemePanel({ resume }: { resume: Resume }) {
   const updateTheme = useResumeStore((s) => s.updateTheme);
@@ -16,7 +17,7 @@ export function ThemePanel({ resume }: { resume: Resume }) {
       <div className="drawer-head">
         <h2>Tema</h2>
         <button type="button" className="btn-icon" onClick={() => setShowThemePanel(false)}>
-          ✕
+          <XIcon />
         </button>
       </div>
       <div className="form">

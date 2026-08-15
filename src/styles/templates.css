@@ -10,7 +10,7 @@
   font-family: var(--doc-font, 'Helvetica', Arial, sans-serif);
   font-size: var(--doc-base-pt, 10.5pt);
   line-height: var(--doc-line-height, 1.45);
-  padding: 13mm 15mm;
+  padding: var(--doc-pad-y, 11mm) var(--doc-pad-x, 13mm);
   box-sizing: border-box;
 }
 
@@ -53,10 +53,10 @@
 
 /* Secciones */
 .sec {
-  margin-bottom: calc(var(--doc-spacing, 10pt) * 1.4);
+  margin-bottom: calc(var(--doc-spacing, 8pt) * 1.1);
 }
 .sec-title {
-  margin: 0 0 2mm;
+  margin: 0 0 1.6mm;
   font-size: var(--doc-heading-pt, 14pt);
   font-weight: 700;
   color: var(--doc-accent, #1e3a5f);
@@ -85,7 +85,7 @@
 
 /* Entradas (experiencia, educación, proyectos…) */
 .entry {
-  margin-bottom: 2.5mm;
+  margin-bottom: 1.8mm;
 }
 .entry:last-child {
   margin-bottom: 0;
@@ -115,11 +115,11 @@
   margin: 1mm 0 0;
 }
 .bullets {
-  margin: 1.5mm 0 0;
-  padding-left: 5mm;
+  margin: 1mm 0 0;
+  padding-left: 4.5mm;
 }
 .bullets li {
-  margin-bottom: 0.6mm;
+  margin-bottom: 0.45mm;
 }
 .inline-list {
   margin: 0;

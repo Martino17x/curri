@@ -11,6 +11,7 @@ import { SectionsPanel } from '../panels/SectionsPanel';
 import { ThemePanel } from '../panels/ThemePanel';
 import { ResumePreview } from '../preview/ResumePreview';
 import { ZoomControls } from '../preview/ZoomControls';
+import { EyeIcon, EyeOffIcon } from '../ui/icons';
 
 export function Builder({ resume }: { resume: Resume }) {
   const { presetZoom, isCompact } = useDeviceTier();
@@ -115,10 +116,12 @@ export function Builder({ resume }: { resume: Resume }) {
         <div className="builder-mobile-bar">
           <button
             type="button"
-            className={showPreview ? 'btn-secondary' : 'btn-primary'}
+            className={`btn ${showPreview ? 'btn-secondary' : 'btn-primary'}`}
             onClick={() => setShowPreview(!showPreview)}
+            aria-pressed={showPreview}
           >
-            {showPreview ? '✕ Ocultar vista previa' : '👁 Ver vista previa'}
+            {showPreview ? <EyeOffIcon /> : <EyeIcon />}
+            {showPreview ? 'Ocultar vista previa' : 'Ver vista previa'}
           </button>
         </div>
       )}

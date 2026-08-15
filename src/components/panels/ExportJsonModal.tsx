@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { exportJsonResumeWithOptions, type JsonExportFormat } from '../../lib/exportJson';
 import type { Resume } from '../../types/resume';
+import { XIcon } from '../ui/icons';
 
 export function ExportJsonModal({ resume, onClose }: { resume: Resume; onClose: () => void }) {
   const [format, setFormat] = useState<JsonExportFormat>('curri');
@@ -24,7 +25,7 @@ export function ExportJsonModal({ resume, onClose }: { resume: Resume; onClose: 
         <div className="modal-head">
           <h2>Exportar JSON</h2>
           <button type="button" className="btn-icon" onClick={onClose}>
-            ✕
+            <XIcon />
           </button>
         </div>
 
