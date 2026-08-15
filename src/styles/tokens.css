@@ -1,0 +1,44 @@
+:root {
+  /* App UI tokens */
+  --ui-bg: #f4f5f7;
+  --ui-surface: #ffffff;
+  --ui-border: #e2e4e8;
+  --ui-text: #1f2430;
+  --ui-text-muted: #6b7280;
+  --ui-accent: #4f46e5;
+  --ui-accent-soft: #eef2ff;
+  --ui-danger: #dc2626;
+  --ui-warning: #d97706;
+  --ui-success: #16a34a;
+  --ui-radius: 10px;
+  --ui-shadow: 0 1px 3px rgba(16, 24, 40, 0.08);
+  --ui-font: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+
+  /* Resume document tokens (set per-document by ThemeProvider) */
+  --doc-font: 'Helvetica', 'Arial', sans-serif;
+  --doc-accent: #1f2430;
+  --doc-text: #1f2430;
+  --doc-muted: #555c66;
+  --doc-base-pt: 10.5;
+  --doc-heading-pt: 14;
+  --doc-line-height: 1.45;
+  --doc-spacing: 10px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+body {
+  font-family: var(--ui-font);
+  background: var(--ui-bg);
+  color: var(--ui-text);
+}

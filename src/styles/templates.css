@@ -1,0 +1,210 @@
+/* ============================================================
+   CSS del DOCUMENTO (CV). Se usa en preview y en el export PDF.
+   ============================================================ */
+
+.doc-page {
+  width: 210mm;
+  min-height: 297mm;
+  background: #fff;
+  color: var(--doc-text, #1f2430);
+  font-family: var(--doc-font, 'Helvetica', Arial, sans-serif);
+  font-size: var(--doc-base-pt, 10.5pt);
+  line-height: var(--doc-line-height, 1.45);
+  padding: 13mm 15mm;
+  box-sizing: border-box;
+}
+
+/* Header del documento */
+.doc-header {
+  margin-bottom: var(--doc-spacing);
+}
+.doc-photo {
+  width: 22mm;
+  height: 27mm;
+  object-fit: cover;
+  border-radius: 3mm;
+  margin-bottom: 3mm;
+  display: block;
+}
+.doc-name {
+  margin: 0 0 1mm;
+  font-size: var(--doc-name-pt, 18pt);
+  line-height: 1.15;
+  color: var(--doc-accent, #1e3a5f);
+  font-weight: 700;
+  word-break: break-word;
+}
+.doc-name--upper {
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+.doc-label {
+  font-size: calc(var(--doc-base-pt, 10.5pt) * 1.1);
+  color: var(--doc-muted, #5b6270);
+  font-weight: 600;
+  margin-bottom: 1.5mm;
+}
+.contact-line {
+  margin: 0;
+  color: var(--doc-muted, #5b6270);
+  font-size: var(--doc-base-pt, 10.5pt);
+  word-break: break-word;
+}
+
+/* Secciones */
+.sec {
+  margin-bottom: calc(var(--doc-spacing, 10pt) * 1.4);
+}
+.sec-title {
+  margin: 0 0 2mm;
+  font-size: var(--doc-heading-pt, 14pt);
+  font-weight: 700;
+  color: var(--doc-accent, #1e3a5f);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.sec-title--bar {
+  display: flex;
+  align-items: center;
+  gap: 2.5mm;
+}
+.sec-title--bar::after {
+  content: '';
+  flex: 1;
+  height: 0.5mm;
+  background: var(--doc-accent, #1e3a5f);
+}
+.sec-title--underline {
+  border-bottom: 0.4mm solid var(--doc-accent, #1e3a5f);
+  padding-bottom: 1mm;
+}
+.sec-title--simple {
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+/* Entradas (experiencia, educación, proyectos…) */
+.entry {
+  margin-bottom: 2.5mm;
+}
+.entry:last-child {
+  margin-bottom: 0;
+}
+.entry-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 3mm;
+}
+.entry-title {
+  margin: 0;
+  font-size: calc(var(--doc-base-pt, 10.5pt) * 1.05);
+  font-weight: 700;
+  color: var(--doc-text, #1f2430);
+}
+.entry-sub {
+  color: var(--doc-muted, #5b6270);
+  font-size: var(--doc-base-pt, 10.5pt);
+}
+.date-range {
+  white-space: nowrap;
+  color: var(--doc-muted, #5b6270);
+  font-size: var(--doc-base-pt, 10.5pt);
+}
+.text-value {
+  margin: 1mm 0 0;
+}
+.bullets {
+  margin: 1.5mm 0 0;
+  padding-left: 5mm;
+}
+.bullets li {
+  margin-bottom: 0.6mm;
+}
+.inline-list {
+  margin: 0;
+}
+.entry-link {
+  color: var(--doc-accent, #1e3a5f);
+  text-decoration: none;
+  word-break: break-all;
+}
+
+/* Skills / idiomas / certificados */
+.skill-group {
+  margin-bottom: 1mm;
+}
+.skill-name {
+  font-weight: 600;
+}
+.lang-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 3mm;
+  margin-bottom: 0.8mm;
+}
+.cert-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 3mm;
+  margin-bottom: 0.8mm;
+}
+.cert-name {
+  font-weight: 600;
+}
+
+/* Variantes de plantilla */
+.tpl-classic .doc-header {
+  text-align: center;
+}
+.tpl-classic .contact-line {
+  margin-top: 1mm;
+}
+.tpl-classic .sec-title {
+  text-transform: none;
+  letter-spacing: 0.02em;
+  border-bottom: 0.35mm solid #d0d4da;
+  padding-bottom: 0.8mm;
+  color: var(--doc-text, #1f2430);
+}
+.tpl-classic .doc-name {
+  letter-spacing: 0.02em;
+}
+
+.tpl-minimal .doc-name {
+  color: var(--doc-text, #1f2430);
+  letter-spacing: 0.03em;
+}
+.tpl-minimal .doc-label {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: calc(var(--doc-base-pt, 10.5pt) * 0.95);
+}
+.tpl-minimal .sec-title {
+  color: var(--doc-muted, #5b6270);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 600;
+  font-size: calc(var(--doc-heading-pt, 14pt) * 0.9);
+}
+.tpl-minimal .sec {
+  margin-bottom: calc(var(--doc-spacing, 10pt) * 1.8);
+}
+
+/* Impresión: A4 con margen cero; el contenido fluye a más páginas si hace falta. */
+@media print {
+  @page {
+    size: A4;
+    margin: 0;
+  }
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    background: #fff !important;
+  }
+  .doc-page {
+    margin: 0;
+    box-shadow: none;
+  }
+}
