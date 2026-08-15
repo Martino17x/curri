@@ -24,8 +24,8 @@
   gap: 4mm;
 }
 .doc-photo {
-  width: 22mm;
-  height: 28mm;
+  width: 30mm;
+  height: 36mm;
   object-fit: cover;
   border-radius: 3mm;
   flex-shrink: 0;
