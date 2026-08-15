@@ -1,5 +1,5 @@
 import type { Resume, Section } from '../../types/resume';
-import { ContactLine, docVars } from './shared';
+import { ContactLine } from './shared';
 import { SectionView } from './SectionView';
 
 export function TemplateMinimal({ resume }: { resume: Resume }) {
@@ -9,7 +9,7 @@ export function TemplateMinimal({ resume }: { resume: Resume }) {
   const rest = visible.filter((s) => s.type !== 'basics');
 
   return (
-    <div className="tpl tpl-minimal" style={docVars(theme)}>
+    <div className="tpl tpl-minimal">
       <header className="doc-header">
         <h1 className={`doc-name ${theme.nameUppercase ? 'doc-name--upper' : ''}`}>
           {basics?.fields.name}

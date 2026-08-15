@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { createResume, createSampleResume } from '../data/defaults';
+import { createCommercialSampleResume, createResume, createSampleResume } from '../data/defaults';
 import { uid } from '../lib/id';
 import type { Resume, Section } from '../types/resume';
 import type { ThemeConfig } from '../types/theme';
@@ -14,6 +14,7 @@ interface ResumeStore {
   seeded: boolean;
   addResume: (name?: string) => string;
   addSampleResume: () => string;
+  addCommercialSampleResume: () => string;
   duplicateResume: (id: string) => string;
   deleteResume: (id: string) => void;
   setActiveResume: (id: string | null) => void;
@@ -47,6 +48,16 @@ export const useResumeStore = create<ResumeStore>()(
 
       addSampleResume: () => {
         const resume = createSampleResume();
+        set((state) => ({
+          resumes: [...state.resumes, resume],
+          activeResumeId: resume.id,
+          seeded: true,
+        }));
+        return resume.id;
+      },
+
+      addCommercialSampleResume: () => {
+        const resume = createCommercialSampleResume();
         set((state) => ({
           resumes: [...state.resumes, resume],
           activeResumeId: resume.id,

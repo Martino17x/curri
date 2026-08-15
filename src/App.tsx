@@ -7,16 +7,18 @@ import { useUiStore } from './store/uiStore';
 
 export default function App() {
   const resumes = useResumeStore((s) => s.resumes);
-  const seeded = useResumeStore((s) => s.seeded);
   const addSampleResume = useResumeStore((s) => s.addSampleResume);
   const activeResumeId = useResumeStore((s) => s.activeResumeId);
   const view = useUiStore((s) => s.view);
 
   useEffect(() => {
-    if (!seeded && resumes.length === 0) {
+    // Guard idempotente: en StrictMode (dev) el efecto corre 2 veces y el closure
+    // queda con valores viejos; leer el estado actual evita sembrar 2 CVs de ejemplo.
+    const { seeded: s, resumes: rs } = useResumeStore.getState();
+    if (!s && rs.length === 0) {
       addSampleResume();
     }
-  }, [seeded, resumes.length, addSampleResume]);
+  }, [addSampleResume]);
 
   const resume = selectResume(resumes, activeResumeId);
 

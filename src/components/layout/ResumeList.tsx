@@ -11,7 +11,7 @@ function formatUpdated(iso: string): string {
 export function ResumeList() {
   const resumes = useResumeStore((s) => s.resumes);
   const addResume = useResumeStore((s) => s.addResume);
-  const addSampleResume = useResumeStore((s) => s.addSampleResume);
+  const addCommercialSampleResume = useResumeStore((s) => s.addCommercialSampleResume);
   const duplicateResume = useResumeStore((s) => s.duplicateResume);
   const deleteResume = useResumeStore((s) => s.deleteResume);
   const setActiveResume = useResumeStore((s) => s.setActiveResume);
@@ -77,14 +77,14 @@ export function ResumeList() {
           type="button"
           className="resume-card resume-card--new"
           onClick={() => {
-            const id = addSampleResume();
+            const id = addCommercialSampleResume();
             open(id);
           }}
         >
           <span className="resume-card-plus">
             <SparklesIcon width={22} height={22} />
           </span>
-          <span>Cargar CV de ejemplo</span>
+          <span>Cargar CV comercial de ejemplo</span>
         </button>
       </div>
     </main>

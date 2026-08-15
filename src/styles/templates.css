@@ -56,7 +56,7 @@
   margin-bottom: calc(var(--doc-spacing, 8pt) * 1.1);
 }
 .sec-title {
-  margin: 0 0 1.6mm;
+  margin: 0 0 1.2mm;
   font-size: var(--doc-heading-pt, 14pt);
   font-weight: 700;
   color: var(--doc-accent, #1e3a5f);
@@ -76,7 +76,7 @@
 }
 .sec-title--underline {
   border-bottom: 0.4mm solid var(--doc-accent, #1e3a5f);
-  padding-bottom: 1mm;
+  padding-bottom: 0.8mm;
 }
 .sec-title--simple {
   text-transform: none;
@@ -85,7 +85,7 @@
 
 /* Entradas (experiencia, educación, proyectos…) */
 .entry {
-  margin-bottom: 1.8mm;
+  margin-bottom: 1.3mm;
 }
 .entry:last-child {
   margin-bottom: 0;
@@ -115,11 +115,11 @@
   margin: 1mm 0 0;
 }
 .bullets {
-  margin: 1mm 0 0;
+  margin: 0.8mm 0 0;
   padding-left: 4.5mm;
 }
 .bullets li {
-  margin-bottom: 0.45mm;
+  margin-bottom: 0.3mm;
 }
 .inline-list {
   margin: 0;

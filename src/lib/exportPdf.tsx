@@ -1,6 +1,7 @@
 import { createRoot, type Root } from 'react-dom/client';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { TemplateRenderer } from '../components/preview/TemplateRenderer';
+import { docVars } from '../components/templates/shared';
 import type { Resume } from '../types/resume';
 import templatesCssRaw from '../styles/templates.css?raw';
 
@@ -40,9 +41,15 @@ export function buildStandaloneHtml(resume: Resume): string {
     `<style>${templatesCssRaw}</style>`,
     `<style>${PRINT_EXTRA_CSS}</style>`,
     '</head><body>',
-    `<div class="doc-page">${body}</div>`,
+    `<div class="doc-page" style="${styleAttr(docVars(resume.theme) as Record<string, string>)}">${body}</div>`,
     '</body></html>',
   ].join('');
+}
+
+function styleAttr(style: Record<string, string>): string {
+  return Object.entries(style)
+    .map(([k, v]) => `${k}:${v}`)
+    .join(';');
 }
 
 interface PdfCallbacks {
@@ -83,7 +90,7 @@ export function exportPdf(resume: Resume, callbacks?: PdfCallbacks) {
   try {
     const root = ensurePrintRoot();
     root.render(
-      <div className="doc-page">
+      <div className="doc-page" style={docVars(resume.theme)}>
         <TemplateRenderer resume={resume} />
       </div>,
     );

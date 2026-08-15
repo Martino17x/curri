@@ -31,34 +31,34 @@ export function Header({ resume }: { resume?: { id: string; documentName: string
         <>
           <span className="header-sep" aria-hidden="true" />
 
-          <div className="doc-controls">
-            <Select
-              className="select--sm"
-              options={resumes.map((r) => ({ value: r.id, label: r.documentName || 'Sin nombre' }))}
-              value={resume.id}
-              onChange={setActiveResume}
-              ariaLabel="Elegí otro CV"
-            />
-            <input
-              className="doc-name-input"
-              value={resume.documentName}
-              onChange={(e) => renameResume(resume.id, e.target.value)}
-              aria-label="Nombre del documento"
-              placeholder="Nombre del CV"
-            />
-          </div>
+          <Select
+            className="select--sm header-cv"
+            options={resumes.map((r) => ({ value: r.id, label: r.documentName || 'Sin nombre' }))}
+            value={resume.id}
+            onChange={setActiveResume}
+            ariaLabel="Elegí otro CV"
+          />
+
+          <input
+            className="doc-name-input"
+            value={resume.documentName}
+            onChange={(e) => renameResume(resume.id, e.target.value)}
+            aria-label="Nombre del documento"
+            placeholder="Nombre del CV"
+          />
 
           <span className="header-sep" aria-hidden="true" />
 
+          <Select
+            className="select--sm header-template"
+            options={TEMPLATE_OPTIONS}
+            value={resume.templateId}
+            onChange={(v) => setTemplate(resume.id, v as TemplateId)}
+            ariaLabel="Plantilla"
+            placeholder="Plantilla"
+          />
+
           <div className="header-actions">
-            <Select
-              className="select--sm select--template"
-              options={TEMPLATE_OPTIONS}
-              value={resume.templateId}
-              onChange={(v) => setTemplate(resume.id, v as TemplateId)}
-              ariaLabel="Plantilla"
-              placeholder="Plantilla"
-            />
             <button
               type="button"
               className="btn-secondary"

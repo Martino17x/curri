@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import type { Resume } from '../../types/resume';
+import { docVars } from '../templates/shared';
 import { TemplateRenderer } from './TemplateRenderer';
 import { AlertIcon } from '../ui/icons';
 
@@ -92,7 +93,7 @@ export function ResumePreview({
             transformOrigin: 'top center',
           }}
         >
-          <div className="doc-page" ref={docRef}>
+          <div className="doc-page" style={docVars(resume.theme)} ref={docRef}>
             <TemplateRenderer resume={resume} />
           </div>
         </div>
@@ -101,7 +102,7 @@ export function ResumePreview({
           <div className="page-break-marker" style={{ top: `${PAGE_H * effective}mm` }} role="status">
             <span className="page-break-line" />
             <span className="page-break-label">
-              <AlertIcon width={18} height={18} />
+              <AlertIcon width={14} height={14} />
               <span className="page-break-label-text">
                 <strong>Fin de la página 1</strong>
                 <small>El contenido continúa en una 2.ª hoja</small>

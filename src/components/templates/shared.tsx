@@ -7,7 +7,7 @@ import type { HeaderStyle, ThemeConfig } from '../../types/theme';
 
 /** Variables CSS del documento, derivadas del tema. Cambiar el tema = cambiar estos datos. */
 export function docVars(theme: ThemeConfig): CSSProperties {
-  const lineHeight = theme.spacing === 'compact' ? 1.3 : theme.spacing === 'comfortable' ? 1.38 : 1.5;
+  const lineHeight = theme.spacing === 'compact' ? 1.22 : theme.spacing === 'comfortable' ? 1.38 : 1.5;
   const padY = theme.spacing === 'compact' ? '9mm' : theme.spacing === 'comfortable' ? '11mm' : '14mm';
   const padX = theme.spacing === 'compact' ? '11mm' : theme.spacing === 'comfortable' ? '13mm' : '16mm';
   return {

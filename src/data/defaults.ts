@@ -304,3 +304,173 @@ export function createSampleResume(): Resume {
     ],
   };
 }
+
+/** CV comercial de ejemplo, replicado del template de candela-app
+ *  (cv-comercial-ventas-stock.html). Entra en UNA hoja A4 con tema compacto. */
+export function createCommercialSampleResume(): Resume {
+  const work: WorkItem[] = [
+    {
+      id: uid(),
+      position: 'Vendedora y asistente comercial',
+      company: 'Angelicos Regalería y Sublimación',
+      location: '',
+      start: d(2021, 1),
+      end: d(2024, 2),
+      current: false,
+      summary: '',
+      highlights: [
+        'Asesoré a clientes en la selección de regalos y productos personalizados, logrando cierres alineados a necesidades y presupuesto.',
+        'Gestioné reposición y control de stock, manteniendo la oferta actualizada según la demanda y la temporada.',
+        'Organicé el mostrador y la vidriera, resaltando productos de mayor rotación para impulsar ventas.',
+      ],
+    },
+    {
+      id: uid(),
+      position: 'Atención al cliente, gestión de stock y redes sociales',
+      company: 'Origami Librería',
+      location: '',
+      start: d(2024, 11),
+      end: d(2025, 8),
+      current: false,
+      summary: '',
+      highlights: [
+        'Brindé atención al cliente en librería, recomendando productos escolares, de oficina y regalos con foco en la venta.',
+        'Controlé y repondí stock de mercadería, manteniendo el orden del local y disponibilidad de alta rotación.',
+        'Gestioné redes sociales para difundir productos y sostener la comunicación con la clientela, derivando consultas a la venta.',
+      ],
+    },
+    {
+      id: uid(),
+      position: 'Emprendedora y responsable de operaciones',
+      company: 'Chocobajonero',
+      location: '',
+      start: d(2023, 12),
+      end: d(2025, 8),
+      current: false,
+      summary: 'En pausa por mudanza a Córdoba Capital.',
+      highlights: [
+        'Llevé adelante la venta directa y por redes, gestionando la cartera de clientes y el seguimiento de cada pedido hasta la entrega.',
+        'Organicé la producción y el stock de insumos para sostener la operación diaria, cumpliendo con la demanda en fechas pico.',
+        'Definí precios, promociones y combos según margen y estacionalidad, ajustando la oferta para sostener las ventas.',
+      ],
+    },
+    {
+      id: uid(),
+      position: 'Atención al cliente y control de stock',
+      company: "MOE'S Bebidas",
+      location: '',
+      start: d(2019, 8),
+      end: d(2020, 2),
+      current: false,
+      summary: '',
+      highlights: [
+        'Atendí clientes en vinoteca, recomendando productos y cerrando ventas con asesoramiento personalizado.',
+        'Gestioné la reposición y el control de mercadería, asegurando disponibilidad y exhibiciones atractivas en góndola.',
+      ],
+    },
+  ];
+
+  const education: EducationItem[] = [
+    {
+      id: uid(),
+      degree: 'Bachiller en Economía y Administración',
+      institution: 'IPEM 273 Manuel Belgrano',
+      location: '',
+      start: d(2015),
+      end: d(2021),
+      current: false,
+      description: '',
+    },
+    {
+      id: uid(),
+      degree: 'Tecnicatura Superior en Diseño de Espacios',
+      institution: 'ESBA – Roberto Viola',
+      location: '',
+      start: d(2025),
+      end: null,
+      current: true,
+      description: 'En curso.',
+    },
+    {
+      id: uid(),
+      degree: 'Introducción a la Programación Web',
+      institution: 'UNLaR – Universidad Nacional de La Rioja',
+      location: '',
+      start: d(2024, 9),
+      end: null,
+      current: false,
+      description: '',
+    },
+    {
+      id: uid(),
+      degree: 'Inglés Inicial',
+      institution: 'Portal de Capacitación Integral de la Provincia',
+      location: '',
+      start: d(2023, 3),
+      end: null,
+      current: false,
+      description: '',
+    },
+  ];
+
+  const skills: SkillGroup[] = [
+    {
+      id: uid(),
+      name: '',
+      keywords: [
+        'Ventas y asesoramiento comercial',
+        'Cierre de ventas y postventa',
+        'Control de stock e inventario',
+        'Reposición de mercadería',
+        'Organización del punto de venta',
+        'Atención al cliente',
+        'Manejo de caja y registro de ventas',
+        'Comunicación efectiva',
+      ],
+    },
+  ];
+
+  const languages: LanguageItem[] = [
+    { id: uid(), language: 'Español', level: 'Nativo' },
+    { id: uid(), language: 'Inglés', level: 'Inicial (A2)' },
+  ];
+
+  return {
+    id: uid(),
+    documentName: 'CV Comercial de ejemplo',
+    updatedAt: now(),
+    templateId: 'modern',
+    // Tema compacto + títulos subrayados: replica la densidad y el estilo del template de Candela.
+    theme: { ...DEFAULT_THEME, baseFontSize: 10, headingScale: 1.1, spacing: 'compact', headerStyle: 'underline' },
+    sections: [
+      {
+        id: uid(),
+        type: 'basics',
+        title: 'Datos personales',
+        visible: true,
+        fields: {
+          name: 'Candela González',
+          label: 'Vendedora · Asistente Comercial · Control de Stock',
+          email: 'gcande720@gmail.com',
+          phone: '(3549) 559939',
+          location: 'Córdoba Capital – Zona General Paz',
+          linkedin: '',
+          website: '',
+          photo: null,
+        },
+      },
+      {
+        id: uid(),
+        type: 'summary',
+        title: 'Perfil profesional',
+        visible: true,
+        text:
+          'Vendedora con experiencia en comercio físico, asesoramiento comercial y control de inventario. Manejo el ciclo completo de venta: detección de necesidades, recomendación, cierre y postventa. Cuento con sólida experiencia en control de stock, reposición de mercadería y organización del punto de venta. Me mudé recientemente a Córdoba Capital por decisión personal, cuento con disponibilidad inmediata y no tengo inconvenientes de relocalización.',
+      },
+      { id: uid(), type: 'experience', title: 'Experiencia laboral', visible: true, items: work },
+      { id: uid(), type: 'education', title: 'Formación', visible: true, items: education },
+      { id: uid(), type: 'skills', title: 'Competencias', visible: true, groups: skills },
+      { id: uid(), type: 'languages', title: 'Idiomas', visible: true, items: languages },
+    ],
+  };
+}

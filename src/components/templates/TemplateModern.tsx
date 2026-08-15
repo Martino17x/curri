@@ -1,5 +1,5 @@
 import type { Resume, Section } from '../../types/resume';
-import { ContactLine, docVars } from './shared';
+import { ContactLine } from './shared';
 import { SectionView } from './SectionView';
 
 export function TemplateModern({ resume }: { resume: Resume }) {
@@ -9,7 +9,7 @@ export function TemplateModern({ resume }: { resume: Resume }) {
   const rest = visible.filter((s) => s.type !== 'basics');
 
   return (
-    <div className="tpl tpl-modern" style={docVars(theme)}>
+    <div className="tpl tpl-modern">
       <header className="doc-header">
         {basics?.fields.photo && <img className="doc-photo" src={basics.fields.photo} alt="" />}
         <h1 className={`doc-name ${theme.nameUppercase ? 'doc-name--upper' : ''}`}>

@@ -58,11 +58,11 @@ button svg {
   flex-shrink: 0;
   margin: 0 0.4rem;
 }
-.doc-controls {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  min-width: 0;
+.header-cv {
+  max-width: 200px;
+}
+.header-template {
+  max-width: 170px;
 }
 .builder-mobile-bar {
   display: none;
@@ -801,19 +801,19 @@ button svg {
 }
 .page-break-label {
   position: relative;
-  top: -8px;
+  top: -7px;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   background: #fffdf5;
-  border: 1.5px solid #f59e0b;
+  border: 1px solid #f59e0b;
   color: #92400e;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 600;
   line-height: 1.2;
-  padding: 6px 14px;
+  padding: 4px 10px;
   border-radius: 999px;
-  box-shadow: 0 3px 12px rgba(146, 64, 14, 0.3);
+  box-shadow: 0 2px 8px rgba(146, 64, 14, 0.25);
 }
 .page-break-label-text {
   display: flex;
@@ -821,10 +821,10 @@ button svg {
   gap: 1px;
 }
 .page-break-label-text strong {
-  font-size: 12px;
+  font-size: 11px;
 }
 .page-break-label-text small {
-  font-size: 10.5px;
+  font-size: 9.5px;
   font-weight: 500;
   opacity: 0.85;
 }
@@ -956,6 +956,65 @@ button svg {
   }
   .section-row {
     padding: 0.4rem 0.4rem;
+  }
+}
+
+/* Header en mobile: 2 filas — identidad arriba, selectores abajo a ancho completo. */
+@media (max-width: 767px) {
+  .app-header {
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    padding: 0.5rem 0.6rem;
+    min-height: 0;
+  }
+  .header-sep {
+    display: none;
+  }
+  .header-brand {
+    order: 0;
+  }
+  .logo {
+    font-size: 1.05rem;
+  }
+  .doc-name-input {
+    order: 1;
+    flex: 1 1 auto;
+    min-width: 90px;
+    padding: 0.35rem 0.5rem;
+    font-size: 0.9rem;
+  }
+  .header-actions {
+    order: 2;
+    margin-left: auto;
+    gap: 0.35rem;
+  }
+  .header-actions .btn-secondary {
+    min-height: 40px;
+    padding: 0.4rem 0.7rem;
+  }
+  .header-cv {
+    order: 3;
+    flex: 1 1 100%;
+    max-width: none;
+    width: 100%;
+  }
+  .header-template {
+    order: 4;
+    flex: 1 1 100%;
+    max-width: none;
+    width: 100%;
+  }
+  .header-cv .select-trigger,
+  .header-template .select-trigger {
+    width: 100%;
+    justify-content: space-between;
+    min-height: 40px;
+  }
+  .header-cv .select-menu,
+  .header-template .select-menu {
+    min-width: 0;
+    width: 100%;
+    max-width: 100%;
   }
 }
 

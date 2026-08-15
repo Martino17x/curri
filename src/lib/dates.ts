@@ -33,9 +33,11 @@ export function formatRange(
   current: boolean,
 ): string {
   const s = formatDateRef(start);
-  const e = current ? 'Presente' : formatDateRef(end);
-  if (!s && !e) return '';
-  return `${s} – ${e}`;
+  if (current) return s ? `${s} – Presente` : 'Presente';
+  const e = formatDateRef(end);
+  if (s && e) return `${s} – ${e}`;
+  // Fecha única (curso, certificación): mostrar solo el inicio.
+  return s || e;
 }
 
 export function formatDateRefToJson(ref: DateRef | null | undefined): string {
