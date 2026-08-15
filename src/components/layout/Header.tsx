@@ -1,3 +1,4 @@
+import { useNavigate, useParams } from 'react-router-dom';
 import { useResumeStore } from '../../store/resumeStore';
 import { useUiStore } from '../../store/uiStore';
 import type { TemplateId } from '../../types/resume';
@@ -10,24 +11,24 @@ const TEMPLATE_OPTIONS: { value: TemplateId; label: string }[] = [
   { value: 'minimal', label: 'Mínima' },
 ];
 
-export function Header({ resume }: { resume?: { id: string; documentName: string; templateId: TemplateId } }) {
-  const view = useUiStore((s) => s.view);
+export function Header() {
+  const navigate = useNavigate();
+  const { resumeId } = useParams();
   const resumes = useResumeStore((s) => s.resumes);
-  const setActiveResume = useResumeStore((s) => s.setActiveResume);
   const renameResume = useResumeStore((s) => s.renameResume);
   const setTemplate = useResumeStore((s) => s.setTemplate);
-  const setView = useUiStore((s) => s.setView);
   const setShowThemePanel = useUiStore((s) => s.setShowThemePanel);
   const setShowAtsPanel = useUiStore((s) => s.setShowAtsPanel);
 
   // En la página principal el header es mínimo: solo identidad. Las herramientas
   // de edición (selector de CV, nombre, plantilla, Tema/ATS) viven en el builder.
-  const isBuilder = view.name === 'builder' && !!resume;
+  const resume = resumeId ? resumes.find((r) => r.id === resumeId) : undefined;
+  const isBuilder = !!resume;
 
   return (
     <header className={`app-header ${isBuilder ? 'app-header--builder' : 'app-header--list'}`}>
       <div className="header-brand">
-        <button type="button" className="logo" onClick={() => setView({ name: 'list' })} title="Volver a tus CVs">
+        <button type="button" className="logo" onClick={() => navigate('/')} title="Volver a tus CVs">
           <span className="logo-mark" aria-hidden="true" />
           Curri
         </button>
@@ -42,7 +43,7 @@ export function Header({ resume }: { resume?: { id: string; documentName: string
             className="select--sm header-cv"
             options={resumes.map((r) => ({ value: r.id, label: r.documentName || 'Sin nombre' }))}
             value={resume.id}
-            onChange={setActiveResume}
+            onChange={(id) => navigate(`/cv/${id}`)}
             ariaLabel="Elegí otro CV"
           />
 

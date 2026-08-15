@@ -1,5 +1,5 @@
+import { useNavigate } from 'react-router-dom';
 import { useResumeStore } from '../../store/resumeStore';
-import { useUiStore } from '../../store/uiStore';
 import { PlusIcon, SparklesIcon } from '../ui/icons';
 
 function formatUpdated(iso: string): string {
@@ -9,17 +9,17 @@ function formatUpdated(iso: string): string {
 }
 
 export function ResumeList() {
+  const navigate = useNavigate();
   const resumes = useResumeStore((s) => s.resumes);
   const addResume = useResumeStore((s) => s.addResume);
   const addCommercialSampleResume = useResumeStore((s) => s.addCommercialSampleResume);
   const duplicateResume = useResumeStore((s) => s.duplicateResume);
   const deleteResume = useResumeStore((s) => s.deleteResume);
   const setActiveResume = useResumeStore((s) => s.setActiveResume);
-  const setView = useUiStore((s) => s.setView);
 
   const open = (id: string) => {
     setActiveResume(id);
-    setView({ name: 'builder' });
+    navigate(`/cv/${id}`);
   };
 
   // El preset comercial se siembra solo (ensurePresets). Este botón es la vía de
